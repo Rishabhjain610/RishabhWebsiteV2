@@ -9,7 +9,7 @@ import {
   IoLogoLinkedin,
   IoLogoInstagram,
   IoMailOutline,
-  IoLogoWhatsapp,
+
   IoClose,
   IoAdd,
 } from "react-icons/io5";
@@ -41,11 +41,7 @@ const Links = () => {
       icon: <IoLogoLinkedin size={18} />,
       href: "https://www.linkedin.com/in/rishabhjain610/",
     },
-    {
-      name: "WhatsApp",
-      icon: <IoLogoWhatsapp size={18} />,
-      href: "https://wa.me/918433943227",
-    },
+
     {
       name: "LeetCode",
       icon: <SiLeetcode size={18} />,
@@ -125,22 +121,22 @@ const Links = () => {
       <AnimatePresence mode="wait">
         {isOpen && (
           <motion.div
-            className="fixed bottom-24 right-6 z-30 rounded-2xl p-4 backdrop-blur-md"
+            className="fixed bottom-24 right-6 z-30 rounded-2xl p-4 backdrop-blur-xl"
             style={{
               backgroundColor: isDark
-                ? "rgba(18, 18, 18, 0.95)"
-                : "rgba(244, 244, 244, 0.95)",
+                ? "rgba(18, 18, 18, 0.4)"
+                : "rgba(244, 244, 244, 0.4)",
               border: `1px solid ${borderColorValue}`,
               boxShadow: isDark
-                ? "0 8px 32px rgba(0, 0, 0, 0.5)"
-                : "0 8px 32px rgba(0, 0, 0, 0.1)",
+                ? "0 8px 32px rgba(0, 0, 0, 0.3)"
+                : "0 8px 32px rgba(0, 0, 0, 0.05)",
             }}
             initial={{ opacity: 0, scale: 0.9, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
             transition={{ duration: 0.2 }}
           >
-            <motion.div 
+            <motion.div
               className="flex flex-col gap-3"
               variants={containerVariants}
               initial="hidden"

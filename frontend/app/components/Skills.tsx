@@ -202,7 +202,7 @@ const Skills = () => {
             What I work with
           </span>
 
-          <h2 className="text-5xl lg:text-6xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
             Tech{" "}
             <span style={{ color: "#4A90E2", textShadow: "0 0 28px rgba(74,144,226,0.22)" }}>
               Stack

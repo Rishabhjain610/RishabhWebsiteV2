@@ -37,7 +37,7 @@ const education = [
 const stats = [
   { label: "Projects Built", value: "20+", icon: IoRocket },
   { label: "Hackathon Wins", value: "2×", icon: IoTrophy },
-  { label: "Hackathon Finalist", value: "10+", icon: IoGlobeOutline },
+  { label: "Hackathon Finalist", value: "12+", icon: IoGlobeOutline },
 ];
 
 /* ─── Viewport config — once: false so animations replay ─── */
@@ -96,7 +96,7 @@ const About = () => {
             👋 Who I am
           </span>
 
-          <h2 className="text-5xl lg:text-6xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
             About{" "}
             <span style={{ color: "#4A90E2", textShadow: "0 0 28px rgba(74,144,226,0.22)" }}>
               Me

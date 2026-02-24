@@ -119,6 +119,7 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             {/* Theme Toggle Button with Smooth Transition */}
             <button
+              suppressHydrationWarning
               aria-label="Toggle theme"
               onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
               className={cn(

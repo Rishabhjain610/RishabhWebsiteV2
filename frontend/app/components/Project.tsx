@@ -487,11 +487,11 @@ const Project = () => {
                        font-spaceGrotesk mb-4"
             style={{ backgroundColor: accentRgba(0.12), color: ACCENT }}
           >
-            🚀 What I Build
+            What I Build
           </span>
 
           {/* Heading — textShadow like About */}
-          <h2 className="text-5xl lg:text-6xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
             Featured{" "}
             <span
               style={{
