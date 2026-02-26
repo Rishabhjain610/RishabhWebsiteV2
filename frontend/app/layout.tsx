@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import Links from "./components/Links";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Analytics } from "@vercel/analytics/next"
 export const metadata: Metadata = {
   title: "Rishabh Jain - Full Stack Developer",
   description: "Portfolio of Rishabh Jain, a full-stack developer",
