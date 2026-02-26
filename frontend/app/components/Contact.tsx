@@ -185,7 +185,7 @@ export default function Contact() {
                 minHeight: 520,
               }}
             >
-              {/* Thin top accent */}
+              
               <div
                 className="absolute inset-x-0 top-0 h-px z-20"
                 style={{
@@ -193,7 +193,7 @@ export default function Contact() {
                 }}
               />
 
-              {/* Globe Section */}
+              
               <div className="relative flex-1 w-full cursor-pointer" style={{ minHeight: 400 }}>
                 <Globe3D
                   markers={GLOBE_MARKERS()}
@@ -211,7 +211,7 @@ export default function Contact() {
                 />
               </div>
 
-              {/* Social Links Footer */}
+              
               <div className="relative z-[2] mt-auto p-8">
                 <p
                   className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] font-spaceGrotesk"
@@ -261,7 +261,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* ════ RIGHT — Form ════ */}
+          
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -277,13 +277,13 @@ export default function Contact() {
                 : "0 15px 45px rgba(0,0,0,0.06)",
             }}
           >
-            {/* Accent decorative background bleed */}
+           
             <div
               className="absolute -top-24 -right-24 h-[300px] w-[300px] rounded-full blur-[120px] pointer-events-none opacity-[0.05]"
               style={{ background: ACCENT }}
             />
 
-            {/* top accent bar */}
+            
             <div
               className="absolute inset-x-0 top-0 h-[2px]"
               style={{
@@ -292,7 +292,7 @@ export default function Contact() {
             />
 
             <AnimatePresence mode="wait">
-              {/* ── FORM ── */}
+             
               {fs !== "sent" && fs !== "error" && (
                 <motion.form
                   key="form"
@@ -310,7 +310,7 @@ export default function Contact() {
                     value={new Date().toLocaleString()}
                   />
 
-                  {/* heading */}
+                
                   <div className="mb-1">
                     <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#E8E8E8] font-spaceGrotesk">
                       Send a Message
@@ -320,7 +320,7 @@ export default function Contact() {
                     </p>
                   </div>
 
-                  {/* Name + Email */}
+                 
                   <div>
                     <label className={labelClasses}>Full Name</label>
                     <input
@@ -344,7 +344,7 @@ export default function Contact() {
                     />
                   </div>
 
-                  {/* Subject */}
+                 
                   <div>
                     <label className={labelClasses}>Subject</label>
                     <input
@@ -356,7 +356,7 @@ export default function Contact() {
                     />
                   </div>
 
-                  {/* Message */}
+                      
                   <div className="flex flex-col flex-1 min-h-[160px]">
                     <label className={labelClasses}>Your Message</label>
                     <textarea
@@ -368,7 +368,7 @@ export default function Contact() {
                     />
                   </div>
 
-                  {/* Submit */}
+                 
                   <motion.button
                     type="submit"
                     disabled={fs === "submitting"}

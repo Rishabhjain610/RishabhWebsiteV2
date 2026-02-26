@@ -935,13 +935,13 @@ const Project = () => {
 
               {/* video + details */}
               <div
-                className="flex flex-col md:flex-row flex-1 overflow-hidden"
+                className="flex flex-col lg:flex-row flex-1 overflow-hidden"
                 style={{ minHeight: 0 }}
               >
                 {/* video pane */}
                 <div
-                  className="flex items-center justify-center border-b md:border-b-0 md:border-r border-white/[0.07]"
-                  style={{ flex: "1 1 auto", minHeight: "300px", background: "#000" }}
+                  className="flex items-center justify-center border-b lg:border-b-0 lg:border-r border-white/[0.07]"
+                  style={{ flex: "1 1 65%", minHeight: "clamp(250px, 40vh, 450px)", background: "#000" }}
                 >
                   <video
                     ref={videoRef}
@@ -954,7 +954,7 @@ const Project = () => {
                 </div>
 
                 {/* details pane */}
-                <div className="flex-1 overflow-y-auto p-4 sm:p-6 flex flex-col gap-5">
+                <div className="flex-1 lg:flex-[0_0_35%] overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-5">
                   <div>
                     <h3
                       className="font-bold tracking-tight leading-none mb-2"
@@ -1081,3 +1081,5 @@ const Project = () => {
 };
 
 export default Project;
+
+
