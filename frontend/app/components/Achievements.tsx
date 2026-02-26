@@ -151,6 +151,7 @@ const AchievementCard = ({
   return (
     <motion.div
       variants={itemVariant}
+      suppressHydrationWarning
       className="rounded-xl border overflow-hidden transition-all duration-300 cursor-pointer"
       style={{
         backgroundColor: dark ? "rgba(255,255,255,0.02)" : "rgba(74,144,226,0.04)",
@@ -336,6 +337,7 @@ const Achievements = () => {
             <motion.div
               key={label}
               variants={itemVariant}
+              suppressHydrationWarning
               className="p-4 rounded-xl border text-center transition-all duration-300"
               style={{
                 backgroundColor: dark ? "rgba(74,144,226,0.05)" : "rgba(74,144,226,0.08)",

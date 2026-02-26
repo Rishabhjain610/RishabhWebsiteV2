@@ -395,17 +395,17 @@ const Tag = ({
     style={
       accent
         ? {
-            color: "#4A90E2",
-            background: "rgba(74,144,226,0.12)",
-            borderColor: "rgba(74,144,226,0.25)",
-          }
+          color: "#4A90E2",
+          background: "rgba(74,144,226,0.12)",
+          borderColor: "rgba(74,144,226,0.25)",
+        }
         : dark
-        ? {
+          ? {
             color: "#8b949e",
             background: "rgba(255,255,255,0.04)",
             borderColor: "rgba(255,255,255,0.1)",
           }
-        : {
+          : {
             color: "#4A90E2",
             background: "rgba(74,144,226,0.1)",
             borderColor: "rgba(74,144,226,0.2)",
@@ -672,6 +672,7 @@ const Project = () => {
               whileInView="visible"
               viewport={{ once: false, amount: 0.12 }}
               variants={cardVariant}
+              suppressHydrationWarning
               transition={{ delay: Math.min(i * 0.05, 0.25) }}
               className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300"
               style={{
@@ -767,8 +768,9 @@ const Project = () => {
                 <div className="flex flex-wrap items-center gap-2 pt-4 border-t" style={{ borderColor: dark ? "rgba(74,144,226,0.1)" : "rgba(74,144,226,0.15)" }}>
                   <button
                     onClick={() => setActiveVideo(p.title)}
+                    suppressHydrationWarning
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-spaceGrotesk
-                               font-semibold transition-all duration-300 cursor-pointer border text-sm"
+                                font-semibold transition-all duration-300 cursor-pointer border text-sm"
                     style={{
                       background: "rgba(74,144,226,0.15)",
                       color: "#4A90E2",
@@ -1029,12 +1031,12 @@ const Project = () => {
                       background: "rgba(74,144,226,0.08)",
                     }}
                     onMouseEnter={(e) =>
-                      ((e.currentTarget as HTMLElement).style.background =
-                        "rgba(74,144,226,0.18)")
+                    ((e.currentTarget as HTMLElement).style.background =
+                      "rgba(74,144,226,0.18)")
                     }
                     onMouseLeave={(e) =>
-                      ((e.currentTarget as HTMLElement).style.background =
-                        "rgba(74,144,226,0.08)")
+                    ((e.currentTarget as HTMLElement).style.background =
+                      "rgba(74,144,226,0.08)")
                     }
                   >
                     <IoLogoGithub size={14} /> View on GitHub

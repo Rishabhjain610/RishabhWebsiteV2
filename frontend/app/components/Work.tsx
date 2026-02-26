@@ -248,6 +248,7 @@ const Work = () => {
                                transition-all duration-300
                                group-hover:-translate-y-0.5
                                bg-white dark:bg-transparent"
+                    suppressHydrationWarning
                     style={{
                       borderColor: accentRgba(0.12),
                     }}

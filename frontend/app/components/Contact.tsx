@@ -242,6 +242,7 @@ export default function Contact() {
                       title={s.name}
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
+                      suppressHydrationWarning
                       className="flex items-center justify-center p-3 rounded-xl transition-all duration-300"
                       style={{
                         background: "rgba(255,255,255,0.05)",

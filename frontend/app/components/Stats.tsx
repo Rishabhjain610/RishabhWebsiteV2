@@ -128,6 +128,7 @@ const CustomDropdown = ({
         type="button"
         disabled={disabled}
         onClick={() => setIsOpen(!isOpen)}
+        suppressHydrationWarning
         className="flex items-center justify-between gap-3 px-5 py-2.5 rounded-xl text-xs font-spaceGrotesk font-bold
                    bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/10 
                    text-[#1A1A1A] dark:text-[#E0E0E0] hover:border-[#4A90E2]/40 
@@ -296,6 +297,7 @@ const Stats = () => {
             <motion.div
               key={label}
               variants={statCard}
+              suppressHydrationWarning
               className="group p-4 sm:p-5 rounded-2xl border
                          transition-all duration-300 hover:-translate-y-1
                          bg-white dark:bg-transparent backdrop-blur-md cursor-default"
