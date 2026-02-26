@@ -208,13 +208,6 @@ export default function Contact() {
                   }}
                   className="absolute inset-0"
                 />
-                {/* Gradient overlay */}
-                <div
-                  className="absolute inset-0 z-10 pointer-events-none"
-                  style={{
-                    background: "linear-gradient(to top, #0D0D0D 35%, rgba(13,13,13,0.7) 60%, transparent 80%)",
-                  }}
-                />
               </div>
 
               {/* Social Links Footer */}
