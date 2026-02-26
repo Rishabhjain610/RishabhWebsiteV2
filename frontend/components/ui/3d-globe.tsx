@@ -435,19 +435,20 @@ function Scene({ markers, config, onMarkerClick, onMarkerHover }: SceneProps) {
 
   return (
     <>
-      {/* Lighting */}
+      {/* Balanced, bright lighting system for uniform visibility */}
       <ambientLight intensity={config.ambientIntensity} />
       <directionalLight
-        position={[config.radius * 5, config.radius * 2, config.radius * 5]}
+        position={[0, 10, 10]}
         intensity={config.pointLightIntensity}
         color="#ffffff"
       />
-      {/* Rim/Fill Light for Depth */}
       <directionalLight
-        position={[-config.radius * 5, config.radius * 3, -config.radius * 5]}
-        intensity={1.2}
-        color="#88ccff"
+        position={[0, -10, -10]}
+        intensity={config.pointLightIntensity * 0.8}
+        color="#ffffff"
       />
+      <pointLight position={[10, 0, 0]} intensity={2} color="#ffffff" />
+      <pointLight position={[-10, 0, 0]} intensity={2} color="#ffffff" />
 
       {/* Rotating Globe with Markers */}
       <RotatingGlobe

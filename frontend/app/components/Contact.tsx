@@ -180,10 +180,9 @@ export default function Contact() {
             <div
               className="relative flex flex-col flex-1 overflow-hidden rounded-3xl"
               style={{
-                background: "#0D0D0D",
+                background: "transparent",
                 border: "1px solid rgba(255,255,255,0.06)",
                 minHeight: 520,
-                boxShadow: "0 30px 60px rgba(0,0,0,0.5)",
               }}
             >
               {/* Thin top accent */}
@@ -202,7 +201,9 @@ export default function Contact() {
                     radius: 4.1,
                     atmosphereIntensity: 0,
                     showAtmosphere: false,
-                    bumpScale: 3,
+                    ambientIntensity: 5.0,
+                    pointLightIntensity: 5.0,
+                    bumpScale: 1,
                     autoRotateSpeed: 0.4,
                     markerSize: 0.1,
                   }}

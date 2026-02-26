@@ -474,23 +474,28 @@ const Achievements = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md cursor-zoom-out p-4"
+              className="fixed inset-0 z-[999] flex items-center justify-center bg-black/95 backdrop-blur-xl cursor-zoom-out p-4 sm:p-8"
               onClick={() => setLightbox(null)}
             >
+              {/* Definitive Close Button - Positioned to stay clear of top-center floating navbars */}
               <button
-                className="absolute top-6 right-6 p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors duration-200 z-[60]"
-                onClick={() => setLightbox(null)}
+                className="fixed top-28 right-6 p-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-all duration-200 z-[1000] border border-white/20 shadow-2xl backdrop-blur-2xl group active:scale-95"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightbox(null);
+                }}
               >
-                <IoClose size={20} className="text-white" />
+                <IoClose size={32} className="text-white group-hover:scale-110 transition-transform" />
               </button>
+
               <motion.img
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
+                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                 src={lightbox}
                 alt="Certificate"
-                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                className="max-w-[95%] max-h-[75vh] object-contain rounded-xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] border border-white/5 mt-12"
                 onClick={(e) => e.stopPropagation()}
               />
             </motion.div>

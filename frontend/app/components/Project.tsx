@@ -870,7 +870,7 @@ const Project = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={() => setActiveVideo(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+            className="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6"
             style={{
               background: "rgba(0,0,0,0.82)",
               backdropFilter: "blur(8px)",
@@ -1044,7 +1044,7 @@ const Project = () => {
                 </div>
               </div>
 
-              {/* status bar */}
+
               <div
                 className="flex items-center gap-2 px-4 py-2 border-t border-white/[0.07] flex-shrink-0"
                 style={{ background: "#222" }}
