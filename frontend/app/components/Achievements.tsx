@@ -1,21 +1,19 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes";
 import {
   IoTrophy,
   IoMedal,
-  IoRibbon,
   IoFlame,
   IoChevronDown,
   IoChevronUp,
   IoClose,
 } from "react-icons/io5";
 
-/* ─── Accent — consistent with LandingPage + About + Stats ─── */
 const ACCENT = "#4A90E2";
 const accentRgba = (a: number) => `rgba(74,144,226,${a})`;
 
-/* ─── Medal colours ─── */
 const medalColor = (p: string) => {
   if (p.includes("1st")) return "#FFD700";
   if (p.includes("2nd")) return "#C0C0C0";
@@ -23,7 +21,6 @@ const medalColor = (p: string) => {
   return ACCENT;
 };
 
-/* ─── Types ─── */
 interface Achievement {
   placement: string;
   hackathon: string;
@@ -32,7 +29,6 @@ interface Achievement {
   images: string[];
 }
 
-/* ── Podium (Top 3) ── */
 const podium: Achievement[] = [
   {
     placement: "🥇 1st Place",
@@ -64,7 +60,6 @@ const podium: Achievement[] = [
   },
 ];
 
-/* ── Finalist ── */
 const finalist: Achievement[] = [
   {
     placement: "🏅 Top 6",
@@ -110,78 +105,98 @@ const finalist: Achievement[] = [
   },
 ];
 
-/* ─── Animation variants — matches Stats / Work ─── */
-const vp = { once: false, amount: 0.15 as const };
+const vp = { once: false, amount: 0.3 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24, transition: { duration: 0.35, ease: "easeIn" as const } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: "easeOut" as const },
+  },
 };
 
 const staggerContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+  },
 };
 
-const statCard = {
-  hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
+const itemVariant = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: "easeOut" as const },
+  },
 };
 
-/* ─── Card component ─── */
 const AchievementCard = ({
   a,
   expanded,
   onToggle,
   onImageClick,
+  dark,
 }: {
   a: Achievement;
   expanded: boolean;
   onToggle: () => void;
   onImageClick: (src: string) => void;
+  dark: boolean;
 }) => {
   const color = medalColor(a.placement);
-  const Icon =
-    a.placement.includes("1st") || a.placement.includes("2nd") || a.placement.includes("3rd")
-      ? IoTrophy
-      : IoMedal;
 
   return (
     <motion.div
-      variants={statCard}
-      className="rounded-xl sm:rounded-2xl border overflow-hidden
-                 bg-white dark:bg-transparent transition-all duration-300 cursor-pointer"
-      style={{ borderColor: accentRgba(0.12) }}
+      variants={itemVariant}
+      className="rounded-xl border overflow-hidden transition-all duration-300 cursor-pointer"
+      style={{
+        backgroundColor: dark ? "rgba(255,255,255,0.02)" : "rgba(74,144,226,0.04)",
+        borderColor: dark ? accentRgba(0.12) : "rgba(74,144,226,0.15)",
+      }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = accentRgba(0.3);
-        (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 32px ${accentRgba(0.07)}`;
+        (e.currentTarget as HTMLElement).style.borderColor = dark
+          ? accentRgba(0.28)
+          : "rgba(74,144,226,0.25)";
+        (e.currentTarget as HTMLElement).style.backgroundColor = dark
+          ? "rgba(255,255,255,0.04)"
+          : "rgba(74,144,226,0.06)";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = accentRgba(0.12);
-        (e.currentTarget as HTMLElement).style.boxShadow = "none";
+        (e.currentTarget as HTMLElement).style.borderColor = dark
+          ? accentRgba(0.12)
+          : "rgba(74,144,226,0.15)";
+        (e.currentTarget as HTMLElement).style.backgroundColor = dark
+          ? "rgba(255,255,255,0.02)"
+          : "rgba(74,144,226,0.04)";
       }}
       onClick={onToggle}
     >
-      {/* Header row */}
-      <div className="flex items-center gap-3 p-4 sm:p-5">
+      <div className="flex items-center gap-3 p-4">
         <div
-          className="p-2 rounded-full flex-shrink-0"
-          style={{ backgroundColor: `${color}18` }}
+          className="p-2 rounded-lg flex-shrink-0"
+          style={{ background: `${color}15` }}
         >
-          <Icon size={18} style={{ color }} />
+          <IoTrophy size={16} style={{ color }} />
         </div>
 
         <div className="flex-1 min-w-0">
-          <span
-            className="text-[10px] sm:text-[11px] font-bold font-spaceGrotesk px-2 py-0.5 rounded-full"
-            style={{ backgroundColor: `${color}18`, color }}
-          >
-            {a.placement}
-          </span>
-          <h3 className="text-sm sm:text-base font-bold font-spaceGrotesk text-[#1A1A1A] dark:text-[#E0E0E0] truncate mt-1">
-            {a.hackathon}
-          </h3>
-          <p className="text-[10px] sm:text-[11px] font-spaceGrotesk text-[#3a3a3a] dark:text-[#999]">
+          <div className="flex items-center gap-2 mb-1">
+            <h3 className="text-sm font-bold font-spaceGrotesk text-[#c9d1d9] dark:text-[#c9d1d9] truncate"
+              style={{ color: dark ? "#c9d1d9" : "#1A1A1A" }}>
+              {a.hackathon}
+            </h3>
+            <span
+              className="text-[10px] font-bold font-spaceGrotesk px-2 py-0.5 rounded-md flex-shrink-0"
+              style={{ backgroundColor: `${color}20`, color }}
+            >
+              {a.placement}
+            </span>
+          </div>
+          <p className="text-xs font-spaceGrotesk text-[#8b949e]"
+            style={{ color: dark ? "#8b949e" : "#666" }}>
             {a.organizer} · {a.date}
           </p>
         </div>
@@ -198,30 +213,32 @@ const AchievementCard = ({
         </div>
       </div>
 
-      {/* Expanded — certificate images */}
       <AnimatePresence>
         {expanded && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-              <div className="h-px w-full mb-3" style={{ backgroundColor: accentRgba(0.08) }} />
-              <div className={`grid gap-3 ${a.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
+            <div
+              className="px-4 pb-4 border-t"
+              style={{ borderColor: dark ? accentRgba(0.08) : "rgba(74,144,226,0.12)" }}
+            >
+              <div
+                className={`grid gap-2.5 mt-3 ${a.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
+              >
                 {a.images.map((src, i) => (
                   <div
                     key={i}
-                    className="rounded-lg overflow-hidden border bg-[#fafafa] dark:bg-[#1a1a1a] flex items-center justify-center"
-                    style={{ borderColor: accentRgba(0.08) }}
+                    className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center"
+                    style={{ borderColor: dark ? accentRgba(0.12) : "rgba(74,144,226,0.15)" }}
                   >
                     <img
                       src={src}
                       alt={`${a.hackathon} certificate ${i + 1}`}
-                      className="w-full h-auto object-contain rounded-lg cursor-zoom-in
-                                 hover:opacity-80 transition-opacity duration-200"
+                      className="w-full h-auto object-contain rounded-lg cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
                       loading="lazy"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -239,41 +256,62 @@ const AchievementCard = ({
   );
 };
 
-/* ═══════════════════════════════════════════════ */
-
 const Achievements = () => {
   const [expandedKey, setExpandedKey] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<string | null>(null);
-  const toggle = (key: string) => setExpandedKey((p) => (p === key ? null : key));
+  const [mounted, setMounted] = React.useState(false);
+  const { resolvedTheme } = useTheme();
+  const dark = mounted && resolvedTheme === "dark";
+
+  React.useEffect(() => setMounted(true), []);
+
+  const toggle = (key: string) =>
+    setExpandedKey((p) => (p === key ? null : key));
+
+  const stats = [
+    { icon: IoFlame, label: "Hackathons", value: "30+" },
+    { icon: IoTrophy, label: "Wins", value: "2" },
+    { icon: IoMedal, label: "Podium", value: "4" },
+    { icon: IoMedal, label: "Finalist", value: String(finalist.length) },
+  ];
 
   return (
     <section
       id="achievements"
-      className="w-full px-4 sm:px-6 md:px-12 lg:px-20 py-16 sm:py-24
+      className="w-full px-6 md:px-12 lg:px-20 py-24
                  bg-[#F4F4F4] dark:bg-[#121212]
                  transition-colors duration-300 relative overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto relative z-10">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+        .font-spaceGrotesk { font-family: 'Space Grotesk', system-ui, sans-serif !important; }
+      `}</style>
 
-        {/* ── Section header — matches About / Work / Stats ── */}
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={vp}
-          className="mb-10 sm:mb-14 text-center lg:text-left"
+          className="mb-14 text-center lg:text-left"
         >
           <span
             className="inline-block text-sm font-bold px-3 py-1.5 rounded-full
                        font-spaceGrotesk mb-4"
             style={{ backgroundColor: accentRgba(0.12), color: ACCENT }}
           >
-            Hackathons &amp; Wins
+            Hackathons & Wins
           </span>
 
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
             Achieve
-            <span className="font-spaceGrotesk" style={{ color: ACCENT }}>
+            <span
+              style={{
+                color: ACCENT,
+                textShadow: "0 0 28px rgba(74,144,226,0.22)",
+              }}
+            >
               ments
             </span>
           </h2>
@@ -286,55 +324,55 @@ const Achievements = () => {
           </div>
         </motion.div>
 
-        {/* ── Summary stats — matches Stats section layout ── */}
+        {/* Stats Grid */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={vp}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10"
+          className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12"
         >
-          {[
-            { icon: IoFlame, label: "Hackathons", value: "30+", color: "#F59E0B" },
-            { icon: IoTrophy, label: "Wins", value: "2", color: "#FFD700" },
-            { icon: IoMedal, label: "Podium", value: "4", color: "#CD7F32" },
-            { icon: IoRibbon, label: "Finalist", value: String(finalist.length), color: ACCENT },
-          ].map(({ icon: Icon, label, value, color }) => (
+          {stats.map(({ icon: Icon, label, value }) => (
             <motion.div
               key={label}
-              variants={statCard}
-              className="p-4 sm:p-5 rounded-xl sm:rounded-2xl border text-center
-                         bg-white dark:bg-transparent transition-all duration-300"
-              style={{ borderColor: accentRgba(0.12) }}
+              variants={itemVariant}
+              className="p-4 rounded-xl border text-center transition-all duration-300"
+              style={{
+                backgroundColor: dark ? "rgba(74,144,226,0.05)" : "rgba(74,144,226,0.08)",
+                borderColor: dark ? accentRgba(0.14) : "rgba(74,144,226,0.2)",
+              }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = accentRgba(0.3);
-                (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 32px ${accentRgba(0.07)}`;
+                (e.currentTarget as HTMLElement).style.borderColor = dark
+                  ? accentRgba(0.28)
+                  : "rgba(74,144,226,0.3)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = accentRgba(0.12);
-                (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                (e.currentTarget as HTMLElement).style.borderColor = dark
+                  ? accentRgba(0.14)
+                  : "rgba(74,144,226,0.2)";
               }}
             >
               <div
-                className="p-2 rounded-full w-fit mx-auto mb-3"
-                style={{ backgroundColor: accentRgba(0.1) }}
+                className="p-2 rounded-lg w-fit mx-auto mb-2"
+                style={{ backgroundColor: dark ? accentRgba(0.1) : "rgba(74,144,226,0.12)" }}
               >
-                <Icon size={18} style={{ color }} />
+                <Icon size={16} style={{ color: ACCENT }} />
               </div>
-              <p className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] font-spaceGrotesk">
+              <p className="text-xl font-bold text-[#E0E0E0] font-spaceGrotesk"
+                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}>
                 {value}
               </p>
-              <p className="text-[10px] sm:text-[11px] font-spaceGrotesk text-[#3a3a3a] dark:text-[#999] uppercase tracking-widest mt-1">
+              <p className="text-xs font-spaceGrotesk text-[#8b949e] uppercase tracking-widest mt-1"
+                style={{ color: dark ? "#8b949e" : "#666" }}>
                 {label}
               </p>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* ── Two columns: Podium | Finalist ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
-
-          {/* Podium Finish */}
+        {/* Two Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Podium */}
           <div>
             <motion.div
               variants={fadeUp}
@@ -343,12 +381,13 @@ const Achievements = () => {
               viewport={vp}
               className="flex items-center gap-2 mb-4"
             >
-              <IoTrophy size={18} style={{ color: "#FFD700" }} />
-              <h3 className="text-base sm:text-lg font-bold font-spaceGrotesk text-[#1A1A1A] dark:text-[#E0E0E0]">
+              <IoTrophy size={16} style={{ color: "#FFD700" }} />
+              <h3 className="text-lg font-bold font-spaceGrotesk text-[#E0E0E0]"
+                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}>
                 Podium Finish
               </h3>
               <span
-                className="text-[10px] font-bold font-spaceGrotesk px-2 py-0.5 rounded-full"
+                className="text-xs font-bold font-spaceGrotesk px-2 py-0.5 rounded-md"
                 style={{ backgroundColor: accentRgba(0.1), color: ACCENT }}
               >
                 Top 3
@@ -359,7 +398,7 @@ const Achievements = () => {
               initial="hidden"
               whileInView="visible"
               viewport={vp}
-              className="space-y-3"
+              className="space-y-2.5"
             >
               {podium.map((a) => (
                 <AchievementCard
@@ -368,6 +407,7 @@ const Achievements = () => {
                   expanded={expandedKey === a.hackathon}
                   onToggle={() => toggle(a.hackathon)}
                   onImageClick={setLightbox}
+                  dark={dark}
                 />
               ))}
             </motion.div>
@@ -382,12 +422,13 @@ const Achievements = () => {
               viewport={vp}
               className="flex items-center gap-2 mb-4"
             >
-              <IoRibbon size={18} style={{ color: ACCENT }} />
-              <h3 className="text-base sm:text-lg font-bold font-spaceGrotesk text-[#1A1A1A] dark:text-[#E0E0E0]">
+              <IoMedal size={16} style={{ color: ACCENT }} />
+              <h3 className="text-lg font-bold font-spaceGrotesk text-[#E0E0E0]"
+                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}>
                 Finalist
               </h3>
               <span
-                className="text-[10px] font-bold font-spaceGrotesk px-2 py-0.5 rounded-full"
+                className="text-xs font-bold font-spaceGrotesk px-2 py-0.5 rounded-md"
                 style={{ backgroundColor: accentRgba(0.1), color: ACCENT }}
               >
                 {finalist.length} events
@@ -398,7 +439,7 @@ const Achievements = () => {
               initial="hidden"
               whileInView="visible"
               viewport={vp}
-              className="space-y-3"
+              className="space-y-2.5"
             >
               {finalist.map((a) => (
                 <AchievementCard
@@ -407,14 +448,14 @@ const Achievements = () => {
                   expanded={expandedKey === a.hackathon}
                   onToggle={() => toggle(a.hackathon)}
                   onImageClick={setLightbox}
+                  dark={dark}
                 />
               ))}
             </motion.div>
           </div>
-
         </div>
 
-        {/* ── Lightbox modal ── */}
+        {/* Lightbox Modal */}
         <AnimatePresence>
           {lightbox && (
             <motion.div
@@ -422,14 +463,14 @@ const Achievements = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm cursor-zoom-out p-4 sm:p-8"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md cursor-zoom-out p-4"
               onClick={() => setLightbox(null)}
             >
               <button
-                className="absolute top-24 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200 z-[60]"
+                className="absolute top-6 right-6 p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors duration-200 z-[60]"
                 onClick={() => setLightbox(null)}
               >
-                <IoClose size={24} className="text-white" />
+                <IoClose size={20} className="text-white" />
               </button>
               <motion.img
                 initial={{ scale: 0.9, opacity: 0 }}
@@ -438,13 +479,12 @@ const Achievements = () => {
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 src={lightbox}
                 alt="Certificate"
-                className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
               />
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
     </section>
   );
