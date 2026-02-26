@@ -7,6 +7,18 @@ import Footer from "./components/Footer";
 export const metadata: Metadata = {
   title: "Rishabh Jain - Full Stack Developer",
   description: "Portfolio of Rishabh Jain, a full-stack developer",
+  icons: {
+    icon: [
+      {
+        url: "/LogoLight.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/LogoDark.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+  },
 };
 import { Space_Grotesk } from "next/font/google"
 

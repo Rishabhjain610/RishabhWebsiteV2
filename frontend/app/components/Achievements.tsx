@@ -53,21 +53,7 @@ const podium: Achievement[] = [
     hackathon: "DevSprint NEHU Hackathon",
     organizer: "GDG – NEHU",
     date: "2026",
-    images: ["/wins/DevSpirint NEHU2ND.jpeg"],
-  },
-  {
-    placement: "🥈 2nd Place",
-    hackathon: "Hackathon Placeholder 1",
-    organizer: "TBD",
-    date: "2026",
-    images: [],
-  },
-  {
-    placement: "🥈 2nd Place",
-    hackathon: "Hackathon Placeholder 2",
-    organizer: "TBD",
-    date: "2026",
-    images: [],
+    images: ["/wins/DevSpirint NEHU2ND.jpeg", "/wins/DevSprint_Winners.png"],
   },
   {
     placement: "🥉 3rd Place",
@@ -311,7 +297,7 @@ const Achievements = () => {
           {[
             { icon: IoFlame, label: "Hackathons", value: "30+", color: "#F59E0B" },
             { icon: IoTrophy, label: "Wins", value: "2", color: "#FFD700" },
-            { icon: IoMedal, label: "Podium", value: "6", color: "#CD7F32" },
+            { icon: IoMedal, label: "Podium", value: "4", color: "#CD7F32" },
             { icon: IoRibbon, label: "Finalist", value: String(finalist.length), color: ACCENT },
           ].map(({ icon: Icon, label, value, color }) => (
             <motion.div

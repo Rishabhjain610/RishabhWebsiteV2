@@ -6,8 +6,6 @@ import {
   IoLogoLinkedin,
   IoLogoInstagram,
   IoMailOutline,
-  IoLocationOutline,
-  IoArrowForward,
   IoCheckmarkCircle,
   IoSend,
   IoClose,
@@ -17,414 +15,404 @@ import { useTheme } from "next-themes";
 import emailjs from "@emailjs/browser";
 import { Globe3D, GlobeMarker } from "@/components/ui/3d-globe";
 
-/* ─── Accent ─── */
 const ACCENT = "#4A90E2";
-const accentRgba = (a: number) => `rgba(74,144,226,${a})`;
+const A = (o: number) => `rgba(74,144,226,${o})`;
 
-/* ─── Variants ─── */
-const vp = { once: false, amount: 0.1 };
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30, transition: { duration: 0.4, ease: "easeIn" as const } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
-};
-
-const staggerContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
-};
-
-const cardVariant = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
-};
-
-/* ─── Social links ─── */
 const socials = [
-  {
-    name: "Email",
-    label: "rishabhjainwork1@gmail.com",
-    icon: IoMailOutline,
-    href: "mailto:rishabhjainwork1@gmail.com",
-    color: "#EA4335",
-  },
-  {
-    name: "GitHub",
-    label: "Rishabhjain610",
-    icon: IoLogoGithub,
-    href: "https://github.com/Rishabhjain610",
-    color: "#f0f0f0",
-    darkColor: "#c9d1d9",
-  },
-  {
-    name: "LinkedIn",
-    label: "rishabhjain610",
-    icon: IoLogoLinkedin,
-    href: "https://www.linkedin.com/in/rishabhjain610/",
-    color: "#0A66C2",
-  },
-  {
-    name: "Instagram",
-    label: "@rishabh_jain610",
-    icon: IoLogoInstagram,
-    href: "https://instagram.com/rishabh_jain610",
-    color: "#E4405F",
-  },
-  {
-    name: "LeetCode",
-    label: "Rishabhjain610",
-    icon: SiLeetcode,
-    href: "https://leetcode.com/u/8R0zDy20qw/",
-    color: "#FFA116",
-  },
+  { name: "Email", icon: IoMailOutline, href: "mailto:rishabhjainwork1@gmail.com" },
+  { name: "GitHub", icon: IoLogoGithub, href: "https://github.com/Rishabhjain610" },
+  { name: "LinkedIn", icon: IoLogoLinkedin, href: "https://www.linkedin.com/in/rishabhjain610/" },
+  { name: "Instagram", icon: IoLogoInstagram, href: "https://instagram.com/rishabh_jain610" },
+  { name: "LeetCode", icon: SiLeetcode, href: "https://leetcode.com/u/8R0zDy20qw/" },
 ];
 
-const NAVI_MUMBAI_MARKER = (theme: string | undefined): GlobeMarker[] => [
-  {
-    lat: 19.0330,
-    lng: 73.0297,
-    src: theme === "dark" ? "/LogoDark.png" : "/LogoLight.png",
-    label: "Navi Mumbai, India",
-    size: 0.12,
-    color: ACCENT, // Matches our professional primary color
-  },
+const GLOBE_MARKERS = (): GlobeMarker[] => [
+  { lat: 19.033, lng: 73.0297, src: "/LogoDark.png", label: "Navi Mumbai", size: 0.1, color: ACCENT },
 ];
 
-const Contact = () => {
+/* ─── Animation Variants ─── */
+const viewport = { once: false, amount: 0.06 };
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+};
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.05 } } };
+const scaleFade = { hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } } };
+
+/* ─── Professional Input Styles ─── */
+const inputClasses = `
+  w-full rounded-xl px-5 py-3 text-[13px] outline-none font-spaceGrotesk transition-all duration-300
+  bg-[#F0F0F0] dark:bg-white/[0.04]
+  border border-transparent
+  text-[#1A1A1A] dark:text-[#E0E0E0]
+  placeholder:text-[#aaa] dark:placeholder:text-[#444]
+  focus:border-[#4A90E2]/40 focus:bg-white dark:focus:bg-white/[0.07]
+  focus:shadow-[0_0_0_4px_rgba(74,144,226,0.08)]
+`.replace(/\s+/g, " ").trim();
+
+const labelClasses = "block text-[10px] font-bold uppercase tracking-[0.2em] text-[#888] dark:text-[#555] mb-2 ml-1 font-spaceGrotesk";
+
+export default function Contact() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
-  const [formState, setFormState] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+  const [fs, setFs] = useState<"idle" | "submitting" | "sent" | "error">("idle");
   const formRef = React.useRef<HTMLFormElement>(null);
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+  React.useEffect(() => setMounted(true), []);
+  const dark = mounted && resolvedTheme === "dark";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formRef.current) return;
-
-    setFormState("submitting");
-
+    setFs("submitting");
     emailjs.sendForm(
       process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
       process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
       formRef.current,
       process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-    )
-      .then(() => {
-        setFormState("sent");
-        setTimeout(() => setFormState("idle"), 6000);
-        formRef.current?.reset();
-      })
-      .catch((err) => {
-        console.error("EmailJS Error:", err);
-        setFormState("error");
-        setTimeout(() => setFormState("idle"), 5000);
-      });
+    ).then(() => {
+      setFs("sent"); setTimeout(() => setFs("idle"), 6000); formRef.current?.reset();
+    }).catch(() => {
+      setFs("error"); setTimeout(() => setFs("idle"), 5000);
+    });
   };
 
   return (
     <section
       id="contact"
-      className="w-full px-4 sm:px-6 md:px-12 lg:px-20 py-12 sm:py-16
+      className="relative w-full overflow-hidden transition-colors duration-300
                  bg-[#F4F4F4] dark:bg-[#121212]
-                 transition-colors duration-300 relative overflow-hidden"
+                 px-4 sm:px-8 md:px-14 lg:px-20 py-20 sm:py-28"
     >
-      {/* Decorative background glow */}
-      <div
-        className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none opacity-[0.03] dark:opacity-[0.07]"
-        style={{ backgroundColor: ACCENT }}
-      />
+      <div className="relative z-10 mx-auto max-w-6xl">
 
-      <div className="max-w-6xl mx-auto relative z-10">
-
-        {/* ── Section header ── */}
+        {/* ── HEADER ── */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={vp}
-          className="mb-10 sm:mb-14 text-center lg:text-left"
+          viewport={viewport}
+          className="mb-14 text-center lg:text-left"
         >
           <span
-            className="inline-block text-sm font-bold px-3 py-1.5 rounded-full
-                         font-spaceGrotesk mb-4"
-            style={{ backgroundColor: accentRgba(0.12), color: ACCENT }}
+            className="inline-block text-xs font-bold px-3 py-1.5 rounded-full font-spaceGrotesk mb-4"
+            style={{ backgroundColor: A(0.12), color: ACCENT }}
           >
-            Say Hello
+            👋 Say Hello
           </span>
 
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
-            Get In{" "}
-            <span
-              className="font-spaceGrotesk"
-              style={{
-                color: ACCENT,
-                textShadow: "0 0 30px rgba(74,144,226,0.3)"
-              }}
-            >
-              Touch
-            </span>
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight text-[#1A1A1A] dark:text-[#E8E8E8]">
+            Get In <span style={{ color: ACCENT, textShadow: `0 0 30px ${A(0.2)}` }}>Touch</span>
           </h2>
 
-          <div className="flex justify-center lg:justify-start">
-            <div
-              className="h-[2px] w-14 rounded-full"
-              style={{ backgroundColor: ACCENT, opacity: 0.45 }}
-            />
+          <div className="flex justify-center lg:justify-start mt-4">
+            <div className="h-[2px] w-14 rounded-full" style={{ backgroundColor: ACCENT, opacity: 0.3 }} />
           </div>
 
-          <p className="max-w-xl mt-4 text-[#555] dark:text-[#E0E0E0]/60 font-spaceGrotesk text-sm sm:text-base leading-relaxed mx-auto lg:mx-0">
+          <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-[#555] dark:text-[#888] font-spaceGrotesk mx-auto lg:mx-0">
             I&apos;m currently open to new opportunities and collaborations.
             Whether you have a question or just want to chat, I&apos;ll do my best to get back to you!
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+        {/* ── Main Grid ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
 
-          {/* ── Left Column: Globe & Connections ── */}
-          <div className="lg:col-span-5 space-y-6">
-            {/* ── 3D Globe Card ── */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={vp}
-              // Forced dark styling
-              className="relative overflow-hidden group p-1 rounded-3xl bg-[#1A1A1A] border border-white/[0.05] shadow-sm h-[400px]"
-            >
-              <div className="absolute inset-0 z-0 opacity-40 group-hover:opacity-60 transition-opacity duration-500">
-                <Globe3D
-                  className="h-full w-full pointer-events-none"
-                  markers={NAVI_MUMBAI_MARKER("dark")} // Forced dark marker
-                  config={{
-                    radius: 2.8,
-                    atmosphereColor: ACCENT,
-                    atmosphereIntensity: 20,
-                    bumpScale: 3,
-                    autoRotateSpeed: 0.5,
-                    markerSize: 0.08,
-                    showAtmosphere: false,
-                  }}
-                />
-              </div>
-
-              {/* Minimalist Floating Badge (Forced Dark) */}
-              <div className="absolute top-4 left-4 z-10">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#121212]/80 backdrop-blur-md border border-white/10 shadow-sm">
-                  <IoLocationOutline size={14} style={{ color: ACCENT }} />
-                  <span className="text-[10px] font-bold text-white font-spaceGrotesk">
-                    Navi Mumbai, India
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ── Social Connections ── */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={vp}
-            >
-              <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#888] mb-3 font-spaceGrotesk ml-1">
-                Connections
-              </h3>
-              <div className="grid grid-cols-2 gap-2.5">
-                {socials.map((s) => (
-                  <motion.a
-                    key={s.name}
-                    variants={cardVariant}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 p-2 rounded-xl border
-                               bg-white dark:bg-white/[0.03] 
-                               hover:bg-white dark:hover:bg-white/[0.06]
-                               transition-all duration-300 group shadow-sm dark:shadow-none"
-                    style={{ borderColor: accentRgba(0.12) }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor = accentRgba(0.3);
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor = accentRgba(0.12);
-                    }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110 shrink-0"
-                      style={{
-                        backgroundColor: (mounted && resolvedTheme === "dark")
-                          ? "rgba(74, 144, 226, 0.2)"
-                          : "rgba(74, 144, 226, 0.1)"
-                      }}
-                    >
-                      <s.icon
-                        size={20}
-                        style={{ color: ACCENT }}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[13px] font-bold text-[#1A1A1A] dark:text-[#E0E0E0] font-spaceGrotesk leading-tight truncate">
-                        {s.name}
-                      </p>
-                      <p className="text-[10px] text-[#777] dark:text-[#999] font-spaceGrotesk truncate">
-                        {s.label.length > 18 ? s.label.substring(0, 15) + '...' : s.label}
-                      </p>
-                    </div>
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ── Right Column: Form ── */}
+          {/* ════ LEFT — Globe Card ════ */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
-            viewport={vp}
-            className="lg:col-span-6 lg:col-start-7 p-6 sm:p-10 rounded-3xl border 
-                       bg-white dark:bg-white/[0.02] backdrop-blur-xl transition-all duration-500 relative"
+            viewport={viewport}
+            className="lg:col-span-5 flex flex-col gap-6"
+          >
+            <div
+              className="relative flex flex-col flex-1 overflow-hidden rounded-3xl"
+              style={{
+                background: dark ? "#0D0D0D" : "#1A1A1A",
+                border: "1px solid rgba(255,255,255,0.06)",
+                minHeight: 520,
+                boxShadow: `0 30px 60px ${dark ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.15)"}`,
+              }}
+            >
+              {/* Thin top accent */}
+              <div
+                className="absolute inset-x-0 top-0 h-px z-20"
+                style={{ background: `linear-gradient(90deg, transparent, ${ACCENT}, transparent)` }}
+              />
+
+              {/* ── GLOBE — overflows slightly for big visual impact ── */}
+              <div
+                className="absolute z-0"
+                style={{
+                  top: "-20%",
+                  left: "-30%",
+                  right: "-30%",
+                  bottom: "15%",
+                  pointerEvents: "none",
+                }}
+              >
+                <Globe3D
+                  className="w-full h-full"
+                  markers={GLOBE_MARKERS()}
+                  config={{
+                    radius: 4.1,
+                    atmosphereIntensity: 0,
+                    showAtmosphere: false,
+                    bumpScale: 3,
+                    autoRotateSpeed: 0.4,
+                    markerSize: 0.1,
+                  }}
+                />
+              </div>
+
+              {/* bottom fade so socials readable */}
+              <div
+                className="absolute inset-0 z-[1] pointer-events-none"
+                style={{
+                  background: dark
+                    ? "linear-gradient(to top, #0D0D0D 35%, rgba(13,13,13,0.7) 60%, transparent 80%)"
+                    : "linear-gradient(to top, #1A1A1A 35%, rgba(26,26,26,0.7) 60%, transparent 80%)",
+                }}
+              />
+
+              {/* Location badge */}
+              <div className="absolute top-6 left-6 z-10">
+                <div
+                  className="flex items-center gap-2 rounded-full px-3 py-1.5"
+                  style={{
+                    background: "rgba(0,0,0,0.6)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    backdropFilter: "blur(10px)",
+                  }}
+                >
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span
+                      className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                      style={{ backgroundColor: ACCENT }}
+                    />
+                    <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: ACCENT }} />
+                  </span>
+                  <span className="text-[11px] font-bold text-white/90 font-spaceGrotesk tracking-wide">
+                    Navi Mumbai, India
+                  </span>
+                </div>
+              </div>
+
+              {/* ── Social Footer — integrated into globe card ── */}
+              <div className="relative z-[2] mt-auto p-8">
+                <p
+                  className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] font-spaceGrotesk"
+                  style={{ color: "rgba(255,255,255,0.3)" }}
+                >
+                  Connect
+                </p>
+                <motion.div
+                  variants={stagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={viewport}
+                  className="flex flex-wrap gap-2.5"
+                >
+                  {socials.map((s) => (
+                    <motion.a
+                      key={s.name}
+                      variants={scaleFade}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={s.name}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center justify-center p-3 rounded-xl transition-all duration-300"
+                      style={{
+                        background: "rgba(255,255,255,0.05)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.background = A(0.12);
+                        (e.currentTarget as HTMLElement).style.borderColor = A(0.3);
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
+                      }}
+                    >
+                      <s.icon size={18} style={{ color: ACCENT }} />
+                    </motion.a>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ════ RIGHT — Form ════ */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="relative flex flex-col overflow-hidden rounded-3xl
+                       lg:col-span-7 lg:col-start-6"
             style={{
-              borderColor: accentRgba(0.12),
-              boxShadow: `0 20px 50px rgba(0,0,0,${(!mounted || resolvedTheme !== 'dark') ? 0.05 : 0.3})`
+              background: dark ? "rgba(255,255,255,0.02)" : "#ffffff",
+              border: `1px solid ${dark ? "rgba(255,255,255,0.08)" : "#E8E8E8"}`,
+              padding: "2.5rem",
+              boxShadow: dark ? "0 25px 60px rgba(0,0,0,0.4)" : "0 15px 45px rgba(0,0,0,0.06)",
             }}
           >
+            {/* Accent decorative background bleed */}
+            <div
+              className="absolute -top-24 -right-24 h-[300px] w-[300px] rounded-full blur-[120px] pointer-events-none opacity-[0.05]"
+              style={{ background: ACCENT }}
+            />
+
+            {/* top accent bar */}
+            <div
+              className="absolute inset-x-0 top-0 h-[2px]"
+              style={{ background: `linear-gradient(90deg, ${ACCENT}, ${A(0.1)})` }}
+            />
+
             <AnimatePresence mode="wait">
-              {formState !== "sent" && formState !== "error" ? (
+
+              {/* ── FORM ── */}
+              {fs !== "sent" && fs !== "error" && (
                 <motion.form
                   key="form"
                   ref={formRef}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onSubmit={handleSubmit}
-                  className="space-y-6"
+                  exit={{ opacity: 0, transition: { duration: 0.12 } }}
+                  onSubmit={submit}
+                  className="flex flex-col gap-4 flex-1 h-full"
                 >
-                  {/* Hidden fields for EmailJS template */}
                   <input type="hidden" name="title" value="Portfolio Inquiry" />
                   <input type="hidden" name="time" value={new Date().toLocaleString()} />
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#888] ml-1 font-spaceGrotesk">Full Name</label>
-                      <input
-                        required
-                        name="name"
-                        type="text"
-                        placeholder="John Doe"
-                        className="w-full bg-white dark:bg-white/[0.05] border border-[#eee] dark:border-white/10 rounded-xl px-5 py-3
-                                   text-sm font-spaceGrotesk text-[#1A1A1A] dark:text-white outline-none
-                                   focus:ring-2 focus:ring-[#4A90E2]/40 focus:border-[#4A90E2]/50 transition-all duration-300 shadow-sm dark:shadow-none"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-[#888] ml-1 font-spaceGrotesk">Email Address</label>
-                      <input
-                        required
-                        name="email"
-                        type="email"
-                        placeholder="john@example.com"
-                        className="w-full bg-white dark:bg-white/[0.05] border border-[#eee] dark:border-white/10 rounded-xl px-5 py-3
-                                   text-sm font-spaceGrotesk text-[#1A1A1A] dark:text-white outline-none
-                                   focus:ring-2 focus:ring-[#4A90E2]/40 focus:border-[#4A90E2]/50 transition-all duration-300 shadow-sm dark:shadow-none"
-                      />
-                    </div>
+                  {/* heading */}
+                  <div className="mb-1">
+                    <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#E8E8E8] font-spaceGrotesk">
+                      Send a Message
+                    </h3>
+                    <p className="mt-0.5 text-[12px] text-[#999] dark:text-[#555] font-spaceGrotesk">
+                      Looking forward to hearing from you.
+                    </p>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-[#888] ml-1 font-spaceGrotesk">Your Message</label>
+                  {/* Name + Email */}
+                  <div>
+                    <label className={labelClasses}>Full Name</label>
+                    <input required name="name" type="text" placeholder="John Doe" className={inputClasses} suppressHydrationWarning />
+                  </div>
+                  <div>
+                    <label className={labelClasses}>Email Address</label>
+                    <input required name="email" type="email" placeholder="john@example.com" className={inputClasses} suppressHydrationWarning />
+                  </div>
+
+                  {/* Subject */}
+                  <div>
+                    <label className={labelClasses}>Subject</label>
+                    <input name="subject" type="text" placeholder="What's this about?" className={inputClasses} suppressHydrationWarning />
+                  </div>
+
+                  {/* Message */}
+                  <div className="flex flex-col flex-1 min-h-[160px]">
+                    <label className={labelClasses}>Your Message</label>
                     <textarea
                       required
                       name="message"
-                      rows={5}
-                      placeholder="How can I help you?"
-                      className="w-full bg-white dark:bg-white/[0.05] border border-[#eee] dark:border-white/10 rounded-xl px-5 py-4
-                                 text-sm font-spaceGrotesk text-[#1A1A1A] dark:text-white outline-none resize-none
-                                 focus:ring-2 focus:ring-[#4A90E2]/40 focus:border-[#4A90E2]/50 transition-all duration-300 shadow-sm dark:shadow-none"
+                      placeholder="Tell me more about your project or inquiry..."
+                      className={`${inputClasses} resize-none flex-1 h-full`}
+                      suppressHydrationWarning
                     />
                   </div>
 
+                  {/* Submit */}
                   <motion.button
                     type="submit"
-                    disabled={formState === "submitting"}
-                    whileHover={{ scale: 1.01 }}
+                    disabled={fs === "submitting"}
+                    whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="group w-full py-4 rounded-xl flex items-center justify-center gap-3
-                               text-white font-bold font-spaceGrotesk text-sm tracking-wider
-                               transition-all duration-300 overflow-hidden relative"
+                    className="group relative w-full overflow-hidden rounded-xl py-4
+                                 text-sm font-bold tracking-widest text-white font-spaceGrotesk uppercase
+                                 transition-all duration-300 disabled:opacity-50"
+                    suppressHydrationWarning
                     style={{
                       background: `linear-gradient(135deg, ${ACCENT} 0%, #357abd 100%)`,
-                      boxShadow: `0 10px 30px ${accentRgba(0.2)}`
+                      boxShadow: `0 8px 25px ${A(0.25)}`,
                     }}
                   >
-                    {formState === "submitting" ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <span>Send Message</span>
-                        <IoSend size={16} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                      </>
-                    )}
+                    <span
+                      className="absolute inset-0 -translate-x-full skew-x-[-15deg] bg-white/20
+                                       group-hover:translate-x-[200%] transition-transform duration-700"
+                    />
+                    <span className="relative flex items-center justify-center gap-2.5">
+                      {fs === "submitting" ? (
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                      ) : (
+                        <>
+                          Send Message
+                          <IoSend
+                            size={14}
+                            className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
+                          />
+                        </>
+                      )}
+                    </span>
                   </motion.button>
                 </motion.form>
-              ) : formState === "sent" ? (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="h-full min-h-[400px] flex flex-col items-center justify-center text-center space-y-6"
+              )}
+
+              {/* ── SUCCESS ── */}
+              {fs === "sent" && (
+                <motion.div key="ok"
+                  initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                  className="flex flex-1 flex-col items-center justify-center gap-4 text-center min-h-[380px]"
                 >
-                  <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center">
-                    <IoCheckmarkCircle size={48} className="text-green-500" />
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full"
+                    style={{ background: "rgba(34,197,94,0.1)" }}>
+                    <IoCheckmarkCircle size={36} className="text-green-500" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold font-spaceGrotesk text-[#1A1A1A] dark:text-[#E0E0E0] mb-2">Message Sent!</h3>
-                    <p className="text-sm text-[#777] dark:text-[#999] font-spaceGrotesk">
-                      Thanks for reaching out. I&apos;ll get back to you within 24 hours.
+                    <h3 className="text-xl font-bold text-[#1A1A1A] dark:text-[#E8E8E8] font-spaceGrotesk">Message Sent!</h3>
+                    <p className="mt-1.5 text-[13px] text-[#999] dark:text-[#555] font-spaceGrotesk">
+                      I&apos;ll get back to you within 24 hours.
                     </p>
                   </div>
-                  <motion.button
-                    onClick={() => setFormState("idle")}
-                    className="px-8 py-2 rounded-full border border-green-500/30 text-green-500 text-xs font-bold font-spaceGrotesk"
-                    whileHover={{ backgroundColor: 'rgba(34, 197, 94, 0.05)' }}
-                  >
+                  <button onClick={() => setFs("idle")}
+                    className="rounded-full border border-green-500/30 px-6 py-1.5 text-[11px] font-semibold text-green-500 font-spaceGrotesk hover:bg-green-500/5 transition-colors duration-150">
                     Send Another
-                  </motion.button>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="error"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="h-full min-h-[400px] flex flex-col items-center justify-center text-center space-y-6"
-                >
-                  <div className="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center">
-                    <IoClose size={48} className="text-red-500" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold font-spaceGrotesk text-[#1A1A1A] dark:text-[#E0E0E0] mb-2">Sending Failed</h3>
-                    <p className="text-sm text-[#777] dark:text-[#999] font-spaceGrotesk">
-                      Something went wrong. Please try again later.
-                    </p>
-                  </div>
-                  <motion.button
-                    onClick={() => setFormState("idle")}
-                    className="px-8 py-2 rounded-full border border-red-500/30 text-red-500 text-xs font-bold font-spaceGrotesk"
-                    whileHover={{ backgroundColor: 'rgba(239, 68, 68, 0.05)' }}
-                  >
-                    Try Again
-                  </motion.button>
+                  </button>
                 </motion.div>
               )}
+
+              {/* ── ERROR ── */}
+              {fs === "error" && (
+                <motion.div key="err"
+                  initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
+                  className="flex flex-1 flex-col items-center justify-center gap-4 text-center min-h-[380px]"
+                >
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full"
+                    style={{ background: "rgba(239,68,68,0.1)" }}>
+                    <IoClose size={36} className="text-red-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-[#1A1A1A] dark:text-[#E8E8E8] font-spaceGrotesk">Sending Failed</h3>
+                    <p className="mt-1.5 text-[13px] text-[#999] dark:text-[#555] font-spaceGrotesk">
+                      Something went wrong. Please try again.
+                    </p>
+                  </div>
+                  <button onClick={() => setFs("idle")}
+                    className="rounded-full border border-red-500/30 px-6 py-1.5 text-[11px] font-semibold text-red-500 font-spaceGrotesk hover:bg-red-500/5 transition-colors duration-150">
+                    Try Again
+                  </button>
+                </motion.div>
+              )}
+
             </AnimatePresence>
           </motion.div>
-
         </div>
-      </div >
-    </section >
+      </div>
+    </section>
   );
-};
-
-export default Contact;
+}

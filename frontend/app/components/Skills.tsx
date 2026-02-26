@@ -120,8 +120,8 @@ const vp = { once: false, amount: 0.3 };
 
 /* ─── Variants ─── */
 const fadeUp = {
-  hidden: { opacity: 0, y: 24, transition: { duration: 0.4, ease: "easeIn" } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 24, transition: { duration: 0.4, ease: "easeIn" as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
 };
 
 const gridContainer = {
@@ -133,7 +133,7 @@ const gridContainer = {
   exit: {
     opacity: 0,
     y: 8,
-    transition: { duration: 0.2, ease: "easeIn" },
+    transition: { duration: 0.2, ease: "easeIn" as const },
   },
 };
 
@@ -144,7 +144,7 @@ const skillCard = {
     scale: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
   exit: {
     opacity: 0,
@@ -191,7 +191,6 @@ const Skills = () => {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileNotInView="hidden"
           viewport={vp}
           className="mb-16 text-center lg:text-left"
         >
@@ -219,7 +218,6 @@ const Skills = () => {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileNotInView="hidden"
           viewport={vp}
           className="flex flex-wrap gap-3 mb-12 justify-center lg:justify-start"
           role="tablist"
@@ -234,6 +232,7 @@ const Skills = () => {
               aria-selected={active === i}
               aria-controls={`tabpanel-${i}`}
               tabIndex={active === i ? 0 : -1}
+              suppressHydrationWarning
               onKeyDown={(e) => {
                 if (e.key === "ArrowRight") setActive((active + 1) % categories.length);
                 if (e.key === "ArrowLeft") setActive((active - 1 + categories.length) % categories.length);
@@ -278,7 +277,6 @@ const Skills = () => {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileNotInView="hidden"
           viewport={vp}
           role="tabpanel"
           id={`tabpanel-${active}`}
@@ -291,7 +289,6 @@ const Skills = () => {
               initial="hidden"
               animate="visible"
               whileInView="visible"
-              whileNotInView="hidden"
               viewport={vp}
               exit="exit"
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
@@ -376,7 +373,6 @@ const Skills = () => {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileNotInView="hidden"
           viewport={vp}
           className="mt-12 text-center lg:text-left"
         >

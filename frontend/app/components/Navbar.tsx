@@ -149,6 +149,7 @@ const Navbar = () => {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
+                suppressHydrationWarning
                 className={cn(
                   "relative z-50 inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 flex-shrink-0",
                   "text-[#2E2E2E] dark:text-[#E0E0E0]",

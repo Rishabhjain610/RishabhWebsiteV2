@@ -45,7 +45,7 @@ const experiences: Experience[] = [
   {
     icon: IoCodeSlash,
     role: "Senior Tech Team Member",
-    type: "Part-time",
+    type: "Volunteer",
     company: "GDG on Campus TSEC",
     location: "Mumbai, IN · Hybrid",
     period: "Apr 2025 – Present",
@@ -159,7 +159,6 @@ const Work = () => {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileNotInView="hidden"
           viewport={vp}
           className="mb-10 sm:mb-14 text-center lg:text-left"
         >
@@ -205,7 +204,7 @@ const Work = () => {
 
           <div className="space-y-5 sm:space-y-6">
             {experiences.map((exp, i) => {
-              const Icon = exp.icon;
+              const Icon = exp.icon as any;
               const badge = typeBadge[exp.type] || typeBadge["Full-time"];
 
               return (
@@ -214,7 +213,6 @@ const Work = () => {
                   variants={cardSlide}
                   initial="hidden"
                   whileInView="visible"
-                  whileNotInView="hidden"
                   viewport={vp}
                   transition={{ delay: i * 0.08 }}
                   className="relative flex gap-4 sm:gap-5 group"

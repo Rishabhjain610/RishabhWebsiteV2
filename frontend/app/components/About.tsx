@@ -45,8 +45,8 @@ const vp = { once: false, amount: 0.3 };
 
 /* ─── Variants ─── */
 const fadeUp = {
-  hidden: { opacity: 0, y: 24, transition: { duration: 0.4, ease: "easeIn" } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 24, transition: { duration: 0.4, ease: "easeIn" as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
 };
 
 const staggerContainer = {
@@ -58,13 +58,13 @@ const staggerContainer = {
 };
 
 const statItem = {
-  hidden: { opacity: 0, y: 16, transition: { duration: 0.3, ease: "easeIn" } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 16, transition: { duration: 0.3, ease: "easeIn" as const } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" as const } },
 };
 
 const slideInRight = {
-  hidden: { opacity: 0, x: 22, transition: { duration: 0.3, ease: "easeIn" } },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  hidden: { opacity: 0, x: 22, transition: { duration: 0.3, ease: "easeIn" as const } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
 /* ═══════════════════════════════════════════════ */
@@ -84,7 +84,6 @@ const About = () => {
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          whileNotInView="hidden"
           viewport={vp}
           className="mb-14 text-center lg:text-left"
         >
@@ -122,7 +121,6 @@ const About = () => {
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              whileNotInView="hidden"
               viewport={vp}
               className="space-y-4"
             >
@@ -151,7 +149,6 @@ const About = () => {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              whileNotInView="hidden"
               viewport={vp}
               className="grid grid-cols-3 gap-4"
             >
@@ -187,7 +184,6 @@ const About = () => {
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              whileNotInView="hidden"
               viewport={vp}
               className="flex flex-wrap gap-4"
             >
@@ -195,6 +191,7 @@ const About = () => {
                 href="https://drive.google.com/file/d/1DV-irLeae0jWaRLNNyeMvwzPm8aqvXoB/view"
                 target="_blank"
                 rel="noopener noreferrer"
+                suppressHydrationWarning
                 className="inline-flex items-center justify-center gap-2 px-6 py-2.5
                            rounded-xl font-bold text-sm text-white font-spaceGrotesk
                            transition-all duration-300"
@@ -215,6 +212,7 @@ const About = () => {
               </a>
               <a
                 href="#contact"
+                suppressHydrationWarning
                 className="inline-flex items-center justify-center gap-2 px-6 py-2.5
                            rounded-xl font-bold text-sm font-spaceGrotesk
                            border-2 border-[#4A90E2] text-[#4A90E2]
@@ -239,7 +237,6 @@ const About = () => {
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              whileNotInView="hidden"
               viewport={vp}
               className="text-xs font-bold tracking-[0.25em] uppercase mb-8 font-spaceGrotesk"
               style={{ color: "#4A90E2" }}
@@ -264,7 +261,6 @@ const About = () => {
                     variants={slideInRight}
                     initial="hidden"
                     whileInView="visible"
-                    whileNotInView="hidden"
                     viewport={vp}
                     transition={{ delay: i * 0.12 }}
                     className="relative flex gap-5 group"
