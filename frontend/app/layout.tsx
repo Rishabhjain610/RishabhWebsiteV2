@@ -4,10 +4,12 @@ import { ThemeProvider } from "next-themes";
 import Links from "./components/Links";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 import { Analytics } from "@vercel/analytics/next";
 import AnalyticsProvider from "./components/AnalyticsProvider";
-const BASE_URL="https://rishabhjain.dpdns.org";
-const GA_ID=process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS?? "G-RC2P5J3SJ5";
+const BASE_URL = "https://rishabhjain.dpdns.org";
+const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? "G-RC2P5J3SJ5";
 export const metadata: Metadata = {
   title: "Rishabh Jain - Full Stack Developer",
   description:
@@ -164,8 +166,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={spaceGrotesk.variable}>
       <head>
-        
-        
         {/* … */}
 
         {/* rel="me" links for Indie‑Web / Mastodon verification */}
@@ -178,6 +178,8 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Links />
+          <GoogleAnalytics gaId={GA_ID} />
+          <AnalyticsProvider gaId={GA_ID} />
           <Navbar />
           {children}
           <Footer />
