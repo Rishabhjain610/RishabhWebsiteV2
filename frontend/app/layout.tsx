@@ -110,6 +110,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://rishabhjain.dpdns.org/",
   },
+  verification: {
+    google: "TtCVRJScD-UOsCl5zgJf3NL2maM07UtsS2-WAKXzDao",
+  },
   icons: {
     icon: [
       {
@@ -159,7 +162,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={spaceGrotesk.variable}>
       <head>
         
-        <link rel="manifest" href="/manifest.json" />
+        
         {/* … */}
 
         {/* rel="me" links for Indie‑Web / Mastodon verification */}
