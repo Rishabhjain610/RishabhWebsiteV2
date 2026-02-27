@@ -5,6 +5,9 @@ import Links from "./components/Links";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import AnalyticsProvider from "./components/AnalyticsProvider";
+const BASE_URL="https://rishabhjain.dpdns.org";
+const GA_ID=process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS?? "G-BJQ7X7GGWZ";
 export const metadata: Metadata = {
   title: "Rishabh Jain - Full Stack Developer",
   description:
@@ -76,11 +79,11 @@ export const metadata: Metadata = {
     title: "Rishabh Jain - Full Stack Developer",
     description:
       "Portfolio of Rishabh Jain, a full‑stack developer based in Mumbai",
-    url: "https://rishabhjain.dpdns.org/",
+    url: BASE_URL,
     siteName: "Rishabh Jain Portfolio",
     images: [
       {
-        url: "https://rishabhjain.dpdns.org/LogoDark.png",
+        url: `${BASE_URL}/LogoDark.png`,
         width: 1200,
         height: 630,
         alt: "Rishabh Jain Portfolio",
@@ -95,7 +98,7 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Rishabh Jain, a full‑stack developer based in Mumbai",
     creator: "@rishabhjain",
-    images: "https://rishabhjain.dpdns.org/LogoDark.png",
+    images: `${BASE_URL}/LogoDark.png`,
   },
 
   appleWebApp: {
@@ -106,9 +109,9 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
-  manifest: "/site.webmanifest",
+  manifest: `${BASE_URL}/site.webmanifest`,
   alternates: {
-    canonical: "https://rishabhjain.dpdns.org/",
+    canonical: BASE_URL,
   },
   verification: {
     google: "TtCVRJScD-UOsCl5zgJf3NL2maM07UtsS2-WAKXzDao",
