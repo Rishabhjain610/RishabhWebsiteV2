@@ -523,7 +523,7 @@ const CardCLI = ({ project, onDemo }: CardCLIProps) => {
         </span>
       </div>
 
-      {/* history */}
+      
       {history.length > 0 && (
         <div
           ref={scrollRef}
@@ -542,7 +542,6 @@ const CardCLI = ({ project, onDemo }: CardCLIProps) => {
         </div>
       )}
 
-      {/* input */}
       <div
         className="flex items-center gap-2 px-3 py-2 cursor-text"
         onClick={() => inputRef.current?.focus()}
@@ -577,9 +576,6 @@ const CardCLI = ({ project, onDemo }: CardCLIProps) => {
   );
 };
 
-/* ════════════════════════════
-   Main
-════════════════════════════ */
 const Project = () => {
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [mounted, setMounted] = React.useState(false);
@@ -612,7 +608,7 @@ const Project = () => {
                  bg-[#F4F4F4] dark:bg-[#121212]
                  transition-colors duration-300 relative overflow-hidden"
     >
-      {/* Fonts */}
+     
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap');
         .font-spaceGrotesk { font-family: 'Space Grotesk', system-ui, sans-serif !important; }
@@ -624,7 +620,7 @@ const Project = () => {
       `}</style>
 
       <div className="max-w-6xl mx-auto px-auto relative z-10">
-        {/* ── Section header ── */}
+        
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -663,7 +659,7 @@ const Project = () => {
           </div>
         </motion.div>
 
-        {/* ── Grid ── */}
+       
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((p, i) => (
             <motion.article
@@ -692,7 +688,7 @@ const Project = () => {
                 (e.currentTarget as HTMLElement).style.boxShadow = "none";
               }}
             >
-              {/* window chrome */}
+              
               <div
                 className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08]"
                 style={{ background: dark ? "#161b22" : "#F5F5F5" }}
@@ -708,9 +704,9 @@ const Project = () => {
                 </span>
               </div>
 
-              {/* card body */}
+              
               <div className="flex flex-col flex-1 gap-4 p-6">
-                {/* title */}
+                
                 <div className="flex items-baseline gap-2">
                   <span
                     className="dm-mono select-none font-spaceGrotesk"
@@ -727,7 +723,7 @@ const Project = () => {
                   </h3>
                 </div>
 
-                {/* description */}
+               
                 <div>
                   <p
                     className="dm-mono uppercase tracking-[0.15em] mb-2"
@@ -743,7 +739,7 @@ const Project = () => {
                   </p>
                 </div>
 
-                {/* stack tags */}
+               
                 <div>
                   <p
                     className="dm-mono uppercase tracking-[0.15em] mb-2.5"
@@ -761,10 +757,10 @@ const Project = () => {
                   </div>
                 </div>
 
-                {/* spacer */}
+                
                 <div className="flex-1" />
 
-                {/* action buttons */}
+                
                 <div className="flex flex-wrap items-center gap-2 pt-4 border-t" style={{ borderColor: dark ? "rgba(74,144,226,0.1)" : "rgba(74,144,226,0.15)" }}>
                   <button
                     onClick={() => setActiveVideo(p.title)}
@@ -834,7 +830,7 @@ const Project = () => {
           ))}
         </div>
 
-        {/* ── Footer ── */}
+        
         <motion.p
           initial="hidden"
           whileInView="visible"
@@ -859,9 +855,7 @@ const Project = () => {
         </motion.p>
       </div>
 
-      {/* ════════════════════════════════
-          VIDEO MODAL
-      ════════════════════════════════ */}
+      
       <AnimatePresence>
         {activeVideo && active && (
           <motion.div
@@ -890,7 +884,7 @@ const Project = () => {
                 fontFamily: "'DM Sans', system-ui, sans-serif",
               }}
             >
-              {/* modal title bar */}
+             
               <div
                 className="flex items-center justify-between px-4 py-3 border-b border-white/[0.07] flex-shrink-0"
                 style={{ background: "#222" }}
@@ -933,12 +927,12 @@ const Project = () => {
                 </button>
               </div>
 
-              {/* video + details */}
+              
               <div
                 className="flex flex-col lg:flex-row flex-1 overflow-hidden"
                 style={{ minHeight: 0 }}
               >
-                {/* video pane */}
+                
                 <div
                   className="flex items-center justify-center border-b lg:border-b-0 lg:border-r border-white/[0.07]"
                   style={{ flex: "1 1 65%", minHeight: "clamp(250px, 40vh, 450px)", background: "#000" }}
@@ -953,7 +947,6 @@ const Project = () => {
                   />
                 </div>
 
-                {/* details pane */}
                 <div className="flex-1 lg:flex-[0_0_35%] overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-5">
                   <div>
                     <h3
