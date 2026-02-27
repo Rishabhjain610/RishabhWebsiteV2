@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { Analytics } from "@vercel/analytics/next";
-import AnalyticsProvider from "./components/AnalyticsProvider";
+
 const BASE_URL = "https://rishabhjain.dpdns.org";
 const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? "G-RC2P5J3SJ5";
 export const metadata: Metadata = {
@@ -179,7 +179,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Links />
           <GoogleAnalytics gaId={GA_ID} />
-          <AnalyticsProvider gaId={GA_ID} />
+          
           <Navbar />
           {children}
           <Footer />
