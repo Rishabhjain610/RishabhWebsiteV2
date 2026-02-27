@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-const DEFAULT_GA_ID = "G-BJQ7X7GGWZ";
+const DEFAULT_GA_ID = "G-RC2P5J3SJ5";
 
 export default function AnalyticsProvider({ gaId }: { gaId?: string }) {
   const pathname = usePathname();

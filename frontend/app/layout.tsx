@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import AnalyticsProvider from "./components/AnalyticsProvider";
 const BASE_URL="https://rishabhjain.dpdns.org";
-const GA_ID=process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS?? "G-BJQ7X7GGWZ";
+const GA_ID=process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS?? "G-RC2P5J3SJ5";
 export const metadata: Metadata = {
   title: "Rishabh Jain - Full Stack Developer",
   description:
