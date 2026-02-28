@@ -75,7 +75,6 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    nocache: true,
   },
   openGraph: {
     title: "Rishabh Jain - Full Stack Developer",
@@ -150,6 +149,38 @@ export const metadata: Metadata = {
     ],
   },
 };
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Rishabh Jain",
+  url: BASE_URL,
+  jobTitle: "Full Stack Developer",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Mumbai",
+    addressCountry: "IN",
+  },
+  sameAs: [
+    "https://github.com/Rishabhjain610",
+    "https://www.linkedin.com/in/rishabhjain610/",
+    "https://twitter.com/rishabhjain",
+    "https://instagram.com/rishabh_jain610",
+  ],
+  description: "Full-stack developer specializing in MERN stack, Next.js, and scalable web applications.",
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Rishabh Jain Portfolio",
+  url: BASE_URL,
+  author: {
+    "@type": "Person",
+    name: "Rishabh Jain",
+  },
+  description: "Portfolio of Rishabh Jain, a full‑stack developer based in Mumbai",
+};
 import { Space_Grotesk } from "next/font/google";
 
 const spaceGrotesk = Space_Grotesk({
@@ -174,12 +205,21 @@ export default function RootLayout({
         <link rel="me" href="https://twitter.com/rishabhjain" />
         <link rel="me" href="https://instagram.com/rishabh_jain610" />
         <link rel="me" href="mailto:rishabhjainwork1@gmail.com" />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
       </head>
       <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Links />
           <GoogleAnalytics gaId={GA_ID} />
-          
+
           <Navbar />
           {children}
           <Footer />
