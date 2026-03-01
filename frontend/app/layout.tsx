@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     siteName: "Rishabh Jain Portfolio",
     images: [
       {
-        url: `${BASE_URL}/LogoDark.png`,
+        url: `${BASE_URL}/LogoLight.png`,
         width: 1200,
         height: 630,
         alt: "Rishabh Jain Portfolio",
