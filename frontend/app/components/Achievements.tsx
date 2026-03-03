@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -47,6 +48,7 @@ const podium: Achievement[] = [
     date: "2026",
     images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135116/LOFI_EDITION1st_xvdogh.jpg"],
   },
+  
   {
     placement: "🥈 2nd Place",
     hackathon: "DevSprint NEHU Hackathon",
@@ -112,6 +114,7 @@ const finalist: Achievement[] = [
     date: "2025",
     images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135115/HackVerseTOP15_pgjdgt.jpg"],
   },
+  
 ];
 
 const vp = { once: false, amount: 0.3 };
@@ -194,8 +197,10 @@ const AchievementCard = ({
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-sm font-bold font-spaceGrotesk text-[#c9d1d9] dark:text-[#c9d1d9] truncate"
-              style={{ color: dark ? "#c9d1d9" : "#1A1A1A" }}>
+            <h3
+              className="text-sm font-bold font-spaceGrotesk truncate"
+              style={{ color: dark ? "#c9d1d9" : "#1A1A1A" }}
+            >
               {a.hackathon}
             </h3>
             <span
@@ -205,8 +210,10 @@ const AchievementCard = ({
               {a.placement}
             </span>
           </div>
-          <p className="text-xs font-spaceGrotesk text-[#8b949e]"
-            style={{ color: dark ? "#8b949e" : "#666" }}>
+          <p
+            className="text-xs font-spaceGrotesk"
+            style={{ color: dark ? "#8b949e" : "#666" }}
+          >
             {a.organizer} · {a.date}
           </p>
         </div>
@@ -280,9 +287,9 @@ const Achievements = () => {
 
   const stats = [
     { icon: IoFlame, label: "Hackathons", value: "30+" },
-    { icon: IoTrophy, label: "Wins", value: "2" },
-    { icon: IoMedal, label: "Podium", value: "4" },
-    { icon: IoMedal, label: "Finalist", value: String(finalist.length) },
+    { icon: IoTrophy, label: "Wins", value: "6" },
+   
+    { icon: IoMedal, label: "Finalist", value: "12+" },
   ];
 
   return (
@@ -369,12 +376,16 @@ const Achievements = () => {
               >
                 <Icon size={16} style={{ color: ACCENT }} />
               </div>
-              <p className="text-xl font-bold text-[#E0E0E0] font-spaceGrotesk"
-                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}>
+              <p
+                className="text-xl font-bold font-spaceGrotesk"
+                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}
+              >
                 {value}
               </p>
-              <p className="text-xs font-spaceGrotesk text-[#8b949e] uppercase tracking-widest mt-1"
-                style={{ color: dark ? "#8b949e" : "#666" }}>
+              <p
+                className="text-xs font-spaceGrotesk uppercase tracking-widest mt-1"
+                style={{ color: dark ? "#8b949e" : "#666" }}
+              >
                 {label}
               </p>
             </motion.div>
@@ -393,15 +404,17 @@ const Achievements = () => {
               className="flex items-center gap-2 mb-4"
             >
               <IoTrophy size={16} style={{ color: "#FFD700" }} />
-              <h3 className="text-lg font-bold font-spaceGrotesk text-[#E0E0E0]"
-                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}>
+              <h3
+                className="text-lg font-bold font-spaceGrotesk"
+                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}
+              >
                 Podium Finish
               </h3>
               <span
                 className="text-xs font-bold font-spaceGrotesk px-2 py-0.5 rounded-md"
                 style={{ backgroundColor: accentRgba(0.1), color: ACCENT }}
               >
-                Top 3
+                6 wins
               </span>
             </motion.div>
             <motion.div
@@ -434,15 +447,17 @@ const Achievements = () => {
               className="flex items-center gap-2 mb-4"
             >
               <IoMedal size={16} style={{ color: ACCENT }} />
-              <h3 className="text-lg font-bold font-spaceGrotesk text-[#E0E0E0]"
-                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}>
+              <h3
+                className="text-lg font-bold font-spaceGrotesk"
+                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}
+              >
                 Finalist
               </h3>
               <span
                 className="text-xs font-bold font-spaceGrotesk px-2 py-0.5 rounded-md"
                 style={{ backgroundColor: accentRgba(0.1), color: ACCENT }}
               >
-                {finalist.length} events
+                {finalist.length}+ events
               </span>
             </motion.div>
             <motion.div
@@ -477,7 +492,7 @@ const Achievements = () => {
               className="fixed inset-0 z-[999] flex items-center justify-center bg-black/95 backdrop-blur-xl cursor-zoom-out p-4 sm:p-8"
               onClick={() => setLightbox(null)}
             >
-              {/* Definitive Close Button - Positioned to stay clear of top-center floating navbars */}
+              {/* Close Button */}
               <button
                 className="fixed top-28 right-6 p-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-all duration-200 z-[1000] border border-white/20 shadow-2xl backdrop-blur-2xl group active:scale-95"
                 onClick={(e) => {
