@@ -1,20 +1,49 @@
-import type { Metadata } from "next";
+
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Links from "./components/Links";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
-
 import { Analytics } from "@vercel/analytics/next";
+import { Space_Grotesk } from "next/font/google";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space",
+  display: "swap",
+});
 
 const BASE_URL = "https://rishabhjain.dpdns.org";
 const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? "G-RC2P5J3SJ5";
+
+// SEO Fix: viewport must be a separate export in Next.js 14+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
+
 export const metadata: Metadata = {
-  title: "Rishabh Jain - Full Stack Developer",
+  // SEO Fix: metadataBase is required to resolve relative URLs in OG/Twitter images
+  metadataBase: new URL(BASE_URL),
+
+  title: {
+    default: "Rishabh Jain - Full Stack Developer",
+    template: "%s | Rishabh Jain",
+  },
   description:
     "Portfolio of Rishabh Jain, a full‑stack developer based in Mumbai",
-  keywords: [
+  keywords: [ 
+    "Rishabh Jain TSEC",
+    "Rishabh Jain Mumbai",
+    "Rishabh Jain India",
+    "Rishabh Jain GDG TSEC",
     "Full Stack Developer",
     "MERN Stack Developer",
     "Node.js Developer",
@@ -69,12 +98,19 @@ export const metadata: Metadata = {
     "Technical Consultant Web Developer",
     "High Performance Web Developer",
   ],
-  authors: [{ name: "Rishabh Jain", url: "https://rishabhjain.dpdns.org/" }],
+  authors: [{ name: "Rishabh Jain", url: BASE_URL }],
   creator: "Rishabh Jain",
   publisher: "Rishabh Jain",
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   openGraph: {
     title: "Rishabh Jain - Full Stack Developer",
@@ -84,10 +120,11 @@ export const metadata: Metadata = {
     siteName: "Rishabh Jain Portfolio",
     images: [
       {
-        url: `${BASE_URL}/LogoLight.png`,
+        // SEO Fix: use one neutral OG image (not theme-specific)
+        url: "/LogoLight.png",
         width: 1200,
         height: 630,
-        alt: "Rishabh Jain Portfolio",
+        alt: "Rishabh Jain - Full Stack Developer Portfolio",
       },
     ],
     locale: "en_US",
@@ -99,9 +136,9 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Rishabh Jain, a full‑stack developer based in Mumbai",
     creator: "@rishabhjain",
-    images: `${BASE_URL}/LogoDark.png`,
+    // SEO Fix: use same neutral image as OG
+    images: ["/LogoLight.png"],
   },
-
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -110,22 +147,35 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
-  manifest: `${BASE_URL}/site.webmanifest`,
+  manifest: "/site.webmanifest",
   alternates: {
     canonical: BASE_URL,
   },
   verification: {
     google: "TtCVRJScD-UOsCl5zgJf3NL2maM07UtsS2-WAKXzDao",
   },
+  // SEO Fix: theme-aware favicons using media queries
   icons: {
     icon: [
       {
-        url: "/favicon.ico",
+        url: "/icon1.png",
+        media: "(prefers-color-scheme: light)",
         sizes: "any",
       },
       {
-        url: "/favicon.svg",
+        url: "/favicon.ico",
+        media: "(prefers-color-scheme: dark)",
+        sizes: "any",
+      },
+      {
+        url: "/favicon-light.svg",
         type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon-dark.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
       },
       {
         url: "/icon1.png",
@@ -136,14 +186,8 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
     other: [
       {
-        rel: "icon",
-        url: "/icon1.png",
-        sizes: "96x96",
-        type: "image/png",
-      },
-      {
         rel: "mask-icon",
-        url: "/favicon.svg",
+        url: "/favicon-dark.svg",
         color: "#4A90E2",
       },
     ],
@@ -167,7 +211,8 @@ const jsonLd = {
     "https://twitter.com/rishabhjain",
     "https://instagram.com/rishabh_jain610",
   ],
-  description: "Full-stack developer specializing in MERN stack, Next.js, and scalable web applications.",
+  description:
+    "Full-stack developer specializing in MERN stack, Next.js, and scalable web applications.",
 };
 
 const websiteJsonLd = {
@@ -179,16 +224,10 @@ const websiteJsonLd = {
     "@type": "Person",
     name: "Rishabh Jain",
   },
-  description: "Portfolio of Rishabh Jain, a full‑stack developer based in Mumbai",
+  description:
+    "Portfolio of Rishabh Jain, a full‑stack developer based in Mumbai",
 };
-import { Space_Grotesk } from "next/font/google";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-space",
-  display: "swap",
-});
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -197,8 +236,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={spaceGrotesk.variable}>
       <head>
-        {/* … */}
-
         {/* rel="me" links for Indie‑Web / Mastodon verification */}
         <link rel="me" href="https://github.com/Rishabhjain610" />
         <link rel="me" href="https://www.linkedin.com/in/rishabhjain610/" />
@@ -216,10 +253,14 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        {/*
+          Fix: defaultTheme="dark" → user sees dark mode first
+          Fix: enableSystem={false} → don't override with OS preference
+          User can still toggle manually via your theme toggle button
+        */}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           <Links />
           <GoogleAnalytics gaId={GA_ID} />
-
           <Navbar />
           {children}
           <Footer />

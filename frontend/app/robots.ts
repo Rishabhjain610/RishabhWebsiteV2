@@ -8,10 +8,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin", "/.next", "/private"],
+        // SEO Fix: removed "/.next" — crawlers can't reach it anyway;
+        // keeping only meaningful disallows
+        disallow: ["/admin", "/private", "/api/"],
       },
-      { userAgent: "Googlebot", allow: "/", crawlDelay: 0 },
-      { userAgent: "Bingbot", allow: "/", crawlDelay: 1 },
+      { userAgent: "Googlebot", allow: "/" },
+      { userAgent: "Bingbot", allow: "/" },
       { userAgent: "YandexBot", allow: "/" },
       { userAgent: "DuckDuckBot", allow: "/" },
       {
@@ -22,11 +24,14 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "facebookexternalhit", allow: "/" },
       { userAgent: "LinkedInBot", allow: "/" },
 
-      // block known bad bots
-      { userAgent: "AhrefsBot", disallow: ["/"] },
-      { userAgent: "SemrushBot", disallow: ["/"] },
-      { userAgent: "DotBot", disallow: ["/"] },
+      // Block known bad/scraper bots
+      { userAgent: "AhrefsBot", disallow: "/" },
+      { userAgent: "SemrushBot", disallow: "/" },
+      { userAgent: "DotBot", disallow: "/" },
+      { userAgent: "MJ12bot", disallow: "/" },
+      { userAgent: "BLEXBot", disallow: "/" },
     ],
-    sitemap: [`${SITE_URL}/sitemap.xml`],
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }
