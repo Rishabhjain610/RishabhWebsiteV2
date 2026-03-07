@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   IoBriefcase,
   IoCodeSlash,
@@ -13,9 +14,28 @@ import {
 const ACCENT = "#4A90E2";
 const accentRgba = (a: number) => `rgba(74,144,226,${a})`;
 
+/* ─── Custom Icon Component ─── */
+interface CustomIconProps {
+  src: string;
+  alt: string;
+  size?: number;
+}
+
+const CustomIcon: React.FC<CustomIconProps> = ({ src, alt, size = 17 }) => (
+  <Image
+    src={src}
+    alt={alt}
+    width={size}
+    height={size}
+    className="object-contain"
+  />
+);
+
 /* ─── Experience data ─── */
 interface Experience {
   icon: React.ElementType;
+  iconType: "react-icon" | "image";
+  iconSrc?: string;
   role: string;
   type: "Full-time" | "Internship" | "Part-time" | "Remote" | "Volunteer";
   company: string;
@@ -29,9 +49,11 @@ interface Experience {
 const experiences: Experience[] = [
   {
     icon: IoServer,
-    role: "Full Stack Developer",
+    iconType: "image",
+    iconSrc: "/mumbaimetro1.png",
+    role: "Software Development Engineer Intern",
     type: "Internship",
-    company: "Maha Mumbai Metro Operation Corporation Limited",
+    company: "Maha Mumbai Metro Operations Corporation Limited",
     location: "Mumbai, IN",
     period: "Jan 2026 – Present",
     current: true,
@@ -44,6 +66,8 @@ const experiences: Experience[] = [
   },
   {
     icon: IoCodeSlash,
+    iconType: "image",
+    iconSrc: "/gdg.png",
     role: "Senior Tech Team Member",
     type: "Volunteer",
     company: "GDG on Campus TSEC",
@@ -60,6 +84,8 @@ const experiences: Experience[] = [
   },
   {
     icon: IoServer,
+    iconType: "image",
+    iconSrc: "/ignito.png",
     role: "Full Stack Developer",
     type: "Internship",
     company: "Ignito Corporation",
@@ -74,6 +100,8 @@ const experiences: Experience[] = [
   },
   {
     icon: IoBriefcase,
+    iconType: "image",
+    iconSrc: "/Risingeducation.jpg",
     role: "Counselling Consultant",
     type: "Internship",
     company: "Rising Education",
@@ -89,6 +117,8 @@ const experiences: Experience[] = [
   },
   {
     icon: IoGlobe,
+    iconType: "image",
+    iconSrc: "/Avriti.png",
     role: "Frontend Developer",
     type: "Internship",
     company: "Avriti International Pvt Ltd",
@@ -104,6 +134,8 @@ const experiences: Experience[] = [
   },
   {
     icon: IoMegaphone,
+    iconType: "image",
+    iconSrc: "/csi.jpg",
     role: "Marketing JCOM – Computer Society of India",
     type: "Volunteer",
     company: "CSI TSEC",
@@ -121,25 +153,62 @@ const experiences: Experience[] = [
 ];
 
 /* ─── Type badge colors ─── */
-const typeBadge: Record<string, { bg: string; text: string; bgLight: string }> = {
-  "Full-time": { bg: accentRgba(0.12), text: ACCENT, bgLight: accentRgba(0.12) },
-  Internship: { bg: "rgba(63,185,80,0.12)", text: "#3fb950", bgLight: "rgba(34,140,54,0.12)" },
-  "Part-time": { bg: "rgba(136,111,191,0.12)", text: "#886FBF", bgLight: "rgba(106,81,161,0.12)" },
-  Remote: { bg: "rgba(0,166,214,0.12)", text: "#00A6D6", bgLight: "rgba(0,130,170,0.12)" },
-  Volunteer: { bg: "rgba(245,158,11,0.12)", text: "#F59E0B", bgLight: "rgba(200,120,0,0.14)" },
-};
+const typeBadge: Record<string, { bg: string; text: string; bgLight: string }> =
+  {
+    "Full-time": {
+      bg: accentRgba(0.12),
+      text: ACCENT,
+      bgLight: accentRgba(0.12),
+    },
+    Internship: {
+      bg: "rgba(63,185,80,0.12)",
+      text: "#3fb950",
+      bgLight: "rgba(34,140,54,0.12)",
+    },
+    "Part-time": {
+      bg: "rgba(136,111,191,0.12)",
+      text: "#886FBF",
+      bgLight: "rgba(106,81,161,0.12)",
+    },
+    Remote: {
+      bg: "rgba(0,166,214,0.12)",
+      text: "#00A6D6",
+      bgLight: "rgba(0,130,170,0.12)",
+    },
+    Volunteer: {
+      bg: "rgba(245,158,11,0.12)",
+      text: "#F59E0B",
+      bgLight: "rgba(200,120,0,0.14)",
+    },
+  };
 
 /* ─── Viewport & Variants — same pattern as About.tsx ─── */
 const vp = { once: false, amount: 0.25 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24, transition: { duration: 0.4, ease: "easeIn" as const } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
+  hidden: {
+    opacity: 0,
+    y: 24,
+    transition: { duration: 0.4, ease: "easeIn" as const },
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: "easeOut" as const },
+  },
 };
 
 const cardSlide = {
-  hidden: { opacity: 0, x: -18, transition: { duration: 0.3, ease: "easeIn" as const } },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+  hidden: {
+    opacity: 0,
+    x: -18,
+    transition: { duration: 0.3, ease: "easeIn" as const },
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
 };
 
 /* ═══════════════════════════════════════════════ */
@@ -153,7 +222,6 @@ const Work = () => {
                  transition-colors duration-300 relative overflow-hidden"
     >
       <div className="max-w-6xl mx-auto relative z-10">
-
         {/* ── Section header — matches About.tsx ── */}
         <motion.div
           variants={fadeUp}
@@ -192,7 +260,6 @@ const Work = () => {
 
         {/* ── Timeline ── */}
         <div className="relative pl-0 sm:pl-6">
-
           {/* Vertical rail — desktop / tablet only */}
           <div
             className="absolute left-[15px] top-2 bottom-2 w-px hidden sm:block"
@@ -219,22 +286,22 @@ const Work = () => {
                 >
                   {/* ── Timeline dot — hidden on mobile ── */}
                   <div className="hidden sm:flex flex-col items-center flex-shrink-0">
-                    <div
-                      className="relative z-10 w-[38px] h-[38px] rounded-full
-                                 flex items-center justify-center
-                                 ring-2 ring-transparent group-hover:ring-[#4A90E2]/25
-                                 transition-all duration-300"
-                      style={{
-                        background: `linear-gradient(135deg, ${ACCENT}, #357abd)`,
-                        boxShadow: exp.current
-                          ? `0 4px 16px ${accentRgba(0.35)}`
-                          : `0 3px 12px ${accentRgba(0.2)}`,
-                      }}
-                    >
-                      <Icon size={17} className="text-white" />
+                    <div className="relative z-10 flex items-center justify-center rounded-lg p-1.5 bg-white dark:bg-[#1a1a1a] border border-[#e0e0e0] dark:border-[#333]">
+                      {exp.iconType === "image" && exp.iconSrc ? (
+                        <Image
+                          src={exp.iconSrc}
+                          alt={exp.company}
+                          width={36}
+                          height={36}
+                          className="object-contain grayscale-0 dark:grayscale-0"
+                          priority={i < 2}
+                        />
+                      ) : (
+                        <Icon size={36} className="text-[#4A90E2]" />
+                      )}
                       {exp.current && (
                         <span
-                          className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full
+                          className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full
                                      border-2 border-[#F4F4F4] dark:border-[#121212]
                                      bg-[#3fb950] animate-pulse"
                         />
@@ -268,14 +335,20 @@ const Work = () => {
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                       <div className="space-y-1 min-w-0">
                         {/* Mobile: show icon inline */}
-                        <div className="flex items-center gap-2">
-                          <div
-                            className="sm:hidden w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                            style={{
-                              background: `linear-gradient(135deg, ${ACCENT}, #357abd)`,
-                            }}
-                          >
-                            <Icon size={14} className="text-white" />
+                        <div className="flex items-center gap-3">
+                          <div className="sm:hidden flex items-center justify-center flex-shrink-0 rounded-lg p-1 bg-white dark:bg-[#1a1a1a] border border-[#e0e0e0] dark:border-[#333]">
+                            {exp.iconType === "image" && exp.iconSrc ? (
+                              <Image
+                                src={exp.iconSrc}
+                                alt={exp.company}
+                                width={24}
+                                height={24}
+                                className="object-contain grayscale-0 dark:grayscale-0"
+                                priority={i < 2}
+                              />
+                            ) : (
+                              <Icon size={24} className="text-[#4A90E2]" />
+                            )}
                           </div>
                           <h3 className="font-bold text-base sm:text-lg font-spaceGrotesk text-[#1A1A1A] dark:text-[#E0E0E0] leading-snug">
                             {exp.role}
@@ -283,7 +356,10 @@ const Work = () => {
                         </div>
                         <p className="text-sm sm:text-[15px] font-spaceGrotesk text-[#3a3a3a] dark:text-[#b0b0b0]">
                           {exp.company}
-                          <span className="text-[#6b6b6b] dark:text-[#777]"> · {exp.location}</span>
+                          <span className="text-[#6b6b6b] dark:text-[#777]">
+                            {" "}
+                            · {exp.location}
+                          </span>
                         </p>
                       </div>
 
@@ -333,16 +409,26 @@ const Work = () => {
                         // Bold **text** patterns
                         const parts = bullet.split(/(\*\*[^*]+\*\*)/);
                         return (
-                          <li key={j} className="flex gap-2 sm:gap-2.5 items-start">
+                          <li
+                            key={j}
+                            className="flex gap-2 sm:gap-2.5 items-start"
+                          >
                             <span
                               className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full mt-[8px] flex-shrink-0"
                               style={{ backgroundColor: accentRgba(0.4) }}
                             />
                             <span className="text-sm sm:text-[15px] font-spaceGrotesk text-[#3a3a3a] dark:text-[#b0b0b0] leading-relaxed">
                               {parts.map((part, k) =>
-                                part.startsWith("**") && part.endsWith("**")
-                                  ? <strong key={k} className="font-bold text-[#1A1A1A] dark:text-[#E0E0E0]">{part.slice(2, -2)}</strong>
-                                  : <span key={k}>{part}</span>
+                                part.startsWith("**") && part.endsWith("**") ? (
+                                  <strong
+                                    key={k}
+                                    className="font-bold text-[#1A1A1A] dark:text-[#E0E0E0]"
+                                  >
+                                    {part.slice(2, -2)}
+                                  </strong>
+                                ) : (
+                                  <span key={k}>{part}</span>
+                                ),
                               )}
                             </span>
                           </li>

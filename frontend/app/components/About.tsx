@@ -36,7 +36,7 @@ const education = [
 /* ─── Stats ─── */
 const stats = [
   { label: "Projects Built", value: "20+", icon: IoRocket },
-  { label: "Hackathon Wins", value: "2×", icon: IoTrophy },
+  { label: "Hackathon Wins", value: "6×", icon: IoTrophy },
   { label: "Hackathon Finalist", value: "12+", icon: IoGlobeOutline },
 ];
 
