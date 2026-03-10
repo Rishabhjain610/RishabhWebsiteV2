@@ -181,11 +181,11 @@ export default function Contact() {
               className="relative flex flex-col flex-1 overflow-hidden rounded-3xl"
               style={{
                 background: "transparent",
-                border: "1px solid rgba(255,255,255,0.06)",
+                border: `1px solid ${dark ? "rgba(255,255,255,0.06)" : "#E0E0E0"}`,
                 minHeight: 520,
               }}
             >
-              
+
               <div
                 className="absolute inset-x-0 top-0 h-px z-20"
                 style={{
@@ -193,7 +193,7 @@ export default function Contact() {
                 }}
               />
 
-              
+
               <div className="relative flex-1 w-full cursor-pointer" style={{ minHeight: 400 }}>
                 <Globe3D
                   markers={GLOBE_MARKERS()}
@@ -211,11 +211,11 @@ export default function Contact() {
                 />
               </div>
 
-              
+
               <div className="relative z-[2] mt-auto p-8">
                 <p
                   className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] font-spaceGrotesk"
-                  style={{ color: "rgba(255,255,255,0.3)" }}
+                  style={{ color: dark ? "rgba(255,255,255,0.3)" : "#888" }}
                 >
                   Connect
                 </p>
@@ -239,18 +239,18 @@ export default function Contact() {
                       suppressHydrationWarning
                       className="flex items-center justify-center p-3 rounded-xl transition-all duration-300"
                       style={{
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.08)",
+                        background: dark ? "rgba(255,255,255,0.05)" : "rgba(74,144,226,0.06)",
+                        border: `1px solid ${dark ? "rgba(255,255,255,0.08)" : "rgba(74,144,226,0.15)"}`,
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = A(0.12);
+                        (e.currentTarget as HTMLElement).style.background = dark ? A(0.12) : A(0.12);
                         (e.currentTarget as HTMLElement).style.borderColor = A(0.3);
                       }}
                       onMouseLeave={(e) => {
                         (e.currentTarget as HTMLElement).style.background =
-                          "rgba(255,255,255,0.05)";
+                          dark ? "rgba(255,255,255,0.05)" : "rgba(74,144,226,0.06)";
                         (e.currentTarget as HTMLElement).style.borderColor =
-                          "rgba(255,255,255,0.08)";
+                          dark ? "rgba(255,255,255,0.08)" : "rgba(74,144,226,0.15)";
                       }}
                     >
                       <s.icon size={18} style={{ color: ACCENT }} />
@@ -261,7 +261,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          
+
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -277,13 +277,13 @@ export default function Contact() {
                 : "0 15px 45px rgba(0,0,0,0.06)",
             }}
           >
-           
+
             <div
               className="absolute -top-24 -right-24 h-[300px] w-[300px] rounded-full blur-[120px] pointer-events-none opacity-[0.05]"
               style={{ background: ACCENT }}
             />
 
-            
+
             <div
               className="absolute inset-x-0 top-0 h-[2px]"
               style={{
@@ -292,7 +292,7 @@ export default function Contact() {
             />
 
             <AnimatePresence mode="wait">
-             
+
               {fs !== "sent" && fs !== "error" && (
                 <motion.form
                   key="form"
@@ -310,7 +310,7 @@ export default function Contact() {
                     value={new Date().toLocaleString()}
                   />
 
-                
+
                   <div className="mb-1">
                     <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#E8E8E8] font-spaceGrotesk">
                       Send a Message
@@ -320,7 +320,7 @@ export default function Contact() {
                     </p>
                   </div>
 
-                 
+
                   <div>
                     <label className={labelClasses}>Full Name</label>
                     <input
@@ -344,7 +344,7 @@ export default function Contact() {
                     />
                   </div>
 
-                 
+
                   <div>
                     <label className={labelClasses}>Subject</label>
                     <input
@@ -356,7 +356,7 @@ export default function Contact() {
                     />
                   </div>
 
-                      
+
                   <div className="flex flex-col flex-1 min-h-[160px]">
                     <label className={labelClasses}>Your Message</label>
                     <textarea
@@ -368,7 +368,7 @@ export default function Contact() {
                     />
                   </div>
 
-                 
+
                   <motion.button
                     type="submit"
                     disabled={fs === "submitting"}
