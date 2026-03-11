@@ -60,6 +60,16 @@ const podium: Achievement[] = [
     ],
   },
   {
+    placement: "🥈 2nd Place",
+    hackathon: "TechSpirint Hackathon",
+    organizer: "GDG – SOE CUSAT",
+    date: "2026",
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1773213374/RISHABH_JAIN_GDG_SOE_CUSAT_1_odcoas.png",
+      
+    ],
+  },
+  {
     placement: "🥉 3rd Place",
     hackathon: "Tech Sprint SRM Delhi — GDG SRMUH",
     organizer: "Google Developer Groups – SRMUH",
