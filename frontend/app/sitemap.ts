@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://rishabhjain.dpdns.org";
+const BASE_URL = "https://rishabh-website-dev.vercel.app/";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

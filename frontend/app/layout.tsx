@@ -16,7 +16,7 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
-const BASE_URL = "https://rishabhjain.dpdns.org";
+const BASE_URL = "https://rishabh-website-dev.vercel.app/";
 const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? "G-RC2P5J3SJ5";
 
 // SEO Fix: viewport must be a separate export in Next.js 14+
@@ -139,6 +139,7 @@ export const metadata: Metadata = {
     // SEO Fix: use same neutral image as OG
     images: ["/LogoLight.png"],
   },
+  
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -151,8 +152,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
   },
+  // verification: {
+  //   google: "TtCVRJScD-UOsCl5zgJf3NL2maM07UtsS2-WAKXzDao",
+  // },
   verification: {
-    google: "TtCVRJScD-UOsCl5zgJf3NL2maM07UtsS2-WAKXzDao",
+    google: "ePQ4UK9TXEBxEOSROIEgx7FOv86l425KO6qU8J6kGE4",
   },
   // SEO Fix: theme-aware favicons using media queries
   icons: {
