@@ -58,10 +58,11 @@ const experiences: Experience[] = [
     period: "Jan 2026 – Present",
     current: true,
     bullets: [
-      "Developed a web application for calculating electric bills across various metro stations on a line using the MERN stack.",
-      "Implemented a role-based login system with **3** distinct roles — bills are scanned, verified, and approved through the workflow.",
-      "Generated PDF reports of electric bills using jsPDF for record-keeping and audit trails.",
-      "Built responsive frontend components with React and server-side APIs using Node.js and Express.",
+      "Engineered an automated utility management system using **Next.js**, **Express**, and **MongoDB** for **20** metro stations, replacing legacy manual auditing.",
+      "Architected a hierarchical Role-Based Access Control (**RBAC**) system for Station Controllers, Admins, and SuperAdmins to manage stations and commercial stalls.",
+      "Integrated a **Flutter-based** mobile module for Station Controllers to perform **QR-based** meter scanning and real-time data synchronization.",
+      "Streamlined the audit workflow by developing **RESTful APIs** and integrating **jsPDF** for automated scan-to-verify-to-approve billing.",
+      "Designed a centralized dashboard in **TypeScript** for SuperAdmins to dynamically scale the network by onboarding new stations and retail stalls.",
     ],
   },
   {
@@ -75,11 +76,11 @@ const experiences: Experience[] = [
     period: "Apr 2025 – Present",
     current: true,
     bullets: [
-      "Built the GDG-TSEC community website and HackSync 2.0 event website using Next.js, Shadcn UI, and Framer Motion, supporting **400+** active users.",
-      "Led organizing MockUp — a **5-hour** frontend hackathon with **150+** participants; brought Made Over Donuts as the snacks sponsor.",
-      "Mentored **50+** students during the hackathon on designing and development best practices.",
-      "Drove **700+** registrations through PR campaigns and secured Devfolio & InterviewBuddy as official sponsors.",
-      "Earned **19** Google Cloud skill badges and mentored **30+** students to complete their GCP learning paths.",
+      "Engineered the **GDG-TSEC** community platform and **HackSync 2.0** website using **Next.js**, **Shadcn UI**, and **Framer Motion**, serving **400+** active users.",
+      "Spearheaded **MockUp**, a 5-hour frontend hackathon for **150+** participants, securing snack sponsorships and managing end-to-end event logistics.",
+      "Mentored **50+** participants on UI/UX best practices, **API integration**, and frontend development during live hackathons.",
+      "Scaled event registrations to **700+** via strategic PR campaigns and secured technical sponsorships from **Devfolio** and **InterviewBuddy**.",
+      "Earned **19 Google Cloud** skill badges and coached **30+** students through GCP learning paths and cloud infrastructure fundamental.",
     ],
   },
   {
@@ -93,9 +94,9 @@ const experiences: Experience[] = [
     period: "Jul 2025 – Aug 2025",
     duration: "1 month",
     bullets: [
-      "Built an inventory & analytics system for a sweetshop using Next.js, Chart.js, and Shadcn — used Supabase for real-time database updates; led a team of **three**.",
-      "Developed a single-page responsive website using Next.js, Motion, and Shadcn.",
-      "Managed client-related queries to ensure smooth communication and support.",
+      "Engineered an automated inventory and **sales analytics** system for a sweetshop using **Next.js**, **Supabase**, and **Chart.js**, leading a team of three.",
+      "Developed a real-time database architecture with **Supabase** for live inventory tracking and responsive UI using **Tailwind CSS**.",
+      "Managed client-facing requirements to translate business needs into technical specifications and seamless support.",
     ],
   },
   {
