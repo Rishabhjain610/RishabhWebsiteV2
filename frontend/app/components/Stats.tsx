@@ -63,6 +63,14 @@ interface GitHubStats {
   loading: boolean;
   lastUpdated?: number;
   topLanguages: { name: string; percentage: number }[];
+  streaks?: {
+    current: number;
+    longest: number;
+    longestPeriod: string;
+    currentPeriod: string;
+    totalContributions: number;
+    grade: string;
+  };
 }
 
 /* ─── Animation variants — matches Achievements / Work ─── */
