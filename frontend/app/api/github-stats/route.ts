@@ -14,7 +14,7 @@ query($username: String!, $from: DateTime!, $to: DateTime!) {
     followers { totalCount }
     following { totalCount }
 
-    repositories(first: 100, ownerAffiliations: OWNER) {
+    repositories(first: 100, ownerAffiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER], isFork: false, orderBy: {field: UPDATED_AT, direction: DESC}) {
       totalCount
       nodes {
         stargazerCount
@@ -23,10 +23,27 @@ query($username: String!, $from: DateTime!, $to: DateTime!) {
         isArchived
         primaryLanguage { name }
         languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+          totalSize
           edges {
             size
             node {
               name
+            }
+          }
+        }
+        defaultBranchRef {
+          target {
+            ... on Commit {
+              history(first: 100) {
+                nodes {
+                  committedDate
+                  author {
+                    user {
+                      login
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -42,22 +59,6 @@ query($username: String!, $from: DateTime!, $to: DateTime!) {
           nodes {
             state
             createdAt
-          }
-        }
-        ref(qualifiedName: "main") {
-          target {
-            ... on Commit {
-              history(first: 100) {
-                nodes {
-                  committedDate
-                  author {
-                    user {
-                      login
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -197,12 +198,12 @@ async function handleRequest(
         languageSizeMap[lang] = (languageSizeMap[lang] || 0) + size;
       });
 
-      // Rough commit analysis from last 100 commits of main
-      const commits = repo.ref?.target?.history?.nodes || [];
+      // Rough commit analysis from last 100 commits of default branch
+      const commits = repo.defaultBranchRef?.target?.history?.nodes || [];
       commits.forEach((commit: any) => {
         if (commit.author?.user?.login === username) {
           const date = new Date(commit.committedDate);
-          const hour = date.getUTCHours();
+          const hour = (date.getUTCHours() + 5) % 24; // UTC+5:30 approximate
           const day = date.getUTCDay();
 
           commitHourMap[hour] = (commitHourMap[hour] || 0) + 1;
@@ -210,8 +211,15 @@ async function handleRequest(
 
           if (mainLang) {
             languageCommitMap[mainLang] =
-              (languageCommitMap[mainLang] || 0) + 1;
+              (languageCommitMap[mainLang] || 0) + 5; // Weight repo-level involvement
           }
+
+          // Also count individual language contributions per commit based on repo distributions
+          repoLangs.forEach((edge: any) => {
+            const lang = edge.node.name;
+            const weight = edge.size / (repo.languages.totalSize || 1);
+            languageCommitMap[lang] = (languageCommitMap[lang] || 0) + weight;
+          });
         }
       });
     });
@@ -264,52 +272,67 @@ async function handleRequest(
     );
 
     // Calculate streaks
-    let currentStreak = 0;
-    let longestStreak = 0;
-    let tempStreak = 0;
-    let streakStart = "";
-    let streakEnd = "";
+    let currentStreakCount = 0;
+    let longestStreakCount = 0;
+    let tempStreakCount = 0;
+    let tempStreakStart = "";
     let longestStart = "";
     let longestEnd = "";
 
-    const today = new Date().toISOString().split("T")[0];
     const sortedDays = [...dailyContributions].sort(
       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     );
 
     sortedDays.forEach((day: any) => {
       if (day.count > 0) {
-        tempStreak++;
-        if (tempStreak === 1) streakStart = day.date;
-        streakEnd = day.date;
-        if (tempStreak > longestStreak) {
-          longestStreak = tempStreak;
-          longestStart = streakStart;
-          longestEnd = streakEnd;
+        tempStreakCount++;
+        if (tempStreakCount === 1) tempStreakStart = day.date;
+        if (tempStreakCount > longestStreakCount) {
+          longestStreakCount = tempStreakCount;
+          longestStart = tempStreakStart;
+          longestEnd = day.date;
         }
       } else {
-        tempStreak = 0;
+        tempStreakCount = 0;
       }
     });
 
     // Current streak logic: check if the streak includes today or yesterday
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+    const yesterday = new Date(today);
+    yesterday.setUTCDate(today.getUTCDate() - 1);
+
+    let activeStreakStart = "";
+    let activeStreakEnd = "";
+
     const lastDayWithCommits = [...sortedDays]
       .reverse()
       .find((d: any) => d.count > 0);
+
     if (lastDayWithCommits) {
       const lastDate = new Date(lastDayWithCommits.date);
-      const diffDays = Math.floor(
-        (new Date().getTime() - lastDate.getTime()) / (1000 * 3600 * 24),
-      );
-      if (diffDays <= 1) {
-        // Find the streak that ends at lastDayWithCommits
+      lastDate.setUTCHours(0, 0, 0, 0);
+
+      if (lastDate >= yesterday) {
         let count = 0;
+        let streakFound = false;
         for (let i = sortedDays.length - 1; i >= 0; i--) {
-          if (new Date(sortedDays[i].date) > lastDate) continue;
-          if (sortedDays[i].count > 0) count++;
-          else break;
+          const dayDate = new Date(sortedDays[i].date);
+          dayDate.setUTCHours(0, 0, 0, 0);
+
+          if (dayDate > lastDate) continue;
+
+          if (sortedDays[i].count > 0) {
+            if (activeStreakEnd === "") activeStreakEnd = sortedDays[i].date;
+            activeStreakStart = sortedDays[i].date;
+            count++;
+            streakFound = true;
+          } else if (streakFound) {
+            break;
+          }
         }
-        currentStreak = count;
+        currentStreakCount = count;
       }
     }
 
@@ -330,25 +353,27 @@ async function handleRequest(
       commitsByHour,
       commitsByDay,
       streaks: {
-        current: currentStreak,
-        longest: longestStreak,
+        current: currentStreakCount,
+        longest: longestStreakCount,
         longestPeriod:
           longestStart && longestEnd
             ? `${new Date(longestStart).toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${new Date(longestEnd).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`
-            : "",
+            : "No streak",
         currentPeriod:
-          currentStreak > 0
-            ? `${new Date(streakStart).toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${new Date(streakEnd).toLocaleDateString("en-US", { month: "short", day: "numeric" })}`
+          currentStreakCount > 0
+            ? `${new Date(activeStreakStart).toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${new Date(activeStreakEnd).toLocaleDateString("en-US", { month: "short", day: "numeric" })}`
             : "No active streak",
         totalContributions,
         grade:
-          totalContributions > 500
-            ? "S"
-            : totalContributions > 300
-              ? "A+"
-              : totalContributions > 100
-                ? "A"
-                : "B",
+          totalContributions > 2000
+            ? "S+"
+            : totalContributions > 1000
+              ? "S"
+              : totalContributions > 500
+                ? "A+"
+                : totalContributions > 200
+                  ? "A"
+                  : "B",
       },
       contributionTypes: [
         {

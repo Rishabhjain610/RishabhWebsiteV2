@@ -233,13 +233,13 @@ const GitHubHeatmap = ({
 }) => {
   if (!contributions || contributions.length === 0) return null;
 
-  // GitHub contribution levels colors (accent-based)
+  // GitHub contribution levels colors (more visible & uniform)
   const getLevel = (count: number) => {
-    if (count === 0) return "bg-[#ebedf0] dark:bg-[#161b22]";
-    if (count <= 3) return "bg-[#9be9a8]/60 dark:bg-[#0e4429]";
-    if (count <= 6) return "bg-[#40c463]/60 dark:bg-[#006d32]";
-    if (count <= 9) return "bg-[#30a14e]/60 dark:bg-[#26a641]";
-    return "bg-[#216e39]/60 dark:bg-[#39d353]";
+    if (count === 0) return "bg-gray-200 dark:bg-white/10";
+    if (count <= 3) return "bg-[#4A90E2]/30 dark:bg-[#4A90E2]/20";
+    if (count <= 6) return "bg-[#4A90E2]/50 dark:bg-[#4A90E2]/40";
+    if (count <= 9) return "bg-[#4A90E2]/80 dark:bg-[#4A90E2]/70";
+    return "bg-[#4A90E2] dark:bg-[#4A90E2]";
   };
 
   // Build the grid
@@ -247,6 +247,13 @@ const GitHubHeatmap = ({
   let currentWeek: { date: string; count: number }[] = [];
   const monthLabels: { name: string; weekIndex: number }[] = [];
   let lastMonth = -1;
+
+  const [hoveredDay, setHoveredDay] = useState<{
+    date: string;
+    count: number;
+    x: number;
+    y: number;
+  } | null>(null);
 
   contributions.forEach((day, i) => {
     currentWeek.push(day);
@@ -273,35 +280,69 @@ const GitHubHeatmap = ({
         </span>
         <div className="flex items-center gap-1.5">
           <span className="text-[8px] text-gray-400">Less</span>
-          {[0, 2, 5, 8, 12].map((c) => (
-            <div key={c} className={`w-2 h-2 rounded-sm ${getLevel(c)}`} />
+          {[0, 2, 5, 8, 12].map((c, i) => (
+            <div
+              key={c}
+              className={`w-2.5 h-2.5 rounded-full ${getLevel(c)} border border-white/5`}
+            />
           ))}
           <span className="text-[8px] text-gray-400">More</span>
         </div>
       </div>
 
-      <div className="w-full overflow-x-auto scrollbar-hide pb-2">
+      <div className="w-full overflow-x-auto scrollbar-hide pb-2 relative">
+        <AnimatePresence>
+          {hoveredDay && (
+            <motion.div
+              initial={{ opacity: 0, y: 5, scale: 0.9 }}
+              animate={{ opacity: 1, y: -45, scale: 1 }}
+              exit={{ opacity: 0, y: 5, scale: 0.9 }}
+              className="absolute pointer-events-none z-[60] px-3 py-2 rounded-xl bg-black dark:bg-[#111111] border border-white/10 shadow-2xl backdrop-blur-xl whitespace-nowrap overflow-visible"
+              style={{
+                left: hoveredDay.x,
+                top: hoveredDay.y,
+                transform: "translateX(-50%)",
+              }}
+            >
+              <div className="flex flex-col gap-0.5">
+                <span className="text-[12px] font-spaceGrotesk font-black text-white tracking-tight">
+                  {hoveredDay.count}{" "}
+                  {hoveredDay.count === 1 ? "contribution" : "contributions"}
+                </span>
+                <span className="text-[9px] font-spaceGrotesk text-gray-400 font-bold uppercase tracking-widest opacity-80">
+                  {new Date(hoveredDay.date).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-black dark:bg-[#1A1A1A] border-b border-r border-white/10 rotate-45" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="flex flex-col gap-2 min-w-max">
           {/* Month Labels */}
-          <div className="flex gap-1 ml-8 relative h-4">
+          <div className="flex gap-1 ml-4 relative h-4">
             {monthLabels.map((ml, i) => (
               <span
                 key={i}
-                className="absolute text-[9px] font-spaceGrotesk text-gray-400"
-                style={{ left: `${ml.weekIndex * 14}px` }}
+                className="absolute text-[9px] font-spaceGrotesk text-gray-400 font-medium"
+                style={{ left: `${ml.weekIndex * 15}px`, opacity: 0.8 }}
               >
                 {ml.name}
               </span>
             ))}
           </div>
 
-          <div className="flex gap-2 items-start">
+          <div className="flex gap-2 items-start mt-2">
             {/* Day Labels */}
-            <div className="flex flex-col gap-1 mt-[2px]">
+            <div className="flex flex-col gap-1.5 mt-[2px]">
               {["", "Mon", "", "Wed", "", "Fri", ""].map((day, i) => (
                 <span
                   key={i}
-                  className="text-[8px] h-2.5 flex items-center font-spaceGrotesk text-gray-400 w-6"
+                  className="text-[8px] h-2.5 flex items-center font-spaceGrotesk text-gray-400 w-6 font-medium"
                 >
                   {day}
                 </span>
@@ -309,14 +350,27 @@ const GitHubHeatmap = ({
             </div>
 
             {/* Grid */}
-            <div className="flex gap-1">
+            <div className="flex gap-1.5 ml-1">
               {weeks.map((week, wi) => (
-                <div key={wi} className="flex flex-col gap-1">
+                <div key={wi} className="flex flex-col gap-1.5">
                   {week.map((day, di) => (
                     <div
                       key={di}
-                      title={`${day.date}: ${day.count} contributions`}
-                      className={`w-2.5 h-2.5 rounded-sm transition-colors duration-500 ${getLevel(day.count)} ${loading ? "opacity-20 blur-[1px]" : "opacity-90"}`}
+                      onMouseEnter={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const parentRect =
+                          e.currentTarget.parentElement?.parentElement?.parentElement?.parentElement?.getBoundingClientRect();
+                        if (parentRect) {
+                          setHoveredDay({
+                            date: day.date,
+                            count: day.count,
+                            x: rect.left - parentRect.left + rect.width / 2,
+                            y: rect.top - parentRect.top,
+                          });
+                        }
+                      }}
+                      onMouseLeave={() => setHoveredDay(null)}
+                      className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${getLevel(day.count)} ${loading ? "opacity-20 blur-[1px]" : "opacity-90 hover:opacity-100 hover:scale-110"} border border-white/5 cursor-pointer shadow-sm relative`}
                     />
                   ))}
                 </div>
@@ -637,16 +691,23 @@ const Stats = () => {
                 />
               </div>
 
-              <div className="p-4 sm:p-6 rounded-2xl bg-black/5 dark:bg-black/20 border border-black/5 dark:border-white/5 overflow-hidden relative group min-h-[300px] flex flex-col items-center justify-center">
+              <div className="p-4 sm:p-6 rounded-3xl bg-black/5 dark:bg-[#0d1117] border border-black/5 dark:border-white/5 overflow-hidden relative group min-h-[300px] flex flex-col items-center justify-center">
                 {stats.loading && (
                   <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/5 dark:bg-black/10 backdrop-blur-[2px]">
                     <div className="w-8 h-8 border-3 border-[#4A90E2]/40 border-t-[#4A90E2] rounded-full animate-spin" />
                   </div>
                 )}
 
-                <div className="w-full h-[220px] mb-6">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData}>
+                <div className="w-full h-[240px] mb-6">
+                  <ResponsiveContainer
+                    width="100%"
+                    height="100%"
+                    minHeight={240}
+                  >
+                    <AreaChart
+                      data={chartData}
+                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+                    >
                       <defs>
                         <linearGradient
                           id="colorPv"
@@ -658,7 +719,7 @@ const Stats = () => {
                           <stop
                             offset="5%"
                             stopColor="#4A90E2"
-                            stopOpacity={0.3}
+                            stopOpacity={0.6}
                           />
                           <stop
                             offset="95%"
@@ -670,24 +731,33 @@ const Stats = () => {
                       <CartesianGrid
                         strokeDasharray="3 3"
                         vertical={false}
-                        stroke="rgba(128,128,128,0.1)"
+                        stroke="rgba(255,255,255,0.05)"
                       />
                       <XAxis
                         dataKey="name"
                         axisLine={false}
                         tickLine={false}
-                        tick={{ fontSize: 10, fill: "#888" }}
+                        tick={{ fontSize: 10, fill: "#666", fontWeight: 500 }}
+                        minTickGap={30}
                       />
-                      <YAxis hide />
+                      <YAxis
+                        axisLine={false}
+                        tickLine={false}
+                        tick={{ fontSize: 10, fill: "#666" }}
+                      />
                       <Tooltip
                         contentStyle={{
-                          backgroundColor: "rgba(0,0,0,0.8)",
-                          border: "none",
-                          borderRadius: "8px",
-                          color: "#fff",
+                          backgroundColor: "#0d1117",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          borderRadius: "12px",
                           fontSize: "12px",
+                          color: "#fff",
                         }}
                         itemStyle={{ color: "#4A90E2" }}
+                        cursor={{
+                          stroke: "rgba(74,144,226,0.2)",
+                          strokeWidth: 2,
+                        }}
                         formatter={(value) => [
                           `${value} Commits`,
                           "Monthly Total",
@@ -697,9 +767,10 @@ const Stats = () => {
                         type="monotone"
                         dataKey="contributions"
                         stroke="#4A90E2"
+                        strokeWidth={3}
                         fillOpacity={1}
                         fill="url(#colorPv)"
-                        strokeWidth={2}
+                        animationDuration={1500}
                       />
                     </AreaChart>
                   </ResponsiveContainer>
