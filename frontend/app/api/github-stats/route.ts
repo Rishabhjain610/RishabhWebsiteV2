@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const DEFAULT_USERNAME = "Rishabhjain610";
 const TOKEN = process.env.GITHUB_TOKEN;
 
-const CACHE_TTL = 1000 * 60 * 60 * 24; // 24 hours
+const CACHE_TTL = 1000 * 60 * 60 * 12; // 12 hours
 
 // Cache per username + date range
 const cache = new Map<string, { data: any; timestamp: number }>();
@@ -14,11 +14,12 @@ query($username: String!, $from: DateTime!, $to: DateTime!) {
     followers { totalCount }
     following { totalCount }
 
-    repositories(first: 100, ownerAffiliations: [OWNER, COLLABORATOR, ORGANIZATION_MEMBER], isFork: false, orderBy: {field: UPDATED_AT, direction: DESC}) {
+    repositories(first: 100, ownerAffiliations: [OWNER], orderBy: {field: UPDATED_AT, direction: DESC}) {
       totalCount
       nodes {
         stargazerCount
         forkCount
+        isFork
         isPrivate
         isArchived
         primaryLanguage { name }
@@ -176,6 +177,7 @@ async function handleRequest(
 
     let totalStars = 0;
     let totalForks = 0;
+    let personalForks = 0;
     let totalPRs = 0;
     let totalIssues = 0;
     const languageSizeMap: Record<string, number> = {};
@@ -186,6 +188,7 @@ async function handleRequest(
     repos.forEach((repo: any) => {
       totalStars += repo.stargazerCount || 0;
       totalForks += repo.forkCount || 0;
+      if (repo.isFork) personalForks++;
       totalPRs += repo.pullRequests?.totalCount || 0;
       totalIssues += repo.issues?.totalCount || 0;
 
@@ -345,6 +348,7 @@ async function handleRequest(
       following: user.following?.totalCount || 0,
       totalStars,
       totalForks,
+      personalForks,
       totalPRs,
       totalIssues,
       totalContributions,

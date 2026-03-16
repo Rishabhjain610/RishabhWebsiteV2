@@ -32,6 +32,7 @@ import {
   IoEye,
   IoChevronDown,
   IoStarSharp,
+  IoRefresh,
 } from "react-icons/io5";
 
 /* ─── Design Tokens — synchronized with Achievements / Work ─── */
@@ -50,6 +51,7 @@ interface GitHubStats {
   following: number;
   totalStars: number;
   totalForks: number;
+  personalForks: number;
   totalPRs?: number;
   totalIssues?: number;
   totalContributions: number;
@@ -392,6 +394,7 @@ const Stats = () => {
     totalStars: 0,
     totalForks: 0,
     totalContributions: 0,
+    personalForks: 0,
     dailyContributions: [],
     from: "",
     to: "",
@@ -446,9 +449,13 @@ const Stats = () => {
     try {
       let url = "/api/github-stats";
       url += `?from=${yearToFetch}-01-01T00:00:00Z&to=${yearToFetch}-12-31T23:59:59Z`;
+      if (forceRefresh) url += "&refresh=true";
 
       const res = await fetch(url);
-      if (!res.ok) throw new Error("API failed");
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || `API failed with status ${res.status}`);
+      }
 
       const data = await res.json();
       if (data.error) throw new Error(data.error);
@@ -465,8 +472,9 @@ const Stats = () => {
       if (yearToFetch === "2026") {
         localStorage.setItem(CACHE_KEY, JSON.stringify(newState));
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error("[Stats] Fetch Error:", e);
+      // You could set an error state here and show it in the UI
       setStats((prev) => ({ ...prev, loading: false }));
     }
   };
@@ -495,11 +503,12 @@ const Stats = () => {
   };
 
   const statItems = [
-    { icon: IoCodeSlash, label: "Repositories", value: stats.publicRepos },
-    { icon: IoStar, label: "Total Stars", value: stats.totalStars },
-    { icon: IoGitBranch, label: "Total Forks", value: stats.totalForks },
-    { icon: IoPeople, label: "Followers", value: stats.followers },
-    { icon: IoEye, label: "Following", value: stats.following },
+    { icon: IoCodeSlash, label: "Repositories", value: stats.publicRepos, desc: "Total owned repositories" },
+    { icon: IoStar, label: "Total Stars", value: stats.totalStars, desc: "Stars across your repos" },
+    { icon: IoGitBranch, label: "Total Forks", value: stats.totalForks, desc: "Forks of your projects" },
+    { icon: IoCodeSlash, label: "Personal Forks", value: stats.personalForks, desc: "Projects you've forked" },
+    { icon: IoPeople, label: "Followers", value: stats.followers, desc: "Your GitHub followers" },
+    { icon: IoEye, label: "Following", value: stats.following, desc: "Accounts you follow" },
   ];
 
   return (
@@ -544,7 +553,7 @@ const Stats = () => {
           initial="hidden"
           whileInView="visible"
           viewport={vp}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-10"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-10"
         >
           {statItems.map(({ icon: Icon, label, value }) => (
             <motion.div
@@ -578,9 +587,18 @@ const Stats = () => {
                   ? "—"
                   : (value ?? 0).toLocaleString()}
               </p>
-              <p className="text-[10px] sm:text-[11px] font-spaceGrotesk text-[#555] dark:text-[#999] uppercase tracking-widest mt-1.5">
-                {label}
-              </p>
+              <div className="flex flex-col mt-1.5 gap-0.5">
+                <p className="text-[10px] sm:text-[11px] font-spaceGrotesk text-[#555] dark:text-[#999] uppercase tracking-widest">
+                  {label}
+                </p>
+                {/* @ts-ignore */}
+                {statItems.find(i => i.label === label)?.desc && (
+                  <p className="text-[8px] font-spaceGrotesk text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {/* @ts-ignore */}
+                    {statItems.find(i => i.label === label).desc}
+                  </p>
+                )}
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -604,6 +622,11 @@ const Stats = () => {
                 <p className="text-xs text-gray-500 font-spaceGrotesk">
                   System level production commits.
                 </p>
+                {stats.lastUpdated && (
+                  <p className="text-[10px] text-gray-400 font-spaceGrotesk mt-1">
+                    Last synced: {new Date(stats.lastUpdated).toLocaleString()}
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col sm:flex-row items-center gap-4">
@@ -689,6 +712,15 @@ const Stats = () => {
                     { value: "2023", label: "2023 activity" },
                   ]}
                 />
+                <button
+                  onClick={() => fetchStatsData(selectedYear, true)}
+                  disabled={stats.loading}
+                  className="p-2.5 rounded-xl bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/10 
+                             text-[#4A90E2] hover:bg-[#4A90E2]/10 transition-all active:scale-95 disabled:opacity-50"
+                  title="Refresh stats"
+                >
+                  <IoRefresh className={stats.loading ? "animate-spin" : ""} />
+                </button>
               </div>
 
               <div className="p-4 sm:p-6 rounded-3xl bg-black/5 dark:bg-[#0d1117] border border-black/5 dark:border-white/5 overflow-hidden relative group min-h-[300px] flex flex-col items-center justify-center">
