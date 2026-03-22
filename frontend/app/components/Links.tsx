@@ -16,18 +16,52 @@ const ACCENT = "#4A90E2";
 const A = (o: number) => `rgba(74,144,226,${o})`;
 
 const links = [
-  { name: "Resume", icon: IoDocument, href: "https://drive.google.com/file/d/1DV-irLeae0jWaRLNNyeMvwzPm8aqvXoB/view" },
-  { name: "GitHub", icon: IoLogoGithub, href: "https://github.com/Rishabhjain610" },
-  { name: "LinkedIn", icon: IoLogoLinkedin, href: "https://www.linkedin.com/in/rishabhjain610/" },
-  { name: "LeetCode", icon: SiLeetcode, href: "https://leetcode.com/Rishabhjain610/" },
-  { name: "Instagram", icon: IoLogoInstagram, href: "https://instagram.com/rishabh_jain610" },
-  { name: "Email", icon: IoMailOutline, href: "mailto:rishabhjainwork1@gmail.com" },
+  {
+    name: "Resume",
+    icon: IoDocument,
+    href: "https://drive.google.com/file/d/1DV-irLeae0jWaRLNNyeMvwzPm8aqvXoB/view",
+  },
+  {
+    name: "GitHub",
+    icon: IoLogoGithub,
+    href: "https://github.com/Rishabhjain610",
+  },
+  {
+    name: "LinkedIn",
+    icon: IoLogoLinkedin,
+    href: "https://www.linkedin.com/in/rishabhjain610/",
+  },
+  {
+    name: "LeetCode",
+    icon: SiLeetcode,
+    href: "https://leetcode.com/u/8R0zDy20qw/",
+  },
+  {
+    name: "Instagram",
+    icon: IoLogoInstagram,
+    href: "https://instagram.com/rishabh_jain610",
+  },
+  {
+    name: "Email",
+    icon: IoMailOutline,
+    href: "mailto:rishabhjainwork1@gmail.com",
+  },
 ];
 
 const menuV = {
   hidden: { opacity: 0, scale: 0.95, y: 8 },
-  visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.18, ease: "easeOut" as const } },
-  exit: { opacity: 0, scale: 0.95, y: 8, transition: { duration: 0.14, ease: "easeIn" as const } },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { duration: 0.18, ease: "easeOut" as const },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    y: 8,
+    transition: { duration: 0.14, ease: "easeIn" as const },
+  },
 };
 
 const listV = {
@@ -37,7 +71,11 @@ const listV = {
 
 const rowV = {
   hidden: { opacity: 0, y: 5 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.2, ease: "easeOut" as const } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.2, ease: "easeOut" as const },
+  },
 };
 
 export default function Links() {
@@ -74,7 +112,9 @@ export default function Links() {
         style={{
           width: 48,
           height: 48,
-          background: open ? panelBg : `linear-gradient(135deg, ${ACCENT}, #2f78c5)`,
+          background: open
+            ? panelBg
+            : `linear-gradient(135deg, ${ACCENT}, #2f78c5)`,
           border: `1px solid ${open ? panelBorder : "transparent"}`,
           boxShadow: open
             ? `0 6px 24px rgba(0,0,0,${dark ? 0.4 : 0.1})`
@@ -118,7 +158,6 @@ export default function Links() {
             >
               {/* header */}
 
-
               {/* rows */}
               <motion.div
                 className="flex flex-col p-1.5 gap-px"
@@ -130,16 +169,19 @@ export default function Links() {
                   <motion.button
                     key={link.name}
                     variants={rowV}
-                    onClick={() => { window.open(link.href, "_blank"); setOpen(false); }}
+                    onClick={() => {
+                      window.open(link.href, "_blank");
+                      setOpen(false);
+                    }}
                     className="group flex items-center gap-2.5 rounded-lg px-2.5 py-2 w-full text-left transition-all duration-150"
                     suppressHydrationWarning
                     style={{ color: textMain }}
-                    onMouseEnter={e => {
+                    onMouseEnter={(e) => {
                       const el = e.currentTarget as HTMLElement;
                       el.style.background = dark ? A(0.11) : A(0.08);
                       el.style.color = ACCENT;
                     }}
-                    onMouseLeave={e => {
+                    onMouseLeave={(e) => {
                       const el = e.currentTarget as HTMLElement;
                       el.style.background = "transparent";
                       el.style.color = textMain;
@@ -161,12 +203,19 @@ export default function Links() {
 
                     {/* arrow */}
                     <svg
-                      width="8" height="8" viewBox="0 0 8 8" fill="none"
+                      width="8"
+                      height="8"
+                      viewBox="0 0 8 8"
+                      fill="none"
                       className="shrink-0 opacity-0 group-hover:opacity-50 transition-opacity duration-150"
                     >
-                      <path d="M1 7L7 1M7 1H3.5M7 1V4.5"
-                        stroke="currentColor" strokeWidth="1.3"
-                        strokeLinecap="round" strokeLinejoin="round" />
+                      <path
+                        d="M1 7L7 1M7 1H3.5M7 1V4.5"
+                        stroke="currentColor"
+                        strokeWidth="1.3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </motion.button>
                 ))}
@@ -175,7 +224,9 @@ export default function Links() {
               {/* bottom accent line */}
               <div
                 className="h-px mx-3 mb-2"
-                style={{ background: `linear-gradient(90deg, transparent, ${A(0.2)}, transparent)` }}
+                style={{
+                  background: `linear-gradient(90deg, transparent, ${A(0.2)}, transparent)`,
+                }}
               />
             </div>
           </motion.div>

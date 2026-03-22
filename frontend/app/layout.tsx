@@ -22,8 +22,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 // ─── Constants ───────────────────────────────────────────────────────────────
-// FIX: Was pointing to dev preview URL. Always use production domain.
-const BASE_URL = "https://rishabhjain.dpdns.org";
+// Using dev Vercel preview URL
+const BASE_URL = "https://rishabh-website-dev.vercel.app";
 const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? "G-RC2P5J3SJ5";
 
 // ─── Viewport ────────────────────────────────────────────────────────────────
