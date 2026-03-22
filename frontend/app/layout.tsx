@@ -286,8 +286,8 @@ export default function RootLayout({
             component so it runs after hydration instead.
           */}
           <GoogleAnalytics gaId={GA_ID} />
+          <Navbar />
           <Suspense fallback={null}>{children}</Suspense>
-          {children}
           <Footer />
           <Analytics />
         </ThemeProvider>
