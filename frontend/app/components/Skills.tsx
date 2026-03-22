@@ -42,10 +42,14 @@ import { FaJava } from "react-icons/fa";
 /* ─── Skill type ─── */
 interface Skill {
   name: string;
-  icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>;
-  color: string;       // brand color for icon bg
-  darkColor?: string;  // optional override for dark mode
-  glowColor?: string;  // optional glow color override
+  icon: React.ComponentType<{
+    size?: number;
+    className?: string;
+    style?: React.CSSProperties;
+  }>;
+  color: string; // brand color for icon bg
+  darkColor?: string; // optional override for dark mode
+  glowColor?: string; // optional glow color override
 }
 
 /* ─── Data with brand colors ─── */
@@ -66,10 +70,20 @@ const categories: { label: string; skills: Skill[] }[] = [
     label: "Frameworks & Libraries",
     skills: [
       { name: "React JS", icon: IoLogoReact, color: "#61DAFB" },
-      { name: "Next JS", icon: SiNextdotjs, color: "#000000", glowColor: "#9CA3AF" },
+      {
+        name: "Next JS",
+        icon: SiNextdotjs,
+        color: "#000000",
+        glowColor: "#9CA3AF",
+      },
       { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
       { name: "Bootstrap", icon: SiBootstrap, color: "#7952B3" },
-      { name: "Shadcn UI", icon: SiShadcnui, color: "#000000", glowColor: "#9CA3AF" },
+      {
+        name: "Shadcn UI",
+        icon: SiShadcnui,
+        color: "#000000",
+        glowColor: "#9CA3AF",
+      },
       { name: "Redux JS", icon: SiRedux, color: "#764ABC" },
       { name: "GSAP", icon: SiGreensock, color: "#3AAA64" },
       { name: "Framer Motion", icon: SiFramer, color: "#0055FF" },
@@ -79,8 +93,18 @@ const categories: { label: string; skills: Skill[] }[] = [
     label: "Databases & Backend",
     skills: [
       { name: "Node JS", icon: IoLogoNodejs, color: "#339933" },
-      { name: "Express JS", icon: SiExpress, color: "#000000", glowColor: "#9CA3AF" },
-      { name: "Socket.IO", icon: SiSocketdotio, color: "#010101", glowColor: "#9CA3AF" },
+      {
+        name: "Express JS",
+        icon: SiExpress,
+        color: "#000000",
+        glowColor: "#9CA3AF",
+      },
+      {
+        name: "Socket.IO",
+        icon: SiSocketdotio,
+        color: "#010101",
+        glowColor: "#9CA3AF",
+      },
       { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
       { name: "MySQL", icon: SiMysql, color: "#00758F" },
       { name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
@@ -92,8 +116,18 @@ const categories: { label: string; skills: Skill[] }[] = [
     skills: [
       { name: "Gemini API", icon: SiGooglegemini, color: "#886FBF" },
       { name: "OCR", icon: IoEyeOutline, color: "#00A6D6" },
-      { name: "Ollama", icon: SiOllama, color: "#000000", glowColor: "#9CA3AF" },
-      { name: "Vercel AI SDK", icon: SiVercel, color: "#000000", glowColor: "#9CA3AF" },
+      {
+        name: "Ollama",
+        icon: SiOllama,
+        color: "#000000",
+        glowColor: "#9CA3AF",
+      },
+      {
+        name: "Vercel AI SDK",
+        icon: SiVercel,
+        color: "#000000",
+        glowColor: "#9CA3AF",
+      },
     ],
   },
   {
@@ -107,7 +141,12 @@ const categories: { label: string; skills: Skill[] }[] = [
   {
     label: "Tools",
     skills: [
-      { name: "GitHub", icon: IoLogoGithub, color: "#181717", glowColor: "#9CA3AF" },
+      {
+        name: "GitHub",
+        icon: IoLogoGithub,
+        color: "#181717",
+        glowColor: "#9CA3AF",
+      },
       { name: "Git", icon: IoGitBranch, color: "#F05032" },
       { name: "Postman", icon: SiPostman, color: "#FF6C00" },
       { name: "Cloudinary", icon: SiCloudinary, color: "#3448C5" },
@@ -120,8 +159,20 @@ const vp = { once: false, amount: 0.3 };
 
 /* ─── Variants ─── */
 const fadeUp = {
-  hidden: { opacity: 0, y: 24, transition: { duration: 0.4, ease: "easeIn" as const } },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
+  hidden: {
+    opacity: 0,
+    y: 24,
+    transition: { duration: 0.4, ease: "easeIn" as const },
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration:
+        typeof window !== "undefined" && window.innerWidth < 768 ? 0.25 : 0.55,
+      ease: "easeOut" as const,
+    },
+  },
 };
 
 const gridContainer = {
@@ -185,7 +236,6 @@ const Skills = () => {
                  transition-colors duration-300"
     >
       <div className="max-w-6xl mx-auto">
-
         {/* ── Header ── */}
         <motion.div
           variants={fadeUp}
@@ -196,20 +246,31 @@ const Skills = () => {
         >
           <span
             className="inline-block text-sm font-bold px-3 py-1.5 rounded-full font-spaceGrotesk mb-4"
-            style={{ backgroundColor: "rgba(74,144,226,0.12)", color: "#4A90E2" }}
+            style={{
+              backgroundColor: "rgba(74,144,226,0.12)",
+              color: "#4A90E2",
+            }}
           >
             What I work with
           </span>
 
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] mb-4">
             Tech{" "}
-            <span style={{ color: "#4A90E2", textShadow: "0 0 28px rgba(74,144,226,0.22)" }}>
+            <span
+              style={{
+                color: "#4A90E2",
+                textShadow: "0 0 28px rgba(74,144,226,0.22)",
+              }}
+            >
               Stack
             </span>
           </h2>
 
           <div className="flex justify-center lg:justify-start">
-            <div className="h-[2px] w-14 rounded-full" style={{ backgroundColor: "#4A90E2", opacity: 0.45 }} />
+            <div
+              className="h-[2px] w-14 rounded-full"
+              style={{ backgroundColor: "#4A90E2", opacity: 0.45 }}
+            />
           </div>
         </motion.div>
 
@@ -234,8 +295,12 @@ const Skills = () => {
               tabIndex={active === i ? 0 : -1}
               suppressHydrationWarning
               onKeyDown={(e) => {
-                if (e.key === "ArrowRight") setActive((active + 1) % categories.length);
-                if (e.key === "ArrowLeft") setActive((active - 1 + categories.length) % categories.length);
+                if (e.key === "ArrowRight")
+                  setActive((active + 1) % categories.length);
+                if (e.key === "ArrowLeft")
+                  setActive(
+                    (active - 1 + categories.length) % categories.length,
+                  );
               }}
               className="relative px-5 py-2.5 rounded-xl text-sm font-spaceGrotesk
                          transition-all duration-300 cursor-pointer overflow-hidden outline-none
@@ -247,9 +312,7 @@ const Skills = () => {
                 fontWeight: active === i ? 800 : 600,
                 letterSpacing: active === i ? "0.02em" : "0",
                 boxShadow:
-                  active === i
-                    ? "0 4px 18px rgba(74,144,226,0.4)"
-                    : "none",
+                  active === i ? "0 4px 18px rgba(74,144,226,0.4)" : "none",
                 transform: active === i ? "translateY(-2px)" : "translateY(0)",
               }}
             >
@@ -315,7 +378,10 @@ const Skills = () => {
                                cursor-default transition-colors duration-300
                                outline-none focus-visible:ring-2 focus-visible:ring-[#4A90E2]"
                     style={{
-                      backgroundColor: hexToRgba(skill.glowColor || skill.color, 0.06),
+                      backgroundColor: hexToRgba(
+                        skill.glowColor || skill.color,
+                        0.06,
+                      ),
                       borderColor: isDarkIcon
                         ? "rgba(160,160,180,0.25)"
                         : hexToRgba(skill.color, 0.15),
@@ -328,7 +394,12 @@ const Skills = () => {
                     <div
                       className="absolute top-4 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full
                                  opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl"
-                      style={{ backgroundColor: hexToRgba(skill.glowColor || skill.color, 0.4) }}
+                      style={{
+                        backgroundColor: hexToRgba(
+                          skill.glowColor || skill.color,
+                          0.4,
+                        ),
+                      }}
                     />
 
                     {/* Icon with brand-colored bg */}
@@ -336,7 +407,11 @@ const Skills = () => {
                       className={`relative z-10 w-12 h-12 rounded-xl flex items-center justify-center
                                   `}
                       whileHover={{ scale: 1.15, rotate: 3 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 15,
+                      }}
                       style={{ backgroundColor: skill.color }}
                     >
                       <IconComp
@@ -347,9 +422,11 @@ const Skills = () => {
                     </motion.div>
 
                     {/* Name */}
-                    <span className="relative z-10 text-sm font-semibold font-spaceGrotesk
+                    <span
+                      className="relative z-10 text-sm font-semibold font-spaceGrotesk
                                      text-[#1A1A1A] dark:text-[#E0E0E0] text-center
-                                     transition-colors duration-300">
+                                     transition-colors duration-300"
+                    >
                       {skill.name}
                     </span>
 

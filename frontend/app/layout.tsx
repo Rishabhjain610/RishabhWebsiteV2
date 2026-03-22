@@ -18,6 +18,7 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space",
   display: "swap",
   preload: true,
+  fallback: ["system-ui", "arial"],
 });
 
 // ─── Constants ───────────────────────────────────────────────────────────────

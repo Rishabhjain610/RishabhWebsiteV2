@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -46,9 +45,11 @@ const podium: Achievement[] = [
     hackathon: "GDG DCE Techsprit-Lofi edition",
     organizer: "GDG — DCE",
     date: "2026",
-    images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135116/LOFI_EDITION1st_xvdogh.jpg"],
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135116/LOFI_EDITION1st_xvdogh.jpg",
+    ],
   },
-  
+
   {
     placement: "🥈 2nd Place",
     hackathon: "DevSprint NEHU Hackathon",
@@ -66,7 +67,6 @@ const podium: Achievement[] = [
     date: "2026",
     images: [
       "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1773213374/RISHABH_JAIN_GDG_SOE_CUSAT_1_odcoas.png",
-      
     ],
   },
   {
@@ -87,44 +87,55 @@ const finalist: Achievement[] = [
     hackathon: "CodeByte 2.0",
     organizer: "CodeByte",
     date: "2025",
-    images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135104/codebyte_2.0_TOP6_tpdpjw.jpg"],
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135104/codebyte_2.0_TOP6_tpdpjw.jpg",
+    ],
   },
   {
     placement: "🏅 Top 8",
     hackathon: "Codeathon 2.0",
     organizer: "Codeathon",
     date: "2025",
-    images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135104/CodeAthonTOP8_kzu9h3.jpg"],
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135104/CodeAthonTOP8_kzu9h3.jpg",
+    ],
   },
   {
     placement: "🏅 Top 10",
     hackathon: "TechSpirint 2025-26 — GDG RGIPT",
     organizer: "Google Developer Groups – RGIPT",
     date: "2025",
-    images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135109/GDGRGIPTTOP10_aekzxe.png"],
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135109/GDGRGIPTTOP10_aekzxe.png",
+    ],
   },
   {
     placement: "🏅 Top 10",
     hackathon: "ArticX Hackathon",
     organizer: "ArticX",
     date: "2025",
-    images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135104/ArticXTOP10_su85it.jpg"],
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135104/ArticXTOP10_su85it.jpg",
+    ],
   },
   {
     placement: "🏅 Top 12",
     hackathon: "Minithon 2025",
     organizer: "Minithon",
     date: "2025",
-    images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135118/Minithon_2025TOP12_zzipdz.png"],
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135118/Minithon_2025TOP12_zzipdz.png",
+    ],
   },
   {
     placement: "🏅 Top 15",
     hackathon: "HackVerse",
     organizer: "HackVerse",
     date: "2025",
-    images: ["https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135115/HackVerseTOP15_pgjdgt.jpg"],
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135115/HackVerseTOP15_pgjdgt.jpg",
+    ],
   },
-  
 ];
 
 const vp = { once: false, amount: 0.3 };
@@ -134,7 +145,11 @@ const fadeUp = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: "easeOut" as const },
+    transition: {
+      duration:
+        typeof window !== "undefined" && window.innerWidth < 768 ? 0.25 : 0.55,
+      ease: "easeOut" as const,
+    },
   },
 };
 
@@ -176,7 +191,9 @@ const AchievementCard = ({
       suppressHydrationWarning
       className="rounded-xl border overflow-hidden transition-all duration-300 cursor-pointer"
       style={{
-        backgroundColor: dark ? "rgba(255,255,255,0.02)" : "rgba(74,144,226,0.04)",
+        backgroundColor: dark
+          ? "rgba(255,255,255,0.02)"
+          : "rgba(74,144,226,0.04)",
         borderColor: dark ? accentRgba(0.12) : "rgba(74,144,226,0.15)",
       }}
       onMouseEnter={(e) => {
@@ -251,7 +268,9 @@ const AchievementCard = ({
           >
             <div
               className="px-4 pb-4 border-t"
-              style={{ borderColor: dark ? accentRgba(0.08) : "rgba(74,144,226,0.12)" }}
+              style={{
+                borderColor: dark ? accentRgba(0.08) : "rgba(74,144,226,0.12)",
+              }}
             >
               <div
                 className={`grid gap-2.5 mt-3 ${a.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
@@ -260,12 +279,19 @@ const AchievementCard = ({
                   <div
                     key={i}
                     className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center"
-                    style={{ borderColor: dark ? accentRgba(0.12) : "rgba(74,144,226,0.15)" }}
+                    style={{
+                      borderColor: dark
+                        ? accentRgba(0.12)
+                        : "rgba(74,144,226,0.15)",
+                    }}
                   >
                     <img
                       src={src}
                       alt={`${a.hackathon} certificate ${i + 1}`}
-                      className="w-full h-auto object-contain rounded-lg cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
+                      width="0"
+                      height="0"
+                      style={{ width: "100%", height: "auto" }}
+                      className="object-contain rounded-lg cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
                       loading="lazy"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -298,7 +324,7 @@ const Achievements = () => {
   const stats = [
     { icon: IoFlame, label: "Hackathons", value: "30+" },
     { icon: IoTrophy, label: "Wins", value: "6" },
-   
+
     { icon: IoMedal, label: "Finalist", value: "12+" },
   ];
 
@@ -366,7 +392,9 @@ const Achievements = () => {
               suppressHydrationWarning
               className="p-4 rounded-xl border text-center transition-all duration-300"
               style={{
-                backgroundColor: dark ? "rgba(74,144,226,0.05)" : "rgba(74,144,226,0.08)",
+                backgroundColor: dark
+                  ? "rgba(74,144,226,0.05)"
+                  : "rgba(74,144,226,0.08)",
                 borderColor: dark ? accentRgba(0.14) : "rgba(74,144,226,0.2)",
               }}
               onMouseEnter={(e) => {
@@ -382,7 +410,11 @@ const Achievements = () => {
             >
               <div
                 className="p-2 rounded-lg w-fit mx-auto mb-2"
-                style={{ backgroundColor: dark ? accentRgba(0.1) : "rgba(74,144,226,0.12)" }}
+                style={{
+                  backgroundColor: dark
+                    ? accentRgba(0.1)
+                    : "rgba(74,144,226,0.12)",
+                }}
               >
                 <Icon size={16} style={{ color: ACCENT }} />
               </div>
@@ -510,7 +542,10 @@ const Achievements = () => {
                   setLightbox(null);
                 }}
               >
-                <IoClose size={32} className="text-white group-hover:scale-110 transition-transform" />
+                <IoClose
+                  size={32}
+                  className="text-white group-hover:scale-110 transition-transform"
+                />
               </button>
 
               <motion.img

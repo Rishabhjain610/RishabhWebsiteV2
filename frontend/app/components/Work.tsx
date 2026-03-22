@@ -195,7 +195,11 @@ const fadeUp = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: "easeOut" as const },
+    transition: {
+      duration:
+        typeof window !== "undefined" && window.innerWidth < 768 ? 0.25 : 0.55,
+      ease: "easeOut" as const,
+    },
   },
 };
 
