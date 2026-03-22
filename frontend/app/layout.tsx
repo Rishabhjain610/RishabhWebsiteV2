@@ -1,5 +1,5 @@
-
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Links from "./components/Links";
@@ -152,10 +152,26 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
-      { url: "/icon1.png", media: "(prefers-color-scheme: light)", sizes: "any" },
-      { url: "/favicon.ico", media: "(prefers-color-scheme: dark)", sizes: "any" },
-      { url: "/favicon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
-      { url: "/favicon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+      {
+        url: "/icon1.png",
+        media: "(prefers-color-scheme: light)",
+        sizes: "any",
+      },
+      {
+        url: "/favicon.ico",
+        media: "(prefers-color-scheme: dark)",
+        sizes: "any",
+      },
+      {
+        url: "/favicon-light.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon-dark.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
       { url: "/icon1.png", type: "image/png", sizes: "96x96" },
     ],
     apple: "/apple-icon.png",
@@ -173,7 +189,14 @@ const personJsonLd = {
   jobTitle: "Full Stack Developer",
   description:
     "Full Stack Developer specialising in React, Next.js, Node.js and MongoDB. Building scalable web apps and AI-integrated solutions from Mumbai, India.",
-  knowsAbout: ["React", "Next.js", "Node.js", "MongoDB", "TypeScript", "Full Stack Development"],
+  knowsAbout: [
+    "React",
+    "Next.js",
+    "Node.js",
+    "MongoDB",
+    "TypeScript",
+    "Full Stack Development",
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Mumbai",
@@ -200,7 +223,10 @@ const websiteJsonLd = {
   // Enables Google Sitelinks search box (bonus SEO)
   potentialAction: {
     "@type": "SearchAction",
-    target: { "@type": "EntryPoint", urlTemplate: `${BASE_URL}/?q={search_term_string}` },
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${BASE_URL}/?q={search_term_string}`,
+    },
     "query-input": "required name=search_term_string",
   },
 };
@@ -217,8 +243,13 @@ export default function RootLayout({
           these origins before they're actually needed — saves ~200–400ms on
           font and analytics loads.
         */}
+        <link rel="preload" href="/LogoDark.png" as="image" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
 
@@ -255,7 +286,7 @@ export default function RootLayout({
             component so it runs after hydration instead.
           */}
           <GoogleAnalytics gaId={GA_ID} />
-          <Navbar />
+          <Suspense fallback={null}>{children}</Suspense>
           {children}
           <Footer />
           <Analytics />

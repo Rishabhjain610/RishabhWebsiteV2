@@ -1,12 +1,15 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import LandingPage from "./components/LandingPage";
-import Contact from "./components/Contact";
-import About from "./components/About";
-import Skills from "./components/Skills";
-import Project from "./components/Project";
-import Work from "./components/Work";
-import Stats from "./components/Stats";
-import Achievements from "./components/Achievements";
+
+// Lazy load below-fold sections for better initial page load
+const Contact = dynamic(() => import("./components/Contact"));
+const About = dynamic(() => import("./components/About"));
+const Skills = dynamic(() => import("./components/Skills"));
+const Project = dynamic(() => import("./components/Project"));
+const Work = dynamic(() => import("./components/Work"));
+const Stats = dynamic(() => import("./components/Stats"));
+const Achievements = dynamic(() => import("./components/Achievements"));
 const page = () => {
   return (
     <div>
