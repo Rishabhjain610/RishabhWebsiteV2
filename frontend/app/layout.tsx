@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   applicationName: "Rishabh Jain Portfolio",
 
   title: {
-    default: "Rishabh Jain — Full Stack Developer | MERN & Next.js",
+    default: "Rishabh Jain — Full Stack Developer",
     template: "%s | Rishabh Jain",
   },
 
