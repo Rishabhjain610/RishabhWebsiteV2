@@ -69,7 +69,7 @@ const experiences: Experience[] = [
     icon: IoCodeSlash,
     iconType: "image",
     iconSrc: "/gdg.png",
-    role: "Senior Tech Team Member",
+    role: "Joint Tech Head",
     type: "Volunteer",
     company: "GDG on Campus TSEC",
     location: "Mumbai, IN · Hybrid",

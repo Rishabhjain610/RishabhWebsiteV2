@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Space_Grotesk } from "next/font/google";
+import { headers } from "next/headers";
 
 // ─── Font ────────────────────────────────────────────────────────────────────
 // Dropped weight "300" — saves one network round-trip on every load.
@@ -21,10 +22,10 @@ const spaceGrotesk = Space_Grotesk({
   fallback: ["system-ui", "arial"],
 });
 
-// ─── Constants ───────────────────────────────────────────────────────────────
-// Using dev Vercel preview URL
-const BASE_URL = "https://rishabh-website-dev.vercel.app";
-const GA_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? "G-RC2P5J3SJ5";
+// ─── Constants ───────────────────────────────────────────────────────────
+// Set NEXT_PUBLIC_SITE_URL in .env.local and Vercel environment
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
+const GA_ID = String(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS || "");
 
 // ─── Viewport ────────────────────────────────────────────────────────────────
 export const viewport: Viewport = {
@@ -233,9 +234,14 @@ const websiteJsonLd = {
 };
 
 // ─── Layout ──────────────────────────────────────────────────────────────────
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const hdrs = await headers();
+  const host = hdrs.get("host") ?? "";
+  const isVercelPreview =
+    host.includes("vercel.app") || host.includes("vercel.sh");
+
   return (
     <html lang="en" suppressHydrationWarning className={spaceGrotesk.variable}>
       <head>
@@ -270,6 +276,17 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
+
+        {/*
+          If the site is being viewed on the Vercel preview domain, instruct
+          crawlers to not index and enforce the canonical to the custom domain.
+        */}
+        {isVercelPreview && (
+          <>
+            <meta name="robots" content="noindex, nofollow" />
+            <link rel="canonical" href={BASE_URL} />
+          </>
+        )}
       </head>
 
       <body className="antialiased">

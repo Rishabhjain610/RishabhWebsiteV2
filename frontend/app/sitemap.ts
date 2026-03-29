@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://rishabh-website-dev.vercel.app/";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -10,8 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1.0,
     },
-    // SEO Fix: add section anchors as separate sitemap entries
-    // if you ever add separate pages, add them here
     {
       url: `${BASE_URL}/#about`,
       lastModified: new Date(),
@@ -37,26 +35,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     {
-      url: `${BASE_URL}/#projects`,
+      url: `${BASE_URL}/#works`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
-      url: `${BASE_URL}/#works`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },{
       url: `${BASE_URL}/#stats`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.5,
-    },{
+    },
+    {
       url: `${BASE_URL}/#achievements`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.5,
-    }
+    },
   ] satisfies MetadataRoute.Sitemap;
 }

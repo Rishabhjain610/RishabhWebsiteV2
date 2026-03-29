@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = "https://rishabh-website-dev.vercel.app/";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,8 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // SEO Fix: removed "/.next" — crawlers can't reach it anyway;
-        // keeping only meaningful disallows
         disallow: ["/admin", "/private", "/api/"],
       },
       { userAgent: "Googlebot", allow: "/" },
