@@ -17,6 +17,7 @@ const Footer = () => {
 
   const vp = { once: false, amount: 0.3 };
 
+  
   const fadeUp = {
     hidden: { opacity: 0, y: 12 },
     visible: {
