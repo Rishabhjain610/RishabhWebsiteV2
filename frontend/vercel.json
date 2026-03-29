@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "rishabh-website-dev.vercel.app"
+        }
+      ],
+      "destination": "https://rishabhjain.dpdns.org/:path*",
+      "permanent": true
+    }
+  ]
+}
