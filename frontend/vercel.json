@@ -1,9 +1,0 @@
-{
-  "redirects": [
-    {
-      "source": "/:path*",
-      "destination": "https://rishabhjain.dpdns.org/:path*",
-      "permanent": true
-    }
-  ]
-}

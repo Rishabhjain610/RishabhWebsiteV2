@@ -148,12 +148,12 @@ export const metadata: Metadata = {
     canonical: BASE_URL,
   },
 
-  // verification: {
-  //   google: "ePQ4UK9TXEBxEOSROIEgx7FOv86l425KO6qU8J6kGE4",
-  // },
   verification: {
-    google: "TtCVRJScD-UOsCl5zgJf3NL2maM07UtsS2-WAKXzDao",
+    google: "ePQ4UK9TXEBxEOSROIEgx7FOv86l425KO6qU8J6kGE4",
   },
+  // verification: {
+  //   google: "TtCVRJScD-UOsCl5zgJf3NL2maM07UtsS2-WAKXzDao",
+  // },
 
   icons: {
     icon: [
@@ -260,7 +260,6 @@ export default async function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
 
         {/* Indie-Web / Mastodon rel=me verification */}
