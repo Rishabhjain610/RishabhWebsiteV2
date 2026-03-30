@@ -148,8 +148,11 @@ export const metadata: Metadata = {
     canonical: BASE_URL,
   },
 
+  // verification: {
+  //   google: "ePQ4UK9TXEBxEOSROIEgx7FOv86l425KO6qU8J6kGE4",
+  // },
   verification: {
-    google: "ePQ4UK9TXEBxEOSROIEgx7FOv86l425KO6qU8J6kGE4",
+    google: "TtCVRJScD-UOsCl5zgJf3NL2maM07UtsS2-WAKXzDao",
   },
 
   icons: {
