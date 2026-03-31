@@ -54,40 +54,15 @@ export const metadata: Metadata = {
     "Rishabh Jain is a Mumbai-based Full Stack Developer specialising in React, Next.js, Node.js and MongoDB. Building scalable web apps, SaaS products, and AI-integrated solutions. Open for freelance & internship opportunities.",
 
   keywords: [
-    "Rishabh Jain",
     "Rishabh Jain TSEC",
-    "Rishabh Jain Mumbai",
-    "Rishabh Jain Navi Mumbai",
-    "Rishabh Jain GDG TSEC",
     "Rishabh Jain Full Stack Developer",
-    "Full Stack Developer Mumbai",
-    "MERN Stack Developer India",
+    "MERN Stack Developer Mumbai",
     "Next.js Developer India",
-    "React Developer Mumbai",
-    "Node.js Backend Developer",
-    "MongoDB Developer",
-    "TypeScript Developer India",
-    "Freelance Full Stack Developer India",
-    "Hire MERN Stack Developer",
-    "Hire Next.js Developer India",
-    "SaaS Application Developer",
-    "Startup MVP Developer India",
-    "AI Integrated Web Applications",
-    "REST API Development India",
-    "Vercel Deployment Expert",
-    "Scalable Web Application Developer",
-    "React TypeScript Developer",
-    "Express.js Developer",
-    "Custom Web Application Developer",
-    "Remote Full Stack Developer India",
-    "Portfolio Website Developer",
-    "Admin Dashboard Developer",
-    "Real Time Web Application Developer",
-    "Affordable Full Stack Developer India",
-    "SEO Optimised Website Developer",
-    "Production Ready Web Applications",
-    "GDG on Campus TSEC",
-    "Thadomal Shahani Engineering College Developer",
+    "React Developer",
+    "Full Stack Developer India",
+    "Freelance Web Developer",
+    "Node.js MongoDB Expert",
+    "TypeScript React Developer",
   ],
 
   authors: [{ name: "Rishabh Jain", url: BASE_URL }],
@@ -98,17 +73,19 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
+      noimageindex: false,
     },
   },
 
   openGraph: {
-    title: "Rishabh Jain — Full Stack Developer | MERN & Next.js",
+    title: "Rishabh Jain — Full Stack Developer",
     description:
       "Mumbai-based Full Stack Developer building scalable web apps with React, Next.js, Node.js & MongoDB. Open for freelance & internship opportunities.",
     url: BASE_URL,
@@ -128,7 +105,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Rishabh Jain — Full Stack Developer | MERN & Next.js",
+    title: "Rishabh Jain — Full Stack Developer",
     description:
       "Mumbai-based Full Stack Developer building scalable web apps with React, Next.js, Node.js & MongoDB.",
     creator: "@rishabhjain610",
@@ -179,6 +156,8 @@ export const metadata: Metadata = {
       },
       { url: "/icon1.png", type: "image/png", sizes: "96x96" },
     ],
+
+    referrer: "strict-origin-when-cross-origin",
     apple: "/apple-icon.png",
     other: [{ rel: "mask-icon", url: "/favicon-dark.svg", color: "#4A90E2" }],
   },
@@ -194,14 +173,22 @@ const personJsonLd = {
   jobTitle: "Full Stack Developer",
   description:
     "Full Stack Developer specialising in React, Next.js, Node.js and MongoDB. Building scalable web apps and AI-integrated solutions from Mumbai, India.",
+  image: `${BASE_URL}/LogoLight.png`,
   knowsAbout: [
     "React",
     "Next.js",
     "Node.js",
     "MongoDB",
     "TypeScript",
+    "AI Agents",
     "Full Stack Development",
+    "SaaS Development",
+    "AI Integration",
   ],
+  worksFor: {
+    "@type": "Organization",
+    name: "Freelance",
+  },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Mumbai",
@@ -214,6 +201,12 @@ const personJsonLd = {
     "https://twitter.com/rishabhjain610",
     "https://instagram.com/rishabh_jain610",
   ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "Business",
+    email: "rishabhjainwork1@gmail.com",
+    availableLanguage: ["en"],
+  },
 };
 
 const websiteJsonLd = {
@@ -225,7 +218,10 @@ const websiteJsonLd = {
   author: { "@type": "Person", "@id": `${BASE_URL}/#person` },
   description:
     "Portfolio of Rishabh Jain — Full Stack Developer based in Mumbai, India.",
-  // Enables Google Sitelinks search box (bonus SEO)
+  inLanguage: "en",
+  isPartOf: {
+    "@id": `${BASE_URL}/#person`,
+  },
   potentialAction: {
     "@type": "SearchAction",
     target: {
@@ -234,6 +230,37 @@ const websiteJsonLd = {
     },
     "query-input": "required name=search_term_string",
   },
+};
+
+const breadcrumbListJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: `${BASE_URL}`,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "About",
+      item: `${BASE_URL}/#about`,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Projects",
+      item: `${BASE_URL}/#projects`,
+    },
+    {
+      "@type": "ListItem",
+      position: 4,
+      name: "Contact",
+      item: `${BASE_URL}/#contact`,
+    },
+  ],
 };
 
 // ─── Layout ──────────────────────────────────────────────────────────────────
@@ -248,19 +275,53 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={spaceGrotesk.variable}>
       <head>
+        {/* Performance & SEO Optimization Meta Tags */}
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="description"
+          content="Rishabh Jain is a Mumbai-based Full Stack Developer specialising in React, Next.js, Node.js and MongoDB."
+        />
+        <meta name="color-scheme" content="light dark" />
+        <meta name="supported-color-schemes" content="light dark" />
+
         {/*
-          PERF FIX: preconnect tells the browser to open TCP+TLS connections to
-          these origins before they're actually needed — saves ~200–400ms on
-          font and analytics loads.
+          PERF: Critical resource hints - tells browser to establish early
+          connections and prefetch critical assets before they're needed.
+          Saves ~100-200ms on font loading and analytics initialization.
         */}
         <link rel="preload" href="/LogoDark.png" as="image" type="image/png" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
+          rel="preload"
+          href="/LogoLight.png"
+          as="image"
+          type="image/png"
+          media="(prefers-co- Multiple schemas for rich snippets */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbListJsonLd),
+         
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+        {/* LCP Optimization - Preload critical images */}
+        <link
+          rel="prefetch"
+          href="/icon1.png"
+          as="image"
+          type="image/png"
+          importance="high"
+        />
 
         {/* Indie-Web / Mastodon rel=me verification */}
         <link rel="me" href="https://github.com/Rishabhjain610" />
@@ -289,6 +350,10 @@ export default async function RootLayout({
             <link rel="canonical" href={BASE_URL} />
           </>
         )}
+
+        {/* CWV Optimization - Add performance hints for browser */}
+        <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
       </head>
 
       <body className="antialiased">
