@@ -156,11 +156,10 @@ export const metadata: Metadata = {
       },
       { url: "/icon1.png", type: "image/png", sizes: "96x96" },
     ],
-
-    referrer: "strict-origin-when-cross-origin",
     apple: "/apple-icon.png",
     other: [{ rel: "mask-icon", url: "/favicon-dark.svg", color: "#4A90E2" }],
   },
+  referrer: "strict-origin-when-cross-origin",
 };
 
 // ─── Structured Data ─────────────────────────────────────────────────────────
