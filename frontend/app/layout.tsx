@@ -296,7 +296,10 @@ export default async function RootLayout({
           href="/LogoLight.png"
           as="image"
           type="image/png"
-          media="(prefers-co- Multiple schemas for rich snippets */}
+          media="(prefers-color-scheme: light)"
+        />
+
+        {/* Multiple schemas for rich snippets */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -309,7 +312,8 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(breadcrumbListJsonLd),
-         
+          }}
+        />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
@@ -352,8 +356,16 @@ export default async function RootLayout({
         )}
 
         {/* CWV Optimization - Add performance hints for browser */}
-        <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta
+          name="theme-color"
+          content="#0a0a0a"
+          media="(prefers-color-scheme: dark)"
+        />
+        <meta
+          name="theme-color"
+          content="#ffffff"
+          media="(prefers-color-scheme: light)"
+        />
       </head>
 
       <body className="antialiased">
