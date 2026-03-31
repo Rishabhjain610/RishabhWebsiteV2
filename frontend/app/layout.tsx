@@ -323,7 +323,6 @@ export default async function RootLayout({
           href="/icon1.png"
           as="image"
           type="image/png"
-          importance="high"
         />
 
         {/* Indie-Web / Mastodon rel=me verification */}
