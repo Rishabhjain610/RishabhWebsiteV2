@@ -66,7 +66,7 @@ const podium: Achievement[] = [
     organizer: "GDG-RGMCET",
     date: "2026",
     images: [
-      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1772135106/Collab_Coders_Challenge2ND_rdlt6b.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1775486570/CodeCollab_beu5cp.png",
     ],
   },
   
