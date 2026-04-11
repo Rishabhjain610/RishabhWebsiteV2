@@ -10,6 +10,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Space_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
+import LoadingScreen from "./components/LoadingScreen";
 
 // ─── Font ────────────────────────────────────────────────────────────────────
 const spaceGrotesk = Space_Grotesk({
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
   // specific ones get used in snippets and attract more qualified clicks.
   description:
     "Rishabh Jain is a Mumbai-based Full Stack Developer and Agentic AI builder " +
-    "specialising in React, Next.js, Node.js, and MongoDB. 6× hackathon winner at TSEC " +
+    "specialising in React, Next.js, Node.js, and MongoDB. 7× hackathon winner at TSEC " +
     "building scalable web apps, SaaS products, and LLM-integrated solutions. " +
     "Open for internship and freelance opportunities.",
 
@@ -102,7 +103,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rishabh Jain — Full Stack Developer",
     description:
-      "Mumbai-based Full Stack Developer and 6× hackathon winner building scalable " +
+      "Mumbai-based Full Stack Developer and 7× hackathon winner building scalable " +
       "web apps and LLM-integrated solutions with React, Next.js, Node.js & MongoDB.",
     url: BASE_URL,
     siteName: "Rishabh Jain",
@@ -126,7 +127,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rishabh Jain — Full Stack Developer",
     description:
-      "Mumbai-based Full Stack Developer and 6× hackathon winner building scalable " +
+      "Mumbai-based Full Stack Developer and 7× hackathon winner building scalable " +
       "web apps and LLM-integrated solutions with React, Next.js, Node.js & MongoDB.",
     creator: "@rishabhjain610",
     images: ["/LogoLight.png"],
@@ -191,7 +192,7 @@ const personJsonLd = {
   jobTitle: "Full Stack Developer",
   description:
     "Full Stack Developer and Agentic AI builder specialising in React, Next.js, " +
-    "Node.js and MongoDB. 6× hackathon winner building scalable web apps and " +
+    "Node.js and MongoDB. 7× hackathon winner building scalable web apps and " +
     "LLM-integrated solutions from Mumbai, India.",
   image: `${BASE_URL}/LogoLight.png`,
   knowsAbout: [
@@ -297,7 +298,7 @@ const profilePageJsonLd = {
   mainEntity: { "@type": "Person", "@id": `${BASE_URL}/#person` },
   description:
     "Personal portfolio of Rishabh Jain — Full Stack Developer and Agentic AI builder " +
-    "based in Mumbai, India. 6× hackathon winner at TSEC.",
+    "based in Mumbai, India. 7× hackathon winner at TSEC.",
   inLanguage: "en",
 };
 
@@ -393,6 +394,7 @@ export default async function RootLayout({
       </head>
 
       <body className="antialiased">
+        <LoadingScreen />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

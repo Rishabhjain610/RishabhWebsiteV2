@@ -337,14 +337,20 @@ const Achievements = () => {
   const { resolvedTheme } = useTheme();
   const dark = mounted && resolvedTheme === "dark";
 
-  React.useEffect(() => setMounted(true), []);
+  const [isLoading, setIsLoading] = useState(true);
+
+  React.useEffect(() => {
+    setMounted(true);
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggle = (key: string) =>
     setExpandedKey((p) => (p === key ? null : key));
 
   const stats = [
     { icon: IoFlame, label: "Hackathons", value: "30+" },
-    { icon: IoTrophy, label: "Wins", value: "6" },
+    { icon: IoTrophy, label: "Wins", value: "7" },
     { icon: IoMedal, label: "Finalist", value: "12+" },
   ];
 
@@ -392,12 +398,6 @@ const Achievements = () => {
             </span>
           </h2>
 
-          <div className="flex justify-center lg:justify-start">
-            <div
-              className="h-[2px] w-14 rounded-full"
-              style={{ backgroundColor: ACCENT, opacity: 0.45 }}
-            />
-          </div>
         </motion.div>
 
         {/* Stats Grid */}
@@ -413,46 +413,40 @@ const Achievements = () => {
               key={label}
               variants={itemVariant}
               suppressHydrationWarning
-              className="p-4 rounded-xl border text-center transition-all duration-300"
-              style={{
-                backgroundColor: dark
-                  ? "rgba(74,144,226,0.05)"
-                  : "rgba(74,144,226,0.08)",
-                borderColor: dark ? accentRgba(0.14) : "rgba(74,144,226,0.2)",
-              }}
+              className="group p-5 rounded-2xl border
+                         transition-all duration-300 hover:-translate-y-1
+                         bg-white dark:bg-transparent backdrop-blur-md cursor-default text-center"
+              style={{ borderColor: accentRgba(0.12) }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = dark
-                  ? accentRgba(0.28)
-                  : "rgba(74,144,226,0.3)";
+                (e.currentTarget as HTMLElement).style.borderColor =
+                  accentRgba(0.3);
+                (e.currentTarget as HTMLElement).style.boxShadow =
+                  `0 8px 32px ${accentRgba(0.07)}`;
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = dark
-                  ? accentRgba(0.14)
-                  : "rgba(74,144,226,0.2)";
+                (e.currentTarget as HTMLElement).style.borderColor =
+                  accentRgba(0.12);
+                (e.currentTarget as HTMLElement).style.boxShadow = "none";
               }}
             >
               <div
-                className="p-2 rounded-lg w-fit mx-auto mb-2"
-                style={{
-                  backgroundColor: dark
-                    ? accentRgba(0.1)
-                    : "rgba(74,144,226,0.12)",
-                }}
+                className="p-2 rounded-xl w-fit mx-auto mb-3 relative z-10 
+                           bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5"
               >
-                <Icon size={16} style={{ color: ACCENT }} />
+                <Icon size={18} style={{ color: ACCENT }} />
               </div>
-              <p
-                className="text-xl font-bold font-spaceGrotesk"
-                style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}
-              >
-                {value}
+              <p className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] font-spaceGrotesk h-8 sm:h-9 flex items-center justify-center">
+                {isLoading ? (
+                  <span className="w-5 h-5 border-2 border-[#4A90E2]/30 border-t-[#4A90E2] rounded-full animate-spin" />
+                ) : (
+                  value
+                )}
               </p>
-              <p
-                className="text-xs font-spaceGrotesk uppercase tracking-widest mt-1"
-                style={{ color: dark ? "#8b949e" : "#666" }}
-              >
-                {label}
-              </p>
+              <div className="flex flex-col mt-2 gap-0.5">
+                <p className="text-[10px] sm:text-[11px] font-spaceGrotesk text-[#555] dark:text-[#999] uppercase tracking-widest font-bold">
+                  {label}
+                </p>
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -479,7 +473,7 @@ const Achievements = () => {
                 className="text-xs font-bold font-spaceGrotesk px-2 py-0.5 rounded-md whitespace-nowrap"
                 style={{ backgroundColor: accentRgba(0.1), color: ACCENT }}
               >
-                6 wins
+                7 wins
               </span>
             </motion.div>
             <motion.div
@@ -601,9 +595,9 @@ const Achievements = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
                 transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                src={lightbox}
+                src={lightbox || undefined}
                 alt="Certificate"
-                className="max-w-[95%] max-h-[75vh] object-contain rounded-xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] border border-white/5] mt-12"
+                className="max-w-[95%] max-h-[75vh] object-contain rounded-xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] border border-white/5 mt-12"
                 onClick={(e) => e.stopPropagation()}
               />
             </motion.div>
