@@ -46,7 +46,7 @@ const socials = [
   {
     name: "LeetCode",
     icon: SiLeetcode,
-    href: "https://leetcode.com/u/8R0zDy20qw/",
+    href: "https://leetcode.com/u/8R0zDy20qwa/",
   },
 ];
 
