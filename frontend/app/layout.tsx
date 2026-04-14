@@ -111,9 +111,9 @@ export const metadata: Metadata = {
     // A logo at the wrong aspect ratio looks broken on LinkedIn/WhatsApp previews.
     images: [
       {
-        url: "/web-app-manifest-192x192.png",
-        width: 192,
-        height: 192,
+        url: "/resized_og.png",
+        width: 1200,
+        height: 630,
         alt: "Rishabh Jain — Full Stack Developer",
         type: "image/png",
       },
@@ -129,7 +129,7 @@ export const metadata: Metadata = {
       "Mumbai-based Full Stack Developer and 7× hackathon winner building scalable " +
       "web apps and LLM-integrated solutions with React, Next.js, Node.js & MongoDB.",
     creator: "@rishabhjain610",
-    images: ["/web-app-manifest-192x192.png"],
+    images: ["/resized_og.png"],
   },
 
   appleWebApp: {
