@@ -109,12 +109,11 @@ export const metadata: Metadata = {
     siteName: "Rishabh Jain",
     // TODO: Replace /og-image.png with a proper 1200×630 card image.
     // A logo at the wrong aspect ratio looks broken on LinkedIn/WhatsApp previews.
-    // Create one at: https://og-playground.vercel.app or use next/og at /api/og.
     images: [
       {
-        url: "/LogoLight.png",
-        width: 1200,
-        height: 630,
+        url: "/web-app-manifest-192x192.png",
+        width: 192,
+        height: 192,
         alt: "Rishabh Jain — Full Stack Developer",
         type: "image/png",
       },
@@ -130,7 +129,7 @@ export const metadata: Metadata = {
       "Mumbai-based Full Stack Developer and 7× hackathon winner building scalable " +
       "web apps and LLM-integrated solutions with React, Next.js, Node.js & MongoDB.",
     creator: "@rishabhjain610",
-    images: ["/LogoLight.png"],
+    images: ["/web-app-manifest-192x192.png"],
   },
 
   appleWebApp: {
