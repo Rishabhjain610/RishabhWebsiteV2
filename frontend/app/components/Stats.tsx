@@ -40,7 +40,7 @@ const ACCENT = "#4A90E2";
 const accentRgba = (a: number) => `rgba(74, 144, 226, ${a})`;
 
 const GITHUB_USERNAME = "Rishabhjain610";
-const CACHE_KEY = "gh-stats-v4-cache";
+const CACHE_KEY = "gh-stats-v8-cache";
 const CACHE_TTL = 3600 * 1000 * 24; // 24 hours
 
 /* ─── Types ─── */
@@ -964,7 +964,6 @@ const Stats = () => {
                 </div>
               </div>
             </div>
-
             <div className="mt-8 flex items-center justify-between">
               <a
                 href={`https://github.com/${GITHUB_USERNAME}`}
@@ -1108,7 +1107,14 @@ const Stats = () => {
                       cx="50%"
                       cy="50%"
                       outerRadius="80%"
-                      data={stats.contributionTypes || []}
+                      data={
+                        stats.contributionTypes?.map((t) => ({
+                          name: t.name,
+                          actualValue: t.value,
+                          // Use log scale (+1 to avoid log(0)) to prevent Commits from squashing PRs/Issues
+                          value: Math.log10(t.value + 1),
+                        })) || []
+                      }
                     >
                       <PolarGrid stroke="rgba(128,128,128,0.25)" />
                       <PolarAngleAxis
@@ -1133,7 +1139,11 @@ const Stats = () => {
                           fontSize: "11px",
                           padding: "8px 12px",
                         }}
-                        formatter={(value) => [value, "Intensity"]}
+                        // Display the actual true value instead of the logarithmic scale value
+                        formatter={(_value, _name, props) => [
+                          props.payload.actualValue,
+                          "Total Count",
+                        ]}
                       />
                     </RadarChart>
                   </ResponsiveContainer>

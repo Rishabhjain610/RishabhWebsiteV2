@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+// Allow the serverless function to run for up to 60 seconds (prevents Vercel 10s timeouts)
+export const maxDuration = 60;
+
 const DEFAULT_USERNAME = "Rishabhjain610";
 const TOKEN = process.env.GITHUB_TOKEN;
 
@@ -15,8 +18,8 @@ query($username: String!, $from: DateTime!, $to: DateTime!) {
     followers { totalCount }
     following { totalCount }
 
-    # Top 20 repositories with commit history (for charts)
-    topRepos: repositories(first: 20, ownerAffiliations: [OWNER], orderBy: {field: UPDATED_AT, direction: DESC}) {
+    # Top 45 repositories with commit history (for charts)
+    topRepos: repositories(first: 45, ownerAffiliations: [OWNER], orderBy: {field: UPDATED_AT, direction: DESC}) {
       nodes {
         name
         stargazerCount
@@ -33,10 +36,10 @@ query($username: String!, $from: DateTime!, $to: DateTime!) {
         defaultBranchRef {
           target {
             ... on Commit {
-              history(first: 10) {
+              history(first: 20) {
                 nodes {
                   committedDate
-                  author { user { login } }
+                  author { user { login } name }
                 }
               }
             }
@@ -171,6 +174,7 @@ async function handleRequest(username: string, from: string, to: string, refresh
     });
 
     const languagesMap: Record<string, number> = {};
+    const commitLanguagesMap: Record<string, number> = {};
     const commitHourMap: Record<number, number> = {};
     const commitDayMap: Record<number, number> = {};
 
@@ -193,17 +197,31 @@ async function handleRequest(username: string, from: string, to: string, refresh
 
       // Commits distribution
       const commits = repo.defaultBranchRef?.target?.history?.nodes || [];
-      commits.forEach((commit: any) => {
-        if (commit.author?.user?.login === username) {
-          const date = new Date(commit.committedDate);
-          // IST (+5:30)
-          const hour = (date.getUTCHours() + 5) % 24; 
-          const day = date.getUTCDay();
+      const fromDate = new Date(from);
+      const toDate = new Date(to);
 
-          commitHourMap[hour] = (commitHourMap[hour] || 0) + 1;
-          commitDayMap[day] = (commitDayMap[day] || 0) + 1;
+      let userCommitsInRepo = 0;
+
+      commits.forEach((commit: any) => {
+        const isUser = commit.author?.user?.login?.toLowerCase() === username.toLowerCase() || commit.author?.name?.toLowerCase() === username.toLowerCase() || commit.author?.name?.toLowerCase().includes("rishabh");
+        if (isUser) {
+          const date = new Date(commit.committedDate);
+          if (date >= fromDate && date <= toDate) {
+            userCommitsInRepo++;
+            // IST (+5:30)
+            const hour = (date.getUTCHours() + 5) % 24; 
+            const day = date.getUTCDay();
+
+            commitHourMap[hour] = (commitHourMap[hour] || 0) + 1;
+            commitDayMap[day] = (commitDayMap[day] || 0) + 1;
+          }
         }
       });
+
+      if (userCommitsInRepo > 0 && repo.languages?.edges?.length > 0) {
+        const primaryLang = repo.languages.edges[0].node.name;
+        commitLanguagesMap[primaryLang] = (commitLanguagesMap[primaryLang] || 0) + userCommitsInRepo;
+      }
     });
 
     const totalWeight = Object.values(languagesMap).reduce((a, b) => a + b, 0);
@@ -211,6 +229,15 @@ async function handleRequest(username: string, from: string, to: string, refresh
       .map(([name, weight]) => ({
         name,
         percentage: totalWeight > 0 ? Math.round((weight / totalWeight) * 1000) / 10 : 0,
+      }))
+      .sort((a, b) => b.percentage - a.percentage)
+      .slice(0, 10);
+
+    const totalCommitWeight = Object.values(commitLanguagesMap).reduce((a, b) => a + b, 0);
+    const topLanguagesByCommit = Object.entries(commitLanguagesMap)
+      .map(([name, weight]) => ({
+        name,
+        percentage: totalCommitWeight > 0 ? Math.round((weight / totalCommitWeight) * 1000) / 10 : 0,
       }))
       .sort((a, b) => b.percentage - a.percentage)
       .slice(0, 10);
@@ -285,6 +312,7 @@ async function handleRequest(username: string, from: string, to: string, refresh
       totalContributions: user.contributions?.contributionCalendar?.totalContributions || 0,
       dailyContributions,
       topLanguages,
+      topLanguagesByCommit,
       commitsByHour,
       commitsByDay,
       streaks: {
