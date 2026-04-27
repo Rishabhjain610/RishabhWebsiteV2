@@ -107,13 +107,13 @@ export const metadata: Metadata = {
       "web apps and LLM-integrated solutions with React, Next.js, Node.js & MongoDB.",
     url: BASE_URL,
     siteName: "Rishabh Jain",
-    // TODO: Replace /og-image.png with a proper 1200×630 card image.
-    // A logo at the wrong aspect ratio looks broken on LinkedIn/WhatsApp previews.
+    // NOTE: 192×192 is a square app icon — dimensions reflect the real file.
+    // For a proper OG preview card, create a dedicated 1200×630 image.
     images: [
       {
-        url: "/resized_og.png",
-        width: 1200,
-        height: 630,
+        url: "/web-app-manifest-192x192.png",
+        width: 192,
+        height: 192,
         alt: "Rishabh Jain — Full Stack Developer",
         type: "image/png",
       },
@@ -129,7 +129,7 @@ export const metadata: Metadata = {
       "Mumbai-based Full Stack Developer and 7× hackathon winner building scalable " +
       "web apps and LLM-integrated solutions with React, Next.js, Node.js & MongoDB.",
     creator: "@rishabhjain610",
-    images: ["/resized_og.png"],
+    images: ["/web-app-manifest-192x192.png"],
   },
 
   appleWebApp: {
@@ -205,6 +205,33 @@ const personJsonLd = {
     "Full Stack Development",
     "SaaS Development",
     "AI Integration",
+    "Python",
+    "Express.js",
+    "Tailwind CSS",
+    "Docker",
+    "Git",
+  ],
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Thadomal Shahani Engineering College",
+    url: "https://tsec.edu",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Mumbai",
+      addressRegion: "Maharashtra",
+      addressCountry: "IN",
+    },
+  },
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "degree",
+      name: "B.E. in Computer Engineering",
+      recognizedBy: {
+        "@type": "CollegeOrUniversity",
+        name: "Thadomal Shahani Engineering College",
+      },
+    },
   ],
   worksFor: {
     "@type": "Organization",
@@ -226,7 +253,7 @@ const personJsonLd = {
     "@type": "ContactPoint",
     contactType: "Business",
     email: "rishabhjainwork1@gmail.com",
-    availableLanguage: ["en"],
+    availableLanguage: ["en", "hi"],
   },
 };
 
@@ -273,12 +300,30 @@ const breadcrumbListJsonLd = {
     {
       "@type": "ListItem",
       position: 3,
+      name: "Skills",
+      item: `${BASE_URL}/#skills`,
+    },
+    {
+      "@type": "ListItem",
+      position: 4,
       name: "Projects",
       item: `${BASE_URL}/#projects`,
     },
     {
       "@type": "ListItem",
-      position: 4,
+      position: 5,
+      name: "Work Experience",
+      item: `${BASE_URL}/#work`,
+    },
+    {
+      "@type": "ListItem",
+      position: 6,
+      name: "Achievements",
+      item: `${BASE_URL}/#achievements`,
+    },
+    {
+      "@type": "ListItem",
+      position: 7,
       name: "Contact",
       item: `${BASE_URL}/#contact`,
     },

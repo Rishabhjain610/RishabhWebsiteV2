@@ -358,13 +358,13 @@ const LandingPage = () => {
 
       {/* ═══ RIGHT – TERMINAL ═══ */}
       <div
-        className="w-full max-w-xl lg:flex-1 relative z-10 mt-8 lg:mt-0 rounded-2xl overflow-hidden font-mono text-sm select-text"
+        className="w-full max-w-xl lg:flex-1 relative z-10 mt-8 lg:mt-0 rounded-2xl overflow-hidden font-mono text-sm select-text shadow-2xl transition-all duration-300 hover:shadow-[#4A90E2]/20"
         style={{
-          backgroundColor: "#0d1117",
-          border: "1px solid rgba(74,144,226,0.25)",
-
-          /* fix: pre-allocate full height so terminal never grows */
-          height: "460px",
+          background: "linear-gradient(145deg, rgba(13,17,23,0.95) 0%, rgba(22,27,34,0.98) 100%)",
+          backdropFilter: "blur(12px)",
+          border: "1px solid rgba(74,144,226,0.2)",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.4), 0 0 40px rgba(74,144,226,0.1)",
+          height: "min(460px, 60vh)", // Responsive height
           display: "flex",
           flexDirection: "column",
         }}
@@ -372,10 +372,9 @@ const LandingPage = () => {
       >
         {/* title bar */}
         <div
-          className="flex items-center gap-2 px-5 py-3.5 border-b select-none flex-shrink-0"
+          className="flex items-center gap-2 px-4 py-3 border-b select-none flex-shrink-0 bg-[#0d1117]/60"
           style={{
-            backgroundColor: "#161b22",
-            borderColor: "rgba(74,144,226,0.15)",
+            borderColor: "rgba(74,144,226,0.1)",
           }}
         >
           <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
@@ -445,11 +444,10 @@ const LandingPage = () => {
 
         {/* status bar */}
         <div
-          className="flex items-center justify-between px-5 py-2.5 border-t text-[11px] select-none flex-shrink-0"
+          className="flex items-center justify-between px-4 py-2 border-t text-[10px] sm:text-[11px] select-none flex-shrink-0 bg-[#0d1117]/60"
           style={{
-            backgroundColor: "#161b22",
-            borderColor: "rgba(74,144,226,0.15)",
-            color: "#6e7681",
+            borderColor: "rgba(74,144,226,0.1)",
+            color: "#8b949e",
           }}
         >
           <span>

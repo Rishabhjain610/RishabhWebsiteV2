@@ -36,6 +36,7 @@ import {
   SiCloudinary,
   SiAmazonwebservices,
   SiRender,
+  SiLangchain,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 
@@ -126,6 +127,12 @@ const categories: { label: string; skills: Skill[] }[] = [
         name: "Vercel AI SDK",
         icon: SiVercel,
         color: "#000000",
+        glowColor: "#9CA3AF",
+      },
+      {
+        name: "LangChain JS",
+        icon: SiLangchain,
+        color: "#1C3C3C", // LangChain color
         glowColor: "#9CA3AF",
       },
     ],
