@@ -79,7 +79,7 @@ const experiences: Experience[] = [
     bullets: [
       "Engineered the **GDG-TSEC** community platform and **HackSync 2.0** website using **Next.js**, **Shadcn UI**, and **Framer Motion**, serving **400+** active users.",
       "Spearheaded **MockUp**, a 5-hour frontend hackathon for **150+** participants, securing snack sponsorships and managing end-to-end event logistics.",
-      "Mentored **50+** participants on UI/UX best practices, **API integration**, and frontend development during live hackathons.",
+      "Mentored **50+** participants during **MockUp** hackathon across domains of **AR**, **Frontend**, and **Backend** development, guiding teams on UI/UX best practices, API integration, and implementation strategies.",
       "Scaled event registrations to **700+** via strategic PR campaigns and secured technical sponsorships from **Devfolio** and **InterviewBuddy**.",
       "Earned **19 Google Cloud** skill badges and coached **30+** students through GCP learning paths and cloud infrastructure fundamental.",
     ],
