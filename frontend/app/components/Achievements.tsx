@@ -51,6 +51,15 @@ const podium: Achievement[] = [
     ],
   },
   {
+    placement: "🥇 1st Place",
+    hackathon: "Google Techspirint Hackathon — GDG FET JU",
+    organizer: "GDG — FET JU",
+    date: "2026",
+    images: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1781606941/FETJU_lgyvlb.png",
+    ],
+  },
+  {
     placement: "🥈 2nd Place",
     hackathon: "DevSprint NEHU Hackathon",
     organizer: "GDG – NEHU",

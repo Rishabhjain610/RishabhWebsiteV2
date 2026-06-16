@@ -37,6 +37,9 @@ import {
   SiAmazonwebservices,
   SiRender,
   SiLangchain,
+  SiRedis,
+  SiDocker,
+  SiNginx,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa";
 
@@ -110,6 +113,7 @@ const categories: { label: string; skills: Skill[] }[] = [
       { name: "MySQL", icon: SiMysql, color: "#00758F" },
       { name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
       { name: "Firebase", icon: IoLogoFirebase, color: "#FFCA28" },
+      { name: "Redis", icon: SiRedis, color: "#DC382D" },
     ],
   },
   {
@@ -130,7 +134,7 @@ const categories: { label: string; skills: Skill[] }[] = [
         glowColor: "#9CA3AF",
       },
       {
-        name: "LangChain JS",
+        name: "LangChain",
         icon: SiLangchain,
         color: "#1C3C3C", // LangChain color
         glowColor: "#9CA3AF",
@@ -141,8 +145,10 @@ const categories: { label: string; skills: Skill[] }[] = [
     label: "Cloud & DevOps",
     skills: [
       { name: "Google Cloud", icon: SiGooglecloud, color: "#4285F4" },
-      { name: "AWS (Learning)", icon: SiAmazonwebservices, color: "#FF9900" },
+      { name: "AWS", icon: SiAmazonwebservices, color: "#FF9900" },
       { name: "Render", icon: SiRender, color: "#46E3B7" },
+      { name: "Docker", icon: SiDocker, color: "#2496ED" },
+      { name: "Nginx", icon: SiNginx, color: "#009639" },
     ],
   },
   {
