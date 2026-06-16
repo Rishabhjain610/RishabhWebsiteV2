@@ -58,11 +58,12 @@ const experiences: Experience[] = [
     period: "Feb 2026 – Present",
     current: true,
     bullets: [
-      "Engineered an automated utility management system using **Next.js**, **Express**, and **MongoDB** for **20** metro stations, replacing legacy manual auditing.",
-      "Architected a hierarchical Role-Based Access Control (**RBAC**) system for Station Controllers, Admins, and SuperAdmins to manage stations and commercial stalls.",
-      "Integrated a **Flutter-based** mobile module for Station Controllers to perform **QR-based** meter scanning and real-time data synchronization.",
-      "Streamlined the audit workflow by developing **RESTful APIs** and integrating **jsPDF** for automated scan-to-verify-to-approve billing.",
-      "Designed a centralized dashboard in **TypeScript** for SuperAdmins to dynamically scale the network by onboarding new stations and retail stalls.",
+      "Engineered an enterprise utility billing and monitoring platform for **34** metro stations and **159** vendor stalls using **Next.js**, **Express.js**, and **MongoDB Atlas**, automating electricity consumption auditing and **ExcelJS**-powered invoice generation workflows, reducing manual bill generation efforts from **4 days to a few hours**.",
+      "Designed hierarchical **MongoDB** schemas representing Metro Lines, Stations, Vendor Stalls, Bills, and Controllers; built analytical dashboards using aggregation pipelines and interactive visualizations to support utility reporting and operational decision-making.",
+      "Implemented secure **Role-Based Access Control (RBAC)** with **JWT** authentication, audit logging, and duplicate-billing safeguards to ensure reliable, traceable, and secure billing operations across all metro stations.",
+      "Developed and maintained **75 RESTful APIs** spanning authentication, billing, analytics, reporting, station management, approvals, and administrative workflows, enabling end-to-end digital management of utility operations.",
+      "Benchmarked enterprise APIs using **Autocannon**, achieving **~52 ms** average authentication latency and **~192 req/sec** throughput under simulated workloads, establishing quantified performance baselines.",
+      "Coordinated requirement gathering, testing, issue resolution, and production rollout with **30+** Station Controllers across metro stations, ensuring smooth adoption and successful deployment of the platform.",
     ],
   },
   {
