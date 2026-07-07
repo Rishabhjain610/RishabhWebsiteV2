@@ -110,9 +110,9 @@ export const metadata: Metadata = {
     // For a proper OG preview card, create a dedicated 1200×630 image.
     images: [
       {
-        url: "/web-app-manifest-192x192.png",
-        width: 192,
-        height: 192,
+        url: "/api/og-image",
+        width: 1200,
+        height: 630,
         alt: "Rishabh Jain — Full Stack Developer",
         type: "image/png",
       },
