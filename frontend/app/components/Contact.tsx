@@ -13,6 +13,7 @@ import {
 } from "react-icons/io5";
 import { SiLeetcode } from "react-icons/si";
 import { useTheme } from "next-themes";
+import { CodolioIcon } from "./Links";
 import emailjs from "@emailjs/browser";
 import { Globe3D, type GlobeMarker } from "@/components/ui/3d-globe";
 
@@ -46,7 +47,7 @@ const socials = [
   },
   {
     name: "Codolio",
-    icon: IoCode,
+    icon: CodolioIcon,
     href: "https://codolio.com/profile/rishabhjain610",
   },
   {

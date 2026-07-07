@@ -245,8 +245,8 @@ const GitHubHeatmap = ({
   };
 
   // Build the grid
-  const weeks: { date: string; count: number }[][] = [];
-  let currentWeek: { date: string; count: number }[] = [];
+  const weeks: ({ date: string; count: number } | null)[][] = [];
+  let currentWeek: ({ date: string; count: number } | null)[] = Array(7).fill(null);
   const monthLabels: { name: string; weekIndex: number }[] = [];
   let lastMonth = -1;
 
@@ -257,20 +257,36 @@ const GitHubHeatmap = ({
     y: number;
   } | null>(null);
 
-  contributions.forEach((day, i) => {
-    currentWeek.push(day);
-    if (currentWeek.length === 7 || i === contributions.length - 1) {
-      const date = new Date(day.date);
-      const month = date.getMonth();
+  contributions.forEach((day) => {
+    const date = new Date(day.date);
+    const dayOfWeek = date.getUTCDay(); // 0 is Sunday, 6 is Saturday
+    
+    currentWeek[dayOfWeek] = day;
+    
+    // If it is Saturday (6), we push the week and start a new one
+    if (dayOfWeek === 6) {
+      weeks.push(currentWeek);
+      currentWeek = Array(7).fill(null);
+    }
+  });
+  
+  if (currentWeek.some(d => d !== null)) {
+    weeks.push(currentWeek);
+  }
+
+  // Generate month labels aligned with columns
+  weeks.forEach((week, weekIndex) => {
+    const firstDay = week.find(d => d !== null);
+    if (firstDay) {
+      const date = new Date(firstDay.date);
+      const month = date.getUTCMonth();
       if (month !== lastMonth) {
         monthLabels.push({
-          name: date.toLocaleString("default", { month: "short" }),
-          weekIndex: weeks.length,
+          name: date.toLocaleString("default", { month: "short", timeZone: "UTC" }),
+          weekIndex: weekIndex,
         });
         lastMonth = month;
       }
-      weeks.push(currentWeek);
-      currentWeek = [];
     }
   });
 
@@ -355,26 +371,36 @@ const GitHubHeatmap = ({
             <div className="flex gap-1.5 ml-1">
               {weeks.map((week, wi) => (
                 <div key={wi} className="flex flex-col gap-1.5">
-                  {week.map((day, di) => (
-                    <div
-                      key={di}
-                      onMouseEnter={(e) => {
-                        const rect = e.currentTarget.getBoundingClientRect();
-                        const parentRect =
-                          e.currentTarget.parentElement?.parentElement?.parentElement?.parentElement?.getBoundingClientRect();
-                        if (parentRect) {
-                          setHoveredDay({
-                            date: day.date,
-                            count: day.count,
-                            x: rect.left - parentRect.left + rect.width / 2,
-                            y: rect.top - parentRect.top,
-                          });
-                        }
-                      }}
-                      onMouseLeave={() => setHoveredDay(null)}
-                      className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${getLevel(day.count)} ${loading ? "opacity-20 blur-[1px]" : "opacity-90 hover:opacity-100 hover:scale-110"} border border-white/5 cursor-pointer shadow-sm relative`}
-                    />
-                  ))}
+                  {week.map((day, di) => {
+                    if (!day) {
+                      return (
+                        <div
+                          key={di}
+                          className="w-2.5 h-2.5 rounded-full opacity-0 pointer-events-none"
+                        />
+                      );
+                    }
+                    return (
+                      <div
+                        key={di}
+                        onMouseEnter={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const parentRect =
+                            e.currentTarget.parentElement?.parentElement?.parentElement?.parentElement?.getBoundingClientRect();
+                          if (parentRect) {
+                            setHoveredDay({
+                              date: day.date,
+                              count: day.count,
+                              x: rect.left - parentRect.left + rect.width / 2,
+                              y: rect.top - parentRect.top,
+                            });
+                          }
+                        }}
+                        onMouseLeave={() => setHoveredDay(null)}
+                        className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${getLevel(day.count)} ${loading ? "opacity-20 blur-[1px]" : "opacity-90 hover:opacity-100 hover:scale-110"} border border-white/5 cursor-pointer shadow-sm relative`}
+                      />
+                    );
+                  })}
                 </div>
               ))}
             </div>

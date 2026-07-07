@@ -10,6 +10,9 @@ import {
   IoChevronDown,
   IoChevronUp,
   IoClose,
+  IoImageOutline,
+  IoChevronBack,
+  IoChevronForward,
 } from "react-icons/io5";
 
 const ACCENT = "#4A90E2";
@@ -381,13 +384,37 @@ const AchievementCard = ({
 
 const Achievements = () => {
   const [expandedKey, setExpandedKey] = useState<string | null>(null);
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null);
   const [mounted, setMounted] = React.useState(false);
   const { resolvedTheme } = useTheme();
   const dark = mounted && resolvedTheme === "dark";
 
   const [isLoading, setIsLoading] = useState(true);
-  const [momentsExpanded, setMomentsExpanded] = useState(false);
+
+  const handleOpenLightbox = (src: string) => {
+    const moments = [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461670/Screenshot_20260708_032425_LinkedIn_jtkzoh.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461668/Screenshot_20260708_032421_LinkedIn_ujruoj.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461666/Screenshot_20260708_032401_LinkedIn_suurzz.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461580/Screenshot_20260708_032322_LinkedIn_ondm3n.jpg"
+    ];
+    const idx = moments.indexOf(src);
+    setLightbox({ images: moments, index: idx >= 0 ? idx : 0 });
+  };
+
+  const handleOpenMoments = (startIndex: number = 0) => {
+    const moments = [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461670/Screenshot_20260708_032425_LinkedIn_jtkzoh.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461668/Screenshot_20260708_032421_LinkedIn_ujruoj.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461666/Screenshot_20260708_032401_LinkedIn_suurzz.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461580/Screenshot_20260708_032322_LinkedIn_ondm3n.jpg"
+    ];
+    setLightbox({ images: moments, index: startIndex });
+  };
 
   React.useEffect(() => {
     setMounted(true);
@@ -499,6 +526,41 @@ const Achievements = () => {
               </div>
             </motion.div>
           ))}
+
+          {/* Hackathon Moments Toggle Card */}
+          <motion.div
+            variants={itemVariant}
+            suppressHydrationWarning
+            className="group p-5 rounded-2xl border
+                       transition-all duration-300 hover:-translate-y-1
+                       bg-white dark:bg-transparent backdrop-blur-md cursor-pointer text-center"
+            style={{ borderColor: accentRgba(0.12) }}
+            onClick={() => handleOpenMoments(0)}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.borderColor = ACCENT;
+              (e.currentTarget as HTMLElement).style.boxShadow =
+                `0 8px 32px ${accentRgba(0.07)}`;
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.borderColor = accentRgba(0.12);
+              (e.currentTarget as HTMLElement).style.boxShadow = "none";
+            }}
+          >
+            <div
+              className="p-2 rounded-xl w-fit mx-auto mb-3 relative z-10 
+                         bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5"
+            >
+              <IoImageOutline size={18} style={{ color: ACCENT }} />
+            </div>
+            <p className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#E0E0E0] font-spaceGrotesk h-8 sm:h-9 flex items-center justify-center">
+              Gallery
+            </p>
+            <div className="flex flex-col mt-2 gap-0.5">
+              <p className="text-[10px] sm:text-[11px] font-spaceGrotesk text-[#555] dark:text-[#999] uppercase tracking-widest font-bold">
+                6 Moments
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Three Column Layout */}
@@ -539,7 +601,7 @@ const Achievements = () => {
                   a={a}
                   expanded={expandedKey === a.hackathon}
                   onToggle={() => toggle(a.hackathon)}
-                  onImageClick={setLightbox}
+                  onImageClick={handleOpenLightbox}
                   dark={dark}
                 />
               ))}
@@ -586,7 +648,7 @@ const Achievements = () => {
                     a={a}
                     expanded={expandedKey === a.hackathon}
                     onToggle={() => toggle(a.hackathon)}
-                    onImageClick={setLightbox}
+                    onImageClick={handleOpenLightbox}
                     dark={dark}
                   />
                 ))}
@@ -606,7 +668,7 @@ const Achievements = () => {
                     a={a}
                     expanded={expandedKey === a.hackathon}
                     onToggle={() => toggle(a.hackathon)}
-                    onImageClick={setLightbox}
+                    onImageClick={handleOpenLightbox}
                     dark={dark}
                   />
                 ))}
@@ -615,124 +677,7 @@ const Achievements = () => {
           </div>
         </div>
 
-        {/* Hackathon Moments Gallery */}
-        <div className="mt-16 pt-12 border-t border-white/[0.06] dark:border-white/[0.08]">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={vp}
-            className="flex items-center gap-2 mb-6 justify-center lg:justify-start"
-          >
-            <IoFlame size={16} style={{ color: ACCENT }} />
-            <h3
-              className="text-lg font-bold font-spaceGrotesk"
-              style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}
-            >
-              Hackathon Moments
-            </h3>
-          </motion.div>
 
-          <motion.div
-            variants={itemVariant}
-            suppressHydrationWarning
-            className="rounded-xl border overflow-hidden transition-all duration-300 cursor-pointer"
-            style={{
-              backgroundColor: dark
-                ? "rgba(255,255,255,0.02)"
-                : "rgba(74,144,226,0.04)",
-              borderColor: dark ? accentRgba(0.12) : "rgba(74,144,226,0.15)",
-            }}
-            onClick={() => setMomentsExpanded(!momentsExpanded)}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor = dark
-                ? accentRgba(0.28)
-                : "rgba(74,144,226,0.25)";
-              (e.currentTarget as HTMLElement).style.backgroundColor = dark
-                ? "rgba(255,255,255,0.04)"
-                : "rgba(74,144,226,0.06)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.borderColor = dark
-                ? accentRgba(0.12)
-                : "rgba(74,144,226,0.15)";
-              (e.currentTarget as HTMLElement).style.backgroundColor = dark
-                ? "rgba(255,255,255,0.02)"
-                : "rgba(74,144,226,0.04)";
-            }}
-          >
-            <div className="flex items-center justify-between p-4">
-              <div className="flex items-center gap-3">
-                <div
-                  className="p-2 rounded-lg"
-                  style={{ background: `${ACCENT}15` }}
-                >
-                  <IoFlame size={16} style={{ color: ACCENT }} />
-                </div>
-                <span
-                  className="text-sm font-bold font-spaceGrotesk"
-                  style={{ color: dark ? "#c9d1d9" : "#1A1A1A" }}
-                >
-                  View Hackathon Gallery (6 photos)
-                </span>
-              </div>
-              <div
-                className="p-1.5 rounded-lg"
-                style={{ backgroundColor: accentRgba(0.08) }}
-              >
-                {momentsExpanded ? (
-                  <IoChevronUp size={14} style={{ color: ACCENT }} />
-                ) : (
-                  <IoChevronDown size={14} style={{ color: ACCENT }} />
-                )}
-              </div>
-            </div>
-
-            <AnimatePresence>
-              {momentsExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
-                  className="overflow-hidden"
-                >
-                  <div
-                    className="px-4 pb-4 border-t"
-                    style={{
-                      borderColor: dark ? accentRgba(0.08) : "rgba(74,144,226,0.12)",
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 mt-3">
-                      {[
-                        "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg",
-                        "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg",
-                        "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461670/Screenshot_20260708_032425_LinkedIn_jtkzoh.jpg",
-                        "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461668/Screenshot_20260708_032421_LinkedIn_ujruoj.jpg",
-                        "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461666/Screenshot_20260708_032401_LinkedIn_suurzz.jpg",
-                        "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461580/Screenshot_20260708_032322_LinkedIn_ondm3n.jpg"
-                      ].map((src, i) => (
-                        <div
-                          key={i}
-                          className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center border-white/[0.08] dark:border-white/[0.12] hover:scale-[1.02] transition-transform duration-200"
-                        >
-                          <img
-                            src={src}
-                            alt={`Hackathon Moment ${i + 1}`}
-                            className="w-full h-auto object-contain cursor-zoom-in hover:opacity-85 transition-opacity"
-                            loading="lazy"
-                            onClick={() => setLightbox(src)}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
 
         {/* Lightbox Modal */}
         <AnimatePresence>
@@ -741,34 +686,85 @@ const Achievements = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[999] flex items-center justify-center bg-black/95 backdrop-blur-xl cursor-zoom-out p-4 sm:p-8"
               onClick={() => setLightbox(null)}
+              className="fixed inset-0 z-[999] flex flex-col items-center justify-center p-4 sm:p-6"
+              style={{
+                background: "rgba(0,0,0,0.92)",
+                backdropFilter: "blur(12px)",
+              }}
             >
-              {/* Close Button */}
-              <button
-                className="fixed top-28 right-6 p-4 rounded-2xl bg-white/10 hover:bg-white/20 transition-all duration-200 z-[1000] border border-white/20 shadow-2xl backdrop-blur-2xl group active:scale-95"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLightbox(null);
-                }}
-              >
-                <IoClose
-                  size={32}
-                  className="text-white group-hover:scale-110 transition-transform"
-                />
-              </button>
-
-              <motion.img
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                src={lightbox || undefined}
-                alt="Certificate"
-                className="max-w-[95%] max-h-[75vh] object-contain rounded-xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] border border-white/5 mt-12"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
                 onClick={(e) => e.stopPropagation()}
-              />
+                className="relative max-w-4xl w-full flex flex-col items-center gap-4 mt-8"
+              >
+                {/* Close Button */}
+                <button
+                  onClick={() => setLightbox(null)}
+                  className="absolute -top-12 right-0 p-2.5 rounded-full text-white/70 hover:text-white transition-colors duration-200 cursor-pointer bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md"
+                >
+                  <IoClose size={22} />
+                </button>
+
+                {/* Main Content Container */}
+                <div className="relative bg-neutral-950/40 border border-white/10 rounded-2xl overflow-hidden max-h-[75vh] w-full flex items-center justify-center shadow-2xl">
+                  <img
+                    src={lightbox.images[lightbox.index]}
+                    alt={`Moment page ${lightbox.index + 1}`}
+                    className="max-w-full max-h-[70vh] object-contain block select-none"
+                  />
+
+                  {/* Navigation controls */}
+                  {lightbox.images.length > 1 && (
+                    <>
+                      {/* Prev Button */}
+                      <button
+                        onClick={() =>
+                          setLightbox((prev) =>
+                            prev
+                              ? {
+                                  ...prev,
+                                  index:
+                                    (prev.index - 1 + prev.images.length) %
+                                    prev.images.length,
+                                }
+                              : null
+                          )
+                        }
+                        className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 border border-white/10 transition-all duration-200 cursor-pointer active:scale-95 z-20"
+                      >
+                        <IoChevronBack size={20} />
+                      </button>
+
+                      {/* Next Button */}
+                      <button
+                        onClick={() =>
+                          setLightbox((prev) =>
+                            prev
+                              ? {
+                                  ...prev,
+                                  index: (prev.index + 1) % prev.images.length,
+                                }
+                              : null
+                          )
+                        }
+                        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 border border-white/10 transition-all duration-200 cursor-pointer active:scale-95 z-20"
+                      >
+                        <IoChevronForward size={20} />
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                {/* Carousel page indicator */}
+                {lightbox.images.length > 1 && (
+                  <div className="text-white/60 font-spaceGrotesk text-xs bg-black/40 px-3.5 py-1.5 rounded-full border border-white/5 backdrop-blur-md">
+                    Moment {lightbox.index + 1} of {lightbox.images.length}
+                  </div>
+                )}
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

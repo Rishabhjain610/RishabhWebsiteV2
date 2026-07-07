@@ -470,34 +470,31 @@ const Work = () => {
                     {/* Certificates */}
                     {exp.certificates && exp.certificates.length > 0 && (
                       <div className="flex flex-wrap gap-2.5 mt-4 pt-3 border-t border-white/[0.04] dark:border-white/[0.06]">
-                        {exp.certificates.map((cert, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setSelectedCert({ images: exp.certificates!, index })}
-                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold
-                                       font-spaceGrotesk transition-all duration-300 border cursor-pointer"
-                            style={{
-                              background: "rgba(74,144,226,0.06)",
-                              color: "#4A90E2",
-                              borderColor: "rgba(74,144,226,0.15)",
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.background = "rgba(74,144,226,0.12)";
-                              e.currentTarget.style.borderColor = "rgba(74,144,226,0.3)";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.background = "rgba(74,144,226,0.06)";
-                              e.currentTarget.style.borderColor = "rgba(74,144,226,0.15)";
-                            }}
-                          >
-                            <IoRibbonOutline size={13} />
-                            <span>
-                              {exp.certificates!.length > 1
-                                ? `Certificate (Page ${index + 1})`
-                                : "View Certificate"}
-                            </span>
-                          </button>
-                        ))}
+                        <button
+                          onClick={() => setSelectedCert({ images: exp.certificates!, index: 0 })}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold
+                                     font-spaceGrotesk transition-all duration-300 border cursor-pointer"
+                          style={{
+                            background: "rgba(74,144,226,0.06)",
+                            color: "#4A90E2",
+                            borderColor: "rgba(74,144,226,0.15)",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "rgba(74,144,226,0.12)";
+                            e.currentTarget.style.borderColor = "rgba(74,144,226,0.3)";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "rgba(74,144,226,0.06)";
+                            e.currentTarget.style.borderColor = "rgba(74,144,226,0.15)";
+                          }}
+                        >
+                          <IoRibbonOutline size={13} />
+                          <span>
+                            {exp.certificates!.length > 1
+                              ? "View Certificates"
+                              : "View Certificate"}
+                          </span>
+                        </button>
                       </div>
                     )}
                   </div>

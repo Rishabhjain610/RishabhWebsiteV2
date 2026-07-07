@@ -209,8 +209,9 @@ async function handleRequest(username: string, from: string, to: string, refresh
           if (date >= fromDate && date <= toDate) {
             userCommitsInRepo++;
             // IST (+5:30)
-            const hour = (date.getUTCHours() + 5) % 24; 
-            const day = date.getUTCDay();
+            const istDate = new Date(date.getTime() + 330 * 60 * 1000);
+            const hour = istDate.getUTCHours();
+            const day = istDate.getUTCDay();
 
             commitHourMap[hour] = (commitHourMap[hour] || 0) + 1;
             commitDayMap[day] = (commitDayMap[day] || 0) + 1;
