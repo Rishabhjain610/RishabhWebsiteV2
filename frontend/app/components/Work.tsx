@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import {
   IoBriefcase,
@@ -8,6 +8,10 @@ import {
   IoGlobe,
   IoMegaphone,
   IoServer,
+  IoRibbonOutline,
+  IoCloseOutline,
+  IoChevronBack,
+  IoChevronForward,
 } from "react-icons/io5";
 
 /* ─── Accent — consistent with LandingPage + About + Project ─── */
@@ -44,6 +48,7 @@ interface Experience {
   duration?: string;
   current?: boolean;
   bullets: string[];
+  certificates?: string[];
 }
 
 const experiences: Experience[] = [
@@ -51,19 +56,26 @@ const experiences: Experience[] = [
     icon: IoServer,
     iconType: "image",
     iconSrc: "/mumbaimetro1.png",
-    role: "Software Development Engineer and Testing Intern",
+    role: "SDE Intern",
     type: "Internship",
     company: "Maha Mumbai Metro Operations Corporation Limited",
     location: "Mumbai, IN",
-    period: "Feb 2026 – Present",
+    period: "Jan 2026 – Present",
     current: true,
     bullets: [
-      "Engineered an enterprise utility billing and monitoring platform for **34** metro stations and **159** vendor stalls using **Next.js**, **Express.js**, and **MongoDB Atlas**, automating electricity consumption auditing and **ExcelJS**-powered invoice generation workflows, reducing manual bill generation efforts from **4 days to a few hours**.",
+      "Engineered an enterprise app and web platform for **Vendor Compliance and Billing** across **34** metro stations and **159** vendor stalls using **Next.js**, **Express.js**, and **MongoDB Atlas**, developing **139 APIs** and **22 MongoDB models**.",
+      "Reduced electric bill generation time from **4 days to 3 hours** by replacing manual processes with a custom software utility; automated vendor compliance using **cron jobs**, **Google Drive API**, **Nodemailer**, secure **OTP-based password reset**, and **ExcelJS** invoice generation.",
+      "Optimized database performance with **15+ indexes**, **offset pagination**, and **query projections** for rapid retrieval, slashing query response times on high-volume operational reads.",
       "Designed hierarchical **MongoDB** schemas representing Metro Lines, Stations, Vendor Stalls, Bills, and Controllers; built analytical dashboards using aggregation pipelines and interactive visualizations to support utility reporting and operational decision-making.",
-      "Implemented secure **Role-Based Access Control (RBAC)** with **JWT** authentication, audit logging, and duplicate-billing safeguards to ensure reliable, traceable, and secure billing operations across all metro stations.",
-      "Developed and maintained **75 RESTful APIs** spanning authentication, billing, analytics, reporting, station management, approvals, and administrative workflows, enabling end-to-end digital management of utility operations.",
+      "Implemented secure **5-role Role-Based Access Control (RBAC)** with **JWT** authentication, audit logging, and duplicate-billing safeguards to ensure reliable, traceable, and secure billing operations.",
       "Benchmarked enterprise APIs using **Autocannon**, achieving **~52 ms** average authentication latency and **~192 req/sec** throughput under simulated workloads, establishing quantified performance baselines.",
-      "Coordinated requirement gathering, testing, issue resolution, and production rollout with **30+** Station Controllers across metro stations, ensuring smooth adoption and successful deployment of the platform.",
+      "Led stakeholder management and coordinated requirement gathering, testing, and production rollout with **30+ Station Controllers** across metro stations, ensuring smooth adoption and deployment.",
+    ],
+    certificates: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459079/Apreciation_e62ady.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459079/offerletter_r45dzc.jpg",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459943/file_00000000d88871faa794df40d609f4a1_yuof5e.png",
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459941/153835_rpdccu.jpg",
     ],
   },
   {
@@ -83,6 +95,9 @@ const experiences: Experience[] = [
       "Scaled event registrations to **700+** via strategic PR campaigns and secured technical sponsorships from **Devfolio** and **InterviewBuddy**.",
       "Earned **19 Google Cloud** skill badges and coached **30+** students through GCP learning paths and cloud infrastructure fundamental.",
     ],
+    certificates: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459357/LOA_Mentoring_c25op9.jpg",
+    ],
   },
   {
     icon: IoServer,
@@ -98,6 +113,9 @@ const experiences: Experience[] = [
       "Engineered an automated inventory and **sales analytics** system for a sweetshop using **Next.js**, **Supabase**, and **Chart.js**, leading a team of three.",
       "Developed a real-time database architecture with **Supabase** for live inventory tracking and responsive UI using **Tailwind CSS**.",
       "Managed client-facing requirements to translate business needs into technical specifications and seamless support.",
+    ],
+    certificates: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459153/Completion_Certificate_jlskwp.png",
     ],
   },
   {
@@ -116,6 +134,9 @@ const experiences: Experience[] = [
       "Managed and coordinated with a team of **10+** members to streamline outreach and ensure consistent student support.",
       "Helped students secure admissions in top Mumbai and Pune engineering colleges including VJTI, SPIT, and DJSCE.",
     ],
+    certificates: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459128/RishabhCertificateof_completion_zrzevc.jpg",
+    ],
   },
   {
     icon: IoGlobe,
@@ -132,6 +153,9 @@ const experiences: Experience[] = [
       "Optimized performance, leading to **100+** new visitors per month.",
       "Developed dynamic React.js components for better engagement.",
       "Collaborated with teams for seamless UI integration.",
+    ],
+    certificates: [
+      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459299/Screenshot_2026-07-08_025126_gkyffh.png",
     ],
   },
   {
@@ -220,6 +244,7 @@ const cardSlide = {
 /* ═══════════════════════════════════════════════ */
 
 const Work = () => {
+  const [selectedCert, setSelectedCert] = useState<{ images: string[]; index: number } | null>(null);
   return (
     <section
       id="experience"
@@ -441,6 +466,40 @@ const Work = () => {
                         );
                       })}
                     </ul>
+
+                    {/* Certificates */}
+                    {exp.certificates && exp.certificates.length > 0 && (
+                      <div className="flex flex-wrap gap-2.5 mt-4 pt-3 border-t border-white/[0.04] dark:border-white/[0.06]">
+                        {exp.certificates.map((cert, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setSelectedCert({ images: exp.certificates!, index })}
+                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold
+                                       font-spaceGrotesk transition-all duration-300 border cursor-pointer"
+                            style={{
+                              background: "rgba(74,144,226,0.06)",
+                              color: "#4A90E2",
+                              borderColor: "rgba(74,144,226,0.15)",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = "rgba(74,144,226,0.12)";
+                              e.currentTarget.style.borderColor = "rgba(74,144,226,0.3)";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = "rgba(74,144,226,0.06)";
+                              e.currentTarget.style.borderColor = "rgba(74,144,226,0.15)";
+                            }}
+                          >
+                            <IoRibbonOutline size={13} />
+                            <span>
+                              {exp.certificates!.length > 1
+                                ? `Certificate (Page ${index + 1})`
+                                : "View Certificate"}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               );
@@ -448,6 +507,95 @@ const Work = () => {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedCert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedCert(null)}
+            className="fixed inset-0 z-[999] flex flex-col items-center justify-center p-4 sm:p-6"
+            style={{
+              background: "rgba(0,0,0,0.85)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-4xl w-full flex flex-col items-center gap-4"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedCert(null)}
+                className="absolute -top-12 right-0 p-2 rounded-full text-white/70 hover:text-white transition-colors duration-200 cursor-pointer bg-black/40 border-0"
+              >
+                <IoCloseOutline size={24} />
+              </button>
+
+              {/* Certificate Image */}
+              <div className="relative bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden max-h-[80vh] w-full flex items-center justify-center shadow-2xl">
+                <img
+                  src={selectedCert.images[selectedCert.index]}
+                  alt={`Certificate page ${selectedCert.index + 1}`}
+                  className="max-w-full max-h-[75vh] object-contain block"
+                />
+
+                {/* Navigation for multiple pages */}
+                {selectedCert.images.length > 1 && (
+                  <>
+                    {/* Prev Button */}
+                    <button
+                      onClick={() =>
+                        setSelectedCert((prev) =>
+                          prev
+                            ? {
+                                ...prev,
+                                index:
+                                  (prev.index - 1 + prev.images.length) %
+                                  prev.images.length,
+                              }
+                            : null
+                        )
+                      }
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 transition-all duration-200 cursor-pointer border-0"
+                    >
+                      <IoChevronBack size={20} />
+                    </button>
+
+                    {/* Next Button */}
+                    <button
+                      onClick={() =>
+                        setSelectedCert((prev) =>
+                          prev
+                            ? {
+                                ...prev,
+                                index: (prev.index + 1) % prev.images.length,
+                              }
+                            : null
+                        )
+                      }
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 transition-all duration-200 cursor-pointer border-0"
+                    >
+                      <IoChevronForward size={20} />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Page indicator */}
+              {selectedCert.images.length > 1 && (
+                <div className="text-white/60 font-spaceGrotesk text-xs">
+                  Page {selectedCert.index + 1} of {selectedCert.images.length}
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

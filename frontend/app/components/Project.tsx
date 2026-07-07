@@ -18,12 +18,51 @@ interface Project {
   tags: string[];
   features: string[];
   videoUrl: string;
+  videoUrls?: string[];
   githubUrl: string;
   liveUrl?: string;
 }
 
 /* ─── Data ─── */
 const projects: Project[] = [
+  {
+    title: "VibeShare 2.0",
+    titleParts: ["Vibe", "Share 2.0"],
+    description:
+      "High-performance, Next.js 15 social networking platform engineered for sub-millisecond data availability and autonomous hub-and-spoke AI multi-agent orchestration.",
+    tags: [
+      "Next.js 15",
+      "TypeScript",
+      "Vercel AI SDK",
+      "PostgreSQL",
+      "Prisma ORM",
+      "Redis Cache",
+      "Socket.io",
+      "Tailwind CSS",
+      "Redux Toolkit",
+      "Docker Compose",
+      "Recharts",
+      "Groq Cloud",
+      "Ollama",
+      "AWS S3",
+    ],
+    features: [
+      "Hub-and-Spoke AI Multi-Agent Orchestration via Vercel AI SDK",
+      "Zod-Validated Planner Hub for intent routing and classification",
+      "Resilient Fallback Stack: Groq (Qwen 3.6-27B) & Local Ollama (minimax-m3)",
+      "Sub-Millisecond Reads via Lazy-Loaded Redis Cache-Aside Matrix (21ms - 37ms)",
+      "B-Tree DB Index scans dropping user entity lookups to 43 microseconds",
+      "Instant Direct Messaging via Socket.io custom Next.js event loop binding",
+      "Prisma Thread-Starvation Defenses (max: 10, 5000ms connection timeout)",
+      "Smart Conversational Summarizer with regex-based Chain-of-Thought filtering",
+      "Fixed-Window Redis Rate Limiting (ratelimit:<route>:<ip>) with fail-open safety",
+      "Docker Compose Topology with host machine loopback for Ollama endpoints",
+      "AWS S3-Backed Media Pipeline supporting direct buffers and presigned URLs",
+      "Atomic likes & comments using composite userId_postId database constraints",
+    ],
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460246/vibeshare2_changed_1_b2ci7l.mp4",
+    githubUrl: "https://github.com/Rishabhjain610/VibeShare",
+  },
   {
     title: "EduWorld",
     titleParts: ["Edu", "World"],
@@ -72,7 +111,12 @@ const projects: Project[] = [
       "E-Library — Google Books API search & previews",
       "AI Search Agent — Google Search + Qwen480 summarizer",
     ],
-    videoUrl: "/assets/EduWorld.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460261/EduWorld_y3mwr6.mp4",
+    videoUrls: [
+      "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460261/EduWorld_y3mwr6.mp4",
+      "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460670/502894133-b2e87bf2-b533-4dac-9170-add400a8bdde_efkovg.mp4",
+      "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460697/553685053-85e9f5cc-3e66-463c-aba8-f83790d13572_p60rp0.mp4",
+    ],
     githubUrl: "https://github.com/Rishabhjain610/EduworldFinal",
   },
   {
@@ -113,37 +157,8 @@ const projects: Project[] = [
       "Interactive Heatmaps — Geographic incident density clustering",
       "Request Management — Formal resource request & approval",
     ],
-    videoUrl: "/assets/CrisesConnect.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460381/CrisesConnect_hkoplq.mp4",
     githubUrl: "https://github.com/Atharva1318-dev/CrisisConnect",
-  },
-  {
-    title: "VibeShare",
-    titleParts: ["Vibe", "Share"],
-    description:
-      "Dynamic MERN stack social media platform with real-time messaging, reels, stories, and AI chat summarization.",
-    tags: [
-      "React JS",
-      "Node JS",
-      "Express JS",
-      "MongoDB",
-      "Socket.IO",
-      "Tailwind CSS",
-      "GPT-OSS 120B",
-    ],
-    features: [
-      "Create text posts, upload reels, and share stories",
-      "Story Analytics — See who viewed your story",
-      "Like, comment, save posts with real-time notifications",
-      "Customizable user profiles with media gallery",
-      "Follow/Unfollow system to curate your feed",
-      "One-to-one & Group chats with zero latency",
-      "Typing indicators & Online/Offline status",
-      "Group management with admin privileges",
-      "AI Chat Summarizer (GPT-OSS 120B)",
-      "JWT Auth with OTP-based password recovery",
-    ],
-    videoUrl: "/assets/Vibeshare.mp4",
-    githubUrl: "https://github.com/Rishabhjain610/VibeShare",
   },
   {
     title: "ShopNest",
@@ -174,8 +189,37 @@ const projects: Project[] = [
       "Analytics Dashboard — Geography, Demographics, Category",
       "Responsive design across all devices",
     ],
-    videoUrl: "/assets/ShopNestdemo.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460256/ShopNestdemo_t0mnpw.mp4",
     githubUrl: "https://github.com/Rishabhjain610/ShopNest",
+  },
+  {
+    title: "VibeShare",
+    titleParts: ["Vibe", "Share"],
+    description:
+      "Dynamic MERN stack social media platform with real-time messaging, reels, stories, and AI chat summarization.",
+    tags: [
+      "React JS",
+      "Node JS",
+      "Express JS",
+      "MongoDB",
+      "Socket.IO",
+      "Tailwind CSS",
+      "GPT-OSS 120B",
+    ],
+    features: [
+      "Create text posts, upload reels, and share stories",
+      "Story Analytics — See who viewed your story",
+      "Like, comment, save posts with real-time notifications",
+      "Customizable user profiles with media gallery",
+      "Follow/Unfollow system to curate your feed",
+      "One-to-one & Group chats with zero latency",
+      "Typing indicators & Online/Offline status",
+      "Group management with admin privileges",
+      "AI Chat Summarizer (GPT-OSS 120B)",
+      "JWT Auth with OTP-based password recovery",
+    ],
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460245/Vibeshare_yuhtov.mp4",
+    githubUrl: "https://github.com/Rishabhjain610/VibeShare",
   },
   {
     title: "ClearChat",
@@ -206,7 +250,7 @@ const projects: Project[] = [
       "Toast Notifications for actions & errors",
       "Responsive UI built with Tailwind CSS",
     ],
-    videoUrl: "/assets/clearchat.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460224/clearchat_jdiwky.mp4",
     githubUrl: "https://github.com/Rishabhjain610/ClearChat",
   },
   {
@@ -231,7 +275,7 @@ const projects: Project[] = [
       "CORS enabled for smooth communication",
       "Fully Responsive — Optimized for all screen sizes",
     ],
-    videoUrl: "/assets/taskify.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460254/taskify_x3jkss.mp4",
     githubUrl: "https://github.com/Rishabhjain610/Taskflow",
   },
   {
@@ -258,7 +302,7 @@ const projects: Project[] = [
       "CORS enabled for frontend-backend integration",
       "Fully Responsive across all devices",
     ],
-    videoUrl: "/assets/blogify.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460221/blogify_aga8w8.mp4",
     githubUrl: "https://github.com/Rishabhjain610/Blogify",
   },
   {
@@ -289,7 +333,7 @@ const projects: Project[] = [
       "Toast Notifications for user feedback",
       "Responsive Design with Tailwind CSS",
     ],
-    videoUrl: "/assets/AirBnb.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460222/AirBnb_qd7mxt.mp4",
     githubUrl: "https://github.com/Rishabhjain610/airBnb",
   },
   {
@@ -303,7 +347,7 @@ const projects: Project[] = [
       "AI Resume Builder — ATS-friendly PDF generation",
       "Job Search Portal — Listings tailored to your skills",
     ],
-    videoUrl: "/assets/JobPrep.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460388/JobPrep_ze2raa.mp4",
     githubUrl: "https://github.com/Rishabhjain610/Jobprepfinal",
   },
   {
@@ -319,7 +363,7 @@ const projects: Project[] = [
       "GSAP Scroll Effects — Parallax, car movement, fade-ins",
       "Desktop-first — High-end immersive experience",
     ],
-    videoUrl: "/assets/tesla.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460242/tesla_mcqove.mp4",
     githubUrl: "https://github.com/Rishabhjain610/tesla",
   },
   {
@@ -337,7 +381,7 @@ const projects: Project[] = [
       "Auto Timer — Test ends when time runs out",
       "Live Video Monitoring — Camera-based activity monitor",
     ],
-    videoUrl: "/assets/shiksha.mp4",
+    videoUrl: "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1783460253/shiksha_vjv21v.mp4",
     githubUrl: "https://github.com/Rishabhjain610/shiksha",
   },
 ];
@@ -582,12 +626,28 @@ const Project = () => {
   const { resolvedTheme } = useTheme();
   const dark = mounted && resolvedTheme === "dark";
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [activeVideoUrl, setActiveVideoUrl] = useState<string | null>(null);
 
   React.useEffect(() => setMounted(true), []);
 
+  const active = activeVideo
+    ? projects.find((p) => p.title === activeVideo)
+    : null;
+
   useEffect(() => {
-    if (activeVideo && videoRef.current) videoRef.current.play();
-  }, [activeVideo]);
+    if (active) {
+      setActiveVideoUrl(active.videoUrls ? active.videoUrls[0] : active.videoUrl);
+    } else {
+      setActiveVideoUrl(null);
+    }
+  }, [active]);
+
+  useEffect(() => {
+    if (activeVideoUrl && videoRef.current) {
+      videoRef.current.load();
+      videoRef.current.play().catch(() => {});
+    }
+  }, [activeVideoUrl]);
 
   useEffect(() => {
     const fn = (e: KeyboardEvent) => {
@@ -596,10 +656,6 @@ const Project = () => {
     window.addEventListener("keydown", fn);
     return () => window.removeEventListener("keydown", fn);
   }, []);
-
-  const active = activeVideo
-    ? projects.find((p) => p.title === activeVideo)
-    : null;
 
   return (
     <section
@@ -934,17 +990,36 @@ const Project = () => {
               >
                 
                 <div
-                  className="flex items-center justify-center border-b lg:border-b-0 lg:border-r border-white/[0.07]"
+                  className="relative flex items-center justify-center border-b lg:border-b-0 lg:border-r border-white/[0.07]"
                   style={{ flex: "1 1 65%", minHeight: "clamp(250px, 40vh, 450px)", background: "#000" }}
                 >
                   <video
                     ref={videoRef}
-                    src={active.videoUrl}
+                    src={activeVideoUrl || undefined}
                     controls
                     loop
                     muted
                     className="w-full h-full object-contain block"
                   />
+
+                  {active.videoUrls && active.videoUrls.length > 1 && (
+                    <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-1.5 sm:gap-2">
+                      {active.videoUrls.map((url, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setActiveVideoUrl(url)}
+                          className="px-3 py-1.5 rounded-lg text-xs font-bold font-spaceGrotesk transition-all duration-200 border cursor-pointer backdrop-blur-md shadow-lg active:scale-95"
+                          style={{
+                            background: activeVideoUrl === url ? "#4A90E2" : "rgba(0,0,0,0.7)",
+                            color: "#fff",
+                            borderColor: activeVideoUrl === url ? "#4A90E2" : "rgba(255,255,255,0.25)",
+                          }}
+                        >
+                          Version {idx + 1}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex-1 lg:flex-[0_0_35%] overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-5">

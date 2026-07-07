@@ -8,6 +8,7 @@ import {
   IoLogoInstagram,
   IoMailOutline,
   IoAdd,
+  IoCode,
 } from "react-icons/io5";
 import { SiLeetcode } from "react-icons/si";
 import { useTheme } from "next-themes";
@@ -34,7 +35,12 @@ const links = [
   {
     name: "LeetCode",
     icon: SiLeetcode,
-    href: "https://leetcode.com/u/8R0zDy20qwa/",
+    href: "https://leetcode.com/u/8R0zDy20qw/",
+  },
+  {
+    name: "Codolio",
+    icon: IoCode,
+    href: "https://codolio.com/profile/rishabhjain610",
   },
   {
     name: "Instagram",

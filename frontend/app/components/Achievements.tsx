@@ -302,12 +302,45 @@ const AchievementCard = ({
                 borderColor: dark ? accentRgba(0.08) : "rgba(74,144,226,0.12)",
               }}
             >
-              <div
-                className={`grid gap-2.5 mt-3 ${a.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
-              >
-                {a.images.map((src, i) => (
+              {/* Certificate Section */}
+              <div className="mt-3">
+                <p className="text-[9px] font-bold uppercase tracking-widest text-[#4A90E2]/85 font-spaceGrotesk mb-1.5">Certificate / Proof</p>
+                <div
+                  className={`grid gap-2.5 ${a.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
+                >
+                  {a.images.map((src, i) => (
+                    <div
+                      key={i}
+                      className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center"
+                      style={{
+                        borderColor: dark
+                          ? accentRgba(0.12)
+                          : "rgba(74,144,226,0.15)",
+                      }}
+                    >
+                      <img
+                        src={src}
+                        alt={`${a.hackathon} certificate ${i + 1}`}
+                        width="0"
+                        height="0"
+                        style={{ width: "100%", height: "auto" }}
+                        className="object-contain rounded-lg cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
+                        loading="lazy"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onImageClick(src);
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Hackathon Moments Section */}
+              <div className="mt-4 pt-3.5 border-t border-black/5 dark:border-white/5">
+                <p className="text-[9px] font-bold uppercase tracking-widest text-[#3fb950]/85 font-spaceGrotesk mb-1.5">Hackathon Moments</p>
+                <div className="grid grid-cols-2 gap-2.5">
                   <div
-                    key={i}
                     className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center"
                     style={{
                       borderColor: dark
@@ -316,20 +349,36 @@ const AchievementCard = ({
                     }}
                   >
                     <img
-                      src={src}
-                      alt={`${a.hackathon} certificate ${i + 1}`}
-                      width="0"
-                      height="0"
-                      style={{ width: "100%", height: "auto" }}
-                      className="object-contain rounded-lg cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
+                      src="https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg"
+                      alt="Hackathon Team Group"
+                      className="w-full h-auto object-contain cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
                       loading="lazy"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onImageClick(src);
+                        onImageClick("https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg");
                       }}
                     />
                   </div>
-                ))}
+                  <div
+                    className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center"
+                    style={{
+                      borderColor: dark
+                        ? accentRgba(0.12)
+                        : "rgba(74,144,226,0.15)",
+                    }}
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg"
+                      alt="Hackathon Solo Focus"
+                      className="w-full h-auto object-contain cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
+                      loading="lazy"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onImageClick("https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg");
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -571,6 +620,77 @@ const Achievements = () => {
                 ))}
               </motion.div>
             </div>
+          </div>
+        </div>
+
+        {/* Hackathon Moments Gallery */}
+        <div className="mt-16 pt-12 border-t border-white/[0.06] dark:border-white/[0.08]">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={vp}
+            className="flex items-center gap-2 mb-6 justify-center lg:justify-start"
+          >
+            <IoFlame size={16} style={{ color: ACCENT }} />
+            <h3
+              className="text-lg font-bold font-spaceGrotesk"
+              style={{ color: dark ? "#E0E0E0" : "#1A1A1A" }}
+            >
+              Hackathon Moments
+            </h3>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <motion.div
+              variants={itemVariant}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3 }}
+              className="rounded-2xl overflow-hidden border shadow-lg group relative cursor-zoom-in"
+              style={{
+                borderColor: dark ? accentRgba(0.12) : "rgba(74,144,226,0.15)",
+                background: dark ? "rgba(255,255,255,0.02)" : "rgba(74,144,226,0.04)"
+              }}
+              onClick={() => setLightbox("https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg")}
+            >
+              <div className="relative aspect-video w-full overflow-hidden">
+                <img
+                  src="https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg"
+                  alt="Team Collaboration"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <h4 className="font-bold text-sm sm:text-base font-spaceGrotesk">Team Work & Pitching</h4>
+                  <p className="text-[11px] sm:text-xs text-white/70 font-spaceGrotesk mt-0.5">Collaborating and pitching solutions in fast-paced Developer Group hackathons.</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariant}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.3 }}
+              className="rounded-2xl overflow-hidden border shadow-lg group relative cursor-zoom-in"
+              style={{
+                borderColor: dark ? accentRgba(0.12) : "rgba(74,144,226,0.15)",
+                background: dark ? "rgba(255,255,255,0.02)" : "rgba(74,144,226,0.04)"
+              }}
+              onClick={() => setLightbox("https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg")}
+            >
+              <div className="relative aspect-video w-full overflow-hidden">
+                <img
+                  src="https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg"
+                  alt="Solo Coding"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-90 transition-opacity duration-300" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <h4 className="font-bold text-sm sm:text-base font-spaceGrotesk">Focused Building Sessions</h4>
+                  <p className="text-[11px] sm:text-xs text-white/70 font-spaceGrotesk mt-0.5">Deep coding and designing system architectures in solo challenges.</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
 

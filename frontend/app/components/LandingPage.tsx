@@ -58,6 +58,7 @@ const commands: Record<string, { output: string[]; navigate?: string }> = {
       "  github       → open GitHub profile",
       "  linkedin     → open LinkedIn profile",
       "  leetcode     → open LeetCode profile",
+      "  codolio      → open Codolio profile",
       "  instagram    → open Instagram profile",
       "  clear        → clear terminal",
       "  help         → show this message",
@@ -89,6 +90,10 @@ const commands: Record<string, { output: string[]; navigate?: string }> = {
   leetcode: {
     output: ["Opening LeetCode..."],
     navigate: "https://leetcode.com/u/8R0zDy20qw/",
+  },
+  codolio: {
+    output: ["Opening Codolio..."],
+    navigate: "https://codolio.com/profile/rishabhjain610",
   },
   instagram: {
     output: ["Opening Instagram..."],

@@ -9,6 +9,7 @@ import {
   IoCheckmarkCircle,
   IoSend,
   IoClose,
+  IoCode,
 } from "react-icons/io5";
 import { SiLeetcode } from "react-icons/si";
 import { useTheme } from "next-themes";
@@ -39,14 +40,19 @@ const socials = [
     href: "https://www.linkedin.com/in/rishabhjain610/",
   },
   {
+    name: "LeetCode",
+    icon: SiLeetcode,
+    href: "https://leetcode.com/u/8R0zDy20qw/",
+  },
+  {
+    name: "Codolio",
+    icon: IoCode,
+    href: "https://codolio.com/profile/rishabhjain610",
+  },
+  {
     name: "Instagram",
     icon: IoLogoInstagram,
     href: "https://instagram.com/rishabh_jain610",
-  },
-  {
-    name: "LeetCode",
-    icon: SiLeetcode,
-    href: "https://leetcode.com/u/8R0zDy20qwa/",
   },
 ];
 
