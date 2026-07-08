@@ -205,15 +205,11 @@ const itemVariant = {
 
 const AchievementCard = ({
   a,
-  expanded,
-  onToggle,
   onImageClick,
   dark,
 }: {
   a: Achievement;
-  expanded: boolean;
-  onToggle: () => void;
-  onImageClick: (src: string) => void;
+  onImageClick: (images: string[], index: number) => void;
   dark: boolean;
 }) => {
   const color = medalColor(a.placement);
@@ -222,7 +218,7 @@ const AchievementCard = ({
     <motion.div
       variants={itemVariant}
       suppressHydrationWarning
-      className="rounded-xl border overflow-hidden transition-all duration-300 cursor-pointer"
+      className="group rounded-xl border overflow-hidden transition-all duration-300 cursor-pointer"
       style={{
         backgroundColor: dark
           ? "rgba(255,255,255,0.02)"
@@ -245,7 +241,7 @@ const AchievementCard = ({
           ? "rgba(255,255,255,0.02)"
           : "rgba(74,144,226,0.04)";
       }}
-      onClick={onToggle}
+      onClick={() => onImageClick(a.images, 0)}
     >
       <div className="flex items-center gap-3 p-4">
         <div
@@ -279,111 +275,17 @@ const AchievementCard = ({
         </div>
 
         <div
-          className="p-1.5 rounded-lg flex-shrink-0"
+          className="p-1.5 rounded-lg flex-shrink-0 transition-transform duration-200 group-hover:scale-110"
           style={{ backgroundColor: accentRgba(0.08) }}
         >
-          {expanded ? (
-            <IoChevronUp size={14} style={{ color: ACCENT }} />
-          ) : (
-            <IoChevronDown size={14} style={{ color: ACCENT }} />
-          )}
+          <IoImageOutline size={14} style={{ color: ACCENT }} />
         </div>
       </div>
-
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <div
-              className="px-4 pb-4 border-t"
-              style={{
-                borderColor: dark ? accentRgba(0.08) : "rgba(74,144,226,0.12)",
-              }}
-            >
-              {/* Certificate Section */}
-              <div className="mt-3">
-                <p className="text-[9px] font-bold uppercase tracking-widest text-[#4A90E2]/85 font-spaceGrotesk mb-1.5">Certificate / Proof</p>
-                <div
-                  className={`grid gap-2.5 ${a.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
-                >
-                  {a.images.map((src, i) => (
-                    <div
-                      key={i}
-                      className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center"
-                      style={{
-                        borderColor: dark
-                          ? accentRgba(0.12)
-                          : "rgba(74,144,226,0.15)",
-                      }}
-                    >
-                      <img
-                        src={src}
-                        alt={`${a.hackathon} certificate ${i + 1}`}
-                        width="0"
-                        height="0"
-                        style={{ width: "100%", height: "auto" }}
-                        className="object-contain rounded-lg cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
-                        loading="lazy"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onImageClick(src);
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Hackathon Moments Section */}
-              <div className="mt-4 pt-3.5 border-t border-black/5 dark:border-white/5">
-                <p className="text-[9px] font-bold uppercase tracking-widest text-[#3fb950]/85 font-spaceGrotesk mb-1.5">Hackathon Moments</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                  {[
-                    "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg",
-                    "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg",
-                    "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461670/Screenshot_20260708_032425_LinkedIn_jtkzoh.jpg",
-                    "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461668/Screenshot_20260708_032421_LinkedIn_ujruoj.jpg",
-                    "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461666/Screenshot_20260708_032401_LinkedIn_suurzz.jpg",
-                    "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461580/Screenshot_20260708_032322_LinkedIn_ondm3n.jpg"
-                  ].map((src, i) => (
-                    <div
-                      key={i}
-                      className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center"
-                      style={{
-                        borderColor: dark
-                          ? accentRgba(0.12)
-                          : "rgba(74,144,226,0.15)",
-                      }}
-                    >
-                      <img
-                        src={src}
-                        alt={`Hackathon Moment ${i + 1}`}
-                        className="w-full h-auto object-contain cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
-                        loading="lazy"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onImageClick(src);
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.div>
   );
 };
 
 const Achievements = () => {
-  const [expandedKey, setExpandedKey] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null);
   const [mounted, setMounted] = React.useState(false);
   const { resolvedTheme } = useTheme();
@@ -391,17 +293,8 @@ const Achievements = () => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const handleOpenLightbox = (src: string) => {
-    const moments = [
-      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonGroup_zd08dc.jpg",
-      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783459406/HackathonSolo_e47r5y.jpg",
-      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461670/Screenshot_20260708_032425_LinkedIn_jtkzoh.jpg",
-      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461668/Screenshot_20260708_032421_LinkedIn_ujruoj.jpg",
-      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461666/Screenshot_20260708_032401_LinkedIn_suurzz.jpg",
-      "https://res.cloudinary.com/dlmzjcc0o/image/upload/v1783461580/Screenshot_20260708_032322_LinkedIn_ondm3n.jpg"
-    ];
-    const idx = moments.indexOf(src);
-    setLightbox({ images: moments, index: idx >= 0 ? idx : 0 });
+  const handleOpenLightbox = (images: string[], index: number = 0) => {
+    setLightbox({ images, index });
   };
 
   const handleOpenMoments = (startIndex: number = 0) => {
@@ -421,9 +314,6 @@ const Achievements = () => {
     const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
-
-  const toggle = (key: string) =>
-    setExpandedKey((p) => (p === key ? null : key));
 
   const stats = [
     { icon: IoFlame, label: "Hackathons", value: "30+" },
@@ -599,8 +489,6 @@ const Achievements = () => {
                 <AchievementCard
                   key={a.hackathon}
                   a={a}
-                  expanded={expandedKey === a.hackathon}
-                  onToggle={() => toggle(a.hackathon)}
                   onImageClick={handleOpenLightbox}
                   dark={dark}
                 />
@@ -646,8 +534,6 @@ const Achievements = () => {
                   <AchievementCard
                     key={a.hackathon}
                     a={a}
-                    expanded={expandedKey === a.hackathon}
-                    onToggle={() => toggle(a.hackathon)}
                     onImageClick={handleOpenLightbox}
                     dark={dark}
                   />
@@ -666,8 +552,6 @@ const Achievements = () => {
                   <AchievementCard
                     key={a.hackathon}
                     a={a}
-                    expanded={expandedKey === a.hackathon}
-                    onToggle={() => toggle(a.hackathon)}
                     onImageClick={handleOpenLightbox}
                     dark={dark}
                   />
@@ -676,99 +560,97 @@ const Achievements = () => {
             </div>
           </div>
         </div>
-
-
-
-        {/* Lightbox Modal */}
-        <AnimatePresence>
-          {lightbox && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setLightbox(null)}
-              className="fixed inset-0 z-[999] flex flex-col items-center justify-center p-4 sm:p-6"
-              style={{
-                background: "rgba(0,0,0,0.92)",
-                backdropFilter: "blur(12px)",
-              }}
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                onClick={(e) => e.stopPropagation()}
-                className="relative max-w-4xl w-full flex flex-col items-center gap-4 mt-8"
-              >
-                {/* Close Button */}
-                <button
-                  onClick={() => setLightbox(null)}
-                  className="absolute -top-12 right-0 p-2.5 rounded-full text-white/70 hover:text-white transition-colors duration-200 cursor-pointer bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md"
-                >
-                  <IoClose size={22} />
-                </button>
-
-                {/* Main Content Container */}
-                <div className="relative bg-neutral-950/40 border border-white/10 rounded-2xl overflow-hidden max-h-[75vh] w-full flex items-center justify-center shadow-2xl">
-                  <img
-                    src={lightbox.images[lightbox.index]}
-                    alt={`Moment page ${lightbox.index + 1}`}
-                    className="max-w-full max-h-[70vh] object-contain block select-none"
-                  />
-
-                  {/* Navigation controls */}
-                  {lightbox.images.length > 1 && (
-                    <>
-                      {/* Prev Button */}
-                      <button
-                        onClick={() =>
-                          setLightbox((prev) =>
-                            prev
-                              ? {
-                                  ...prev,
-                                  index:
-                                    (prev.index - 1 + prev.images.length) %
-                                    prev.images.length,
-                                }
-                              : null
-                          )
-                        }
-                        className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 border border-white/10 transition-all duration-200 cursor-pointer active:scale-95 z-20"
-                      >
-                        <IoChevronBack size={20} />
-                      </button>
-
-                      {/* Next Button */}
-                      <button
-                        onClick={() =>
-                          setLightbox((prev) =>
-                            prev
-                              ? {
-                                  ...prev,
-                                  index: (prev.index + 1) % prev.images.length,
-                                }
-                              : null
-                          )
-                        }
-                        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 border border-white/10 transition-all duration-200 cursor-pointer active:scale-95 z-20"
-                      >
-                        <IoChevronForward size={20} />
-                      </button>
-                    </>
-                  )}
-                </div>
-
-                {/* Carousel page indicator */}
-                {lightbox.images.length > 1 && (
-                  <div className="text-white/60 font-spaceGrotesk text-xs bg-black/40 px-3.5 py-1.5 rounded-full border border-white/5 backdrop-blur-md">
-                    Moment {lightbox.index + 1} of {lightbox.images.length}
-                  </div>
-                )}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightbox(null)}
+            className="fixed inset-0 z-[999] flex flex-col items-center justify-center p-4 sm:p-6"
+            style={{
+              background: "rgba(0,0,0,0.92)",
+              backdropFilter: "blur(12px)",
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-4xl w-full flex flex-col items-center gap-4 mt-8"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setLightbox(null)}
+                className="absolute -top-12 right-0 p-2.5 rounded-full text-white/70 hover:text-white transition-colors duration-200 cursor-pointer bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md"
+              >
+                <IoClose size={22} />
+              </button>
+
+              {/* Main Content Container */}
+              <div className="relative bg-neutral-950/40 border border-white/10 rounded-2xl overflow-hidden max-h-[75vh] w-full flex items-center justify-center shadow-2xl">
+                <img
+                  src={lightbox.images[lightbox.index]}
+                  alt={`Moment page ${lightbox.index + 1}`}
+                  className="max-w-full max-h-[70vh] object-contain block select-none"
+                />
+
+                {/* Navigation controls */}
+                {lightbox.images.length > 1 && (
+                  <>
+                    {/* Prev Button */}
+                    <button
+                      onClick={() =>
+                        setLightbox((prev) =>
+                          prev
+                            ? {
+                                ...prev,
+                                index:
+                                  (prev.index - 1 + prev.images.length) %
+                                  prev.images.length,
+                              }
+                            : null
+                        )
+                      }
+                      className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 border border-white/10 transition-all duration-200 cursor-pointer active:scale-95 z-20"
+                    >
+                      <IoChevronBack size={20} />
+                    </button>
+
+                    {/* Next Button */}
+                    <button
+                      onClick={() =>
+                        setLightbox((prev) =>
+                          prev
+                            ? {
+                                ...prev,
+                                index: (prev.index + 1) % prev.images.length,
+                              }
+                            : null
+                        )
+                      }
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 border border-white/10 transition-all duration-200 cursor-pointer active:scale-95 z-20"
+                    >
+                      <IoChevronForward size={20} />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Carousel page indicator */}
+              {lightbox.images.length > 1 && (
+                <div className="text-white/60 font-spaceGrotesk text-xs bg-black/40 px-3.5 py-1.5 rounded-full border border-white/5 backdrop-blur-md">
+                  Moment {lightbox.index + 1} of {lightbox.images.length}
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
