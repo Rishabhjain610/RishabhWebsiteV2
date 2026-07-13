@@ -150,29 +150,21 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/icon1.png",
-        media: "(prefers-color-scheme: light)",
-        sizes: "any",
-      },
-      {
         url: "/favicon.ico",
-        media: "(prefers-color-scheme: dark)",
         sizes: "any",
       },
       {
-        url: "/favicon-light.svg",
+        url: "/favicon.svg",
         type: "image/svg+xml",
-        media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/favicon-dark.svg",
-        type: "image/svg+xml",
-        media: "(prefers-color-scheme: dark)",
+        url: "/icon1.png",
+        type: "image/png",
+        sizes: "96x96",
       },
-      { url: "/icon1.png", type: "image/png", sizes: "96x96" },
     ],
     apple: "/apple-icon.png",
-    other: [{ rel: "mask-icon", url: "/favicon-dark.svg", color: "#4A90E2" }],
+    other: [{ rel: "mask-icon", url: "/favicon.svg", color: "#4A90E2" }],
   },
   referrer: "strict-origin-when-cross-origin",
 };
