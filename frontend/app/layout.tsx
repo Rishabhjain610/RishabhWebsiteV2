@@ -128,7 +128,7 @@ export const metadata: Metadata = {
       "Mumbai-based Full Stack Developer and 7× hackathon winner building scalable " +
       "web apps and LLM-integrated solutions with React, Next.js, Node.js & MongoDB.",
     creator: "@rishabhjain610",
-    images: ["/web-app-manifest-192x192.png"],
+    images: ["/resized_og.png"],
   },
 
   appleWebApp: {
@@ -137,7 +137,7 @@ export const metadata: Metadata = {
     title: "Rishabh Jain",
   },
   formatDetection: { telephone: false },
-  manifest: "/site.webmanifest",
+  manifest: "/manifest.webmanifest",
 
   alternates: {
     canonical: BASE_URL,
@@ -154,17 +154,16 @@ export const metadata: Metadata = {
         sizes: "any",
       },
       {
-        url: "/favicon.svg",
-        type: "image/svg+xml",
+        url: "/LogoLight.png",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/png",
       },
       {
-        url: "/icon1.png",
+        url: "/LogoDark.png",
+        media: "(prefers-color-scheme: light)",
         type: "image/png",
-        sizes: "96x96",
       },
     ],
-    apple: "/apple-icon.png",
-    other: [{ rel: "mask-icon", url: "/favicon.svg", color: "#4A90E2" }],
   },
   referrer: "strict-origin-when-cross-origin",
 };

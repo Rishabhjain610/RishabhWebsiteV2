@@ -5,8 +5,14 @@ import path from "path";
 export async function GET(request: NextRequest) {
   const userAgent = request.headers.get("user-agent") || "";
   const isLinkedIn = userAgent.toLowerCase().includes("linkedin");
+  const isWhatsApp = userAgent.toLowerCase().includes("whatsapp");
 
-  const imageName = isLinkedIn ? "og-image.png" : "web-app-manifest-192x192.png";
+  let imageName = "resized_og.png";
+  if (isLinkedIn) {
+    imageName = "og-image.png";
+  } else if (isWhatsApp) {
+    imageName = "web-app-manifest-192x192.png";
+  }
   const filePath = path.join(process.cwd(), "public", imageName);
 
   try {
