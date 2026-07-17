@@ -8,12 +8,6 @@
       "type": "image/x-icon"
     },
     {
-      "src": "/LogoDark.png",
-      "sizes": "237x180",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
       "src": "/LogoLight.png",
       "sizes": "235x195",
       "type": "image/png",

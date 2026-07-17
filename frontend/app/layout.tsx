@@ -155,12 +155,6 @@ export const metadata: Metadata = {
       },
       {
         url: "/LogoLight.png",
-        media: "(prefers-color-scheme: dark)",
-        type: "image/png",
-      },
-      {
-        url: "/LogoDark.png",
-        media: "(prefers-color-scheme: light)",
         type: "image/png",
       },
     ],
