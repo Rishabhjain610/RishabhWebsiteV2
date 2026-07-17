@@ -72,7 +72,7 @@ const Navbar = () => {
   };
 
   const currentTheme = mounted ? resolvedTheme : "light";
-  const logoSrc = "/LogoLight.png";
+  const logoSrc = currentTheme === "dark" ? "/LogoDark.png" : "/LogoLight.png";
 
   const navLinks = [
     { name: "Home", href: "/", icon: <IoHomeOutline size={18} /> },

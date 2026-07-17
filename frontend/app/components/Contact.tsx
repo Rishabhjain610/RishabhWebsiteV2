@@ -21,7 +21,7 @@ const ACCENT = "#4A90E2";
 const A = (o: number) => `rgba(74,144,226,${o})`;
 
 const GLOBE_MARKERS = (): GlobeMarker[] => [
-  { lat: 19.033, lng: 73.0297, src: "/LogoLight.png", label: "Navi Mumbai", size: 0.1, color: ACCENT },
+  { lat: 19.033, lng: 73.0297, src: "/LogoDark.png", label: "Navi Mumbai", size: 0.1, color: ACCENT },
 ];
 
 const socials = [
