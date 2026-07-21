@@ -26,6 +26,51 @@ interface Project {
 /* ─── Data ─── */
 const projects: Project[] = [
   {
+    title: "CortexAI",
+    titleParts: ["Cortex", "AI"],
+    description:
+      "Production-grade, credit-based AI SaaS platform powered by a microservices architecture and dynamic multi-agent system (LangGraph/LangChain) with real-time SSE token streaming, sliding window rate limiting, and 8 specialized agents.",
+    tags: [
+      "Node.js",
+      "Express.js",
+      "React",
+      "Redux Toolkit",
+      "LangGraph",
+      "LangChain",
+      "Redis",
+      "Qdrant",
+      "MongoDB",
+      "Docker Compose",
+      "Firebase",
+      "Razorpay",
+      "Groq",
+      "Ollama",
+      "Tavily",
+      "AWS S3",
+      "Tailwind CSS",
+      "Monaco Editor",
+    ],
+    features: [
+      "Multi-Agent AI Orchestration with 8 specialized agents via LangGraph & LangChain",
+      "3-Layer Intelligent Router (Manual selection → Keyword heuristics → Local Ollama LLM fallback)",
+      "Microservices Architecture (API Gateway, Auth, Billing, Agent, Chat services)",
+      "Real-time SSE Token Streaming with X-Accel-Buffering defenses for Nginx",
+      "Sliding Window Rate Limiter using Redis Sorted Sets (ZADD → ZREMRANGEBYSCORE)",
+      "PDF Document & PPT Presentation Generation with live ThoughtBox reasoning UI",
+      "PDF RAG Pipeline with pdf-parse ingestion, noise filtering, and Qdrant vector DB",
+      "Multimodal Vision Analysis using Groq Qwen Vision for image understanding & OCR",
+      "Web Search Agent integration via Tavily Search API with image deduplication",
+      "Code Generation Agent powered by DeepSeek V3 with live Monaco Editor preview",
+      "Credit-Based Usage Control with pre-execution Auth Service deduction gate",
+      "Session-Based Authentication via Firebase Admin SDK and Redis session store (5-day TTL)",
+      "Razorpay Payment Gateway Integration with HMAC-SHA256 signature verification",
+      "Mobile-Responsive Artifact Drawer with backdrop blur overlay and touch-friendly toolbar",
+    ],
+    videoUrl:
+      "https://res.cloudinary.com/dlmzjcc0o/video/upload/v1784663640/Screen_Recording_2026-07-22_011116_online-video-cutter.com_1_rjww6g.mp4",
+    githubUrl: "https://github.com/Rishabhjain610/CortexAI",
+  },
+  {
     title: "VibeShare 2.0",
     titleParts: ["Vibe", "Share 2.0"],
     description:
