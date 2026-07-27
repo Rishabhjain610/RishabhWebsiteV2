@@ -56,6 +56,88 @@ interface Skill {
   glowColor?: string; // optional glow color override
 }
 
+/* ─── Custom Skill Icons ─── */
+const LangGraphIcon = ({
+  size = 28,
+  className = "",
+  style = {},
+}: {
+  size?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    style={style}
+  >
+    <circle cx="6" cy="6" r="2.5" />
+    <circle cx="18" cy="6" r="2.5" />
+    <circle cx="12" cy="18" r="2.5" />
+    <path d="M8.5 6h7" />
+    <path d="M7.8 8.2l3.4 7.6" />
+    <path d="M16.2 8.2l-3.4 7.6" />
+  </svg>
+);
+
+const QdrantIcon = ({
+  size = 28,
+  className = "",
+  style = {},
+}: {
+  size?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    style={style}
+  >
+    <path d="M12 2L2.5 7v10L12 22l9.5-5V7L12 2zm0 2.4l7 3.68-3 1.58-4-2.1-4 2.1-3-1.58 7-3.68zM4.5 9.12l6.5 3.42v7.16L4.5 16.3V9.12zm8.5 10.58v-7.16l6.5-3.42v7.18l-6.5 3.4z" />
+  </svg>
+);
+
+const VectorDBIcon = ({
+  size = 28,
+  className = "",
+  style = {},
+}: {
+  size?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    style={style}
+  >
+    <path d="M21 8v8c0 2.76-4.03 5-9 5s-9-2.24-9-5V8" />
+    <path d="M21 8c0 2.76-4.03 5-9 5s-9-2.24-9-5c0-2.76 4.03-5 9-5s9 2.24 9 5z" />
+    <path d="M21 12c0 2.76-4.03 5-9 5s-9-2.24-9-5" />
+    <circle cx="12" cy="8" r="1.5" fill="currentColor" />
+    <circle cx="7.5" cy="7" r="1" fill="currentColor" />
+    <circle cx="16.5" cy="9" r="1" fill="currentColor" />
+  </svg>
+);
+
 /* ─── Data with brand colors ─── */
 const categories: { label: string; skills: Skill[] }[] = [
   {
@@ -114,6 +196,7 @@ const categories: { label: string; skills: Skill[] }[] = [
       { name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
       { name: "Firebase", icon: IoLogoFirebase, color: "#FFCA28" },
       { name: "Redis", icon: SiRedis, color: "#DC382D" },
+      { name: "Qdrant", icon: QdrantIcon, color: "#DC2626" },
     ],
   },
   {
@@ -138,6 +221,17 @@ const categories: { label: string; skills: Skill[] }[] = [
         icon: SiLangchain,
         color: "#1C3C3C", // LangChain color
         glowColor: "#9CA3AF",
+      },
+      {
+        name: "LangGraph",
+        icon: LangGraphIcon,
+        color: "#1C3C3C",
+        glowColor: "#9CA3AF",
+      },
+      {
+        name: "Vector DB",
+        icon: VectorDBIcon,
+        color: "#7C3AED",
       },
     ],
   },
