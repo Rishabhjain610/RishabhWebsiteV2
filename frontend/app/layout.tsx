@@ -11,6 +11,8 @@ import { Space_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
 import LoadingScreen from "./components/LoadingScreen";
 
+import FaviconManager from "./components/FaviconManager";
+
 // ─── Font ────────────────────────────────────────────────────────────────────
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -150,11 +152,52 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/LogoDark.png",
+        media: "(prefers-color-scheme: dark)",
+        type: "image/png",
+      },
+      {
+        url: "/LogoLight.png",
+        media: "(prefers-color-scheme: light)",
+        type: "image/png",
+      },
+      {
         url: "/favicon.ico",
         sizes: "any",
       },
       {
+        url: "/icon1.png",
+        type: "image/png",
+        sizes: "48x48",
+      },
+      {
+        url: "/web-app-manifest-192x192.png",
+        type: "image/png",
+        sizes: "192x192",
+      },
+    ],
+    shortcut: [
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+      {
+        url: "/LogoDark.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
         url: "/LogoLight.png",
+        media: "(prefers-color-scheme: light)",
+      },
+    ],
+    apple: [
+      {
+        url: "/apple-icon.png",
+        sizes: "180x180",
         type: "image/png",
       },
     ],
@@ -411,6 +454,22 @@ export default async function RootLayout({
           }}
         />
 
+        {/* Dynamic theme-aware favicons for Light and Dark mode */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link
+          rel="icon"
+          href="/LogoDark.png"
+          type="image/png"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="icon"
+          href="/LogoLight.png"
+          type="image/png"
+          media="(prefers-color-scheme: light)"
+        />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+
         {/* Indie-Web / social profile verification */}
         <link rel="me" href="https://github.com/Rishabhjain610" />
         <link rel="me" href="https://www.linkedin.com/in/rishabhjain610/" />
@@ -429,6 +488,7 @@ export default async function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
+          <FaviconManager />
           <Links />
           <GoogleAnalytics gaId={GA_ID} />
           <Navbar />
