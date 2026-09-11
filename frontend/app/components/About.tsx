@@ -16,19 +16,19 @@ const education = [
   {
     icon: IoHome,
     title: "Class 10th ICSE",
-    school: "Goldcrest High School, Vashi",
+    school: "Goldcrest High School, Vashi · Top 10 in ICSE Class 10",
     year: "2021",
   },
   {
     icon: IoSchool,
     title: "Class 12th HSC",
-    school: "Shiravane Vidyalaya & Junior College, Nerul",
+    school: "Shiravane Vidyalaya & Jr College · Top 4% MHT-CET (2023), Top 6% JEE Main",
     year: "2021–23",
   },
   {
     icon: IoCodeSlash,
     title: "B.E in Computer Engineering",
-    school: "Thadomal Shahani Engineering College, Mumbai",
+    school: "Thadomal Shahani Engineering College, Mumbai · CGPA: 8.2/10",
     year: "2023–2027",
   },
 ];
@@ -129,14 +129,14 @@ const About = () => {
                 <span className="font-bold" style={{ color: "#4A90E2" }}>
                   Rishabh Jain
                 </span>
-                , a Full Stack Developer who loves turning ideas into powerful,
-                user-friendly digital experiences. With a strong background in
-                computer engineering and a curious mind, I&apos;m always exploring
-                new technologies and better ways to build.
+                , a Full Stack Developer specializing in AI-integrated platforms,
+                agentic AI systems, and microservices architectures. SDE Intern at
+                MMMOCL, Ex Joint Tech Head at GDG TSEC, 7× hackathon winner, and
+                GSSoC’26 Contributor.
               </p>
               <p className="text-lg lg:text-xl font-spaceGrotesk text-[#1A1A1A] dark:text-[#E0E0E0] opacity-90 dark:opacity-80 leading-relaxed">
-                I enjoy collaborating with others, thinking critically, and
-                writing clean, efficient code. When I&apos;m not coding, you&apos;ll find
+                I enjoy collaborating with others, thinking critically, mentoring 200+
+                students, and writing clean, efficient code. When I&apos;m not coding, you&apos;ll find
                 me either on the{" "}
                 <span className="font-medium">cricket field</span> or deep in
                 thought over the latest in{" "}

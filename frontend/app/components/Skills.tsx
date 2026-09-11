@@ -138,6 +138,111 @@ const VectorDBIcon = ({
   </svg>
 );
 
+const RAGIcon = ({
+  size = 28,
+  className = "",
+  style = {},
+}: {
+  size?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    style={style}
+  >
+    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+    <path d="M6 6h10" />
+    <path d="M6 10h10" />
+    <path d="m14 14 3 3" />
+    <circle cx="12" cy="15" r="2.5" />
+  </svg>
+);
+
+const GroqIcon = ({
+  size = 28,
+  className = "",
+  style = {},
+}: {
+  size?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    style={style}
+  >
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z" />
+  </svg>
+);
+
+const CICDIcon = ({
+  size = 28,
+  className = "",
+  style = {},
+}: {
+  size?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    style={style}
+  >
+    <circle cx="12" cy="12" r="3" />
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+  </svg>
+);
+
+const MicroservicesIcon = ({
+  size = 28,
+  className = "",
+  style = {},
+}: {
+  size?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    style={style}
+  >
+    <rect x="2" y="2" width="6" height="6" rx="1" />
+    <rect x="16" y="2" width="6" height="6" rx="1" />
+    <rect x="9" y="16" width="6" height="6" rx="1" />
+    <path d="M5 8v4h14V8" />
+    <path d="M12 12v4" />
+  </svg>
+);
+
 /* ─── Data with brand colors ─── */
 const categories: { label: string; skills: Skill[] }[] = [
   {
@@ -203,6 +308,8 @@ const categories: { label: string; skills: Skill[] }[] = [
     label: "AI/ML",
     skills: [
       { name: "Gemini API", icon: SiGooglegemini, color: "#886FBF" },
+      { name: "Groq", icon: GroqIcon, color: "#F55036" },
+      { name: "RAG", icon: RAGIcon, color: "#2563EB" },
       { name: "OCR", icon: IoEyeOutline, color: "#00A6D6" },
       {
         name: "Ollama",
@@ -240,8 +347,10 @@ const categories: { label: string; skills: Skill[] }[] = [
     skills: [
       { name: "Google Cloud", icon: SiGooglecloud, color: "#4285F4" },
       { name: "AWS", icon: SiAmazonwebservices, color: "#FF9900" },
-      { name: "Render", icon: SiRender, color: "#46E3B7" },
       { name: "Docker", icon: SiDocker, color: "#2496ED" },
+      { name: "CI/CD", icon: CICDIcon, color: "#10B981" },
+      { name: "Microservices", icon: MicroservicesIcon, color: "#6366F1" },
+      { name: "Render", icon: SiRender, color: "#46E3B7" },
       { name: "Nginx", icon: SiNginx, color: "#009639" },
     ],
   },

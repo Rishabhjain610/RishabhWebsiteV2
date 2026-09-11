@@ -316,7 +316,7 @@ const Achievements = () => {
   }, []);
 
   const stats = [
-    { icon: IoFlame, label: "Hackathons", value: "30+" },
+    { icon: IoFlame, label: "Hackathons", value: "40+" },
     { icon: IoTrophy, label: "Wins", value: "7" },
     { icon: IoMedal, label: "Finalist", value: "12+" },
   ];
