@@ -402,19 +402,17 @@ const gridContainer = {
 };
 
 const skillCard = {
-  hidden: { opacity: 0, scale: 0.8, y: 20, filter: "blur(4px)" },
+  hidden: { opacity: 0, scale: 0.9, y: 16 },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const },
+    transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] as const },
   },
   exit: {
     opacity: 0,
-    scale: 0.9,
-    y: -10,
-    filter: "blur(2px)",
+    scale: 0.95,
+    y: -8,
     transition: { duration: 0.15 },
   },
 };
@@ -564,8 +562,6 @@ const Skills = () => {
               variants={gridContainer}
               initial="hidden"
               animate="visible"
-              whileInView="visible"
-              viewport={vp}
               exit="exit"
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
             >

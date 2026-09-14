@@ -8,23 +8,29 @@ export default function FaviconManager() {
 
   useEffect(() => {
     const updateFavicon = (isDark: boolean) => {
-      const iconUrl = isDark ? "/LogoDark.png" : "/LogoLight.png";
+      const pngIconUrl = isDark ? "/LogoDark.png" : "/LogoLight.png";
 
-      const links = document.querySelectorAll<HTMLLinkElement>(
+      // Remove existing standard icon links so Chrome forces a redraw
+      const existingIcons = document.querySelectorAll<HTMLLinkElement>(
         "link[rel='icon'], link[rel='shortcut icon']"
       );
+      existingIcons.forEach((el) => {
+        el.parentNode?.removeChild(el);
+      });
 
-      if (links.length > 0) {
-        links.forEach((link) => {
-          link.href = iconUrl;
-          link.removeAttribute("media");
-        });
-      } else {
-        const link = document.createElement("link");
-        link.rel = "icon";
-        link.href = iconUrl;
-        document.head.appendChild(link);
-      }
+      // 1. Primary SVG favicon (supports theme switching natively)
+      const svgLink = document.createElement("link");
+      svgLink.rel = "icon";
+      svgLink.type = "image/svg+xml";
+      svgLink.href = "/favicon.svg";
+      document.head.appendChild(svgLink);
+
+      // 2. Theme-matched PNG favicon
+      const pngLink = document.createElement("link");
+      pngLink.rel = "icon";
+      pngLink.type = "image/png";
+      pngLink.href = pngIconUrl;
+      document.head.appendChild(pngLink);
     };
 
     if (resolvedTheme) {

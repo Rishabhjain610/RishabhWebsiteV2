@@ -222,7 +222,7 @@ const AchievementCard = ({
     <motion.div
       variants={itemVariant}
       suppressHydrationWarning
-      className="group rounded-xl border overflow-hidden transition-all duration-300 cursor-pointer"
+      className="group rounded-xl border overflow-hidden transition-colors duration-300 cursor-pointer"
       style={{
         backgroundColor: dark
           ? "rgba(255,255,255,0.02)"
@@ -442,7 +442,7 @@ const Achievements = () => {
               variants={itemVariant}
               suppressHydrationWarning
               className="group p-5 rounded-2xl border
-                         transition-all duration-300 hover:-translate-y-1
+                         transition-colors duration-300 hover:-translate-y-1
                          bg-white dark:bg-transparent backdrop-blur-md cursor-default text-center"
               style={{ borderColor: accentRgba(0.12) }}
               onMouseEnter={(e) => {

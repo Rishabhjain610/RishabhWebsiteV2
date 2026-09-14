@@ -152,6 +152,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+      {
         url: "/LogoDark.png",
         media: "(prefers-color-scheme: dark)",
         type: "image/png",
@@ -165,18 +169,12 @@ export const metadata: Metadata = {
         url: "/favicon.ico",
         sizes: "any",
       },
-      {
-        url: "/icon1.png",
-        type: "image/png",
-        sizes: "48x48",
-      },
-      {
-        url: "/web-app-manifest-192x192.png",
-        type: "image/png",
-        sizes: "192x192",
-      },
     ],
     shortcut: [
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
       {
         url: "/LogoDark.png",
         media: "(prefers-color-scheme: dark)",
@@ -447,6 +445,7 @@ export default async function RootLayout({
         />
 
         {/* Dynamic theme-aware favicons for Light and Dark mode */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link
           rel="icon"
           href="/LogoDark.png"
@@ -459,7 +458,8 @@ export default async function RootLayout({
           type="image/png"
           media="(prefers-color-scheme: light)"
         />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/web-app-manifest-192x192.png" />
 
         {/* Indie-Web / social profile verification */}
         <link rel="me" href="https://github.com/Rishabhjain610" />

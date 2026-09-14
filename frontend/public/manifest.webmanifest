@@ -1,15 +1,17 @@
 {
-  "name": "Rishabh Jain's Portfolio",
-  "short_name": "Rishabh JAIN",
+  "name": "Rishabh Jain - Full Stack Developer",
+  "short_name": "Rishabh Jain",
+  "description": "Rishabh Jain is a Mumbai-based Full Stack Developer and Agentic AI builder specialising in React, Next.js, Node.js, and MongoDB.",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 48x48 32x32 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "/LogoLight.png",
-      "sizes": "235x195",
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
@@ -17,16 +19,30 @@
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "maskable"
     },
     {
       "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable any"
+      "purpose": "any"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
     }
-  ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
+  ]
 }

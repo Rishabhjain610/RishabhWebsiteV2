@@ -780,7 +780,7 @@ const Project = () => {
               variants={cardVariant}
               suppressHydrationWarning
               transition={{ delay: Math.min(i * 0.05, 0.25) }}
-              className="group flex flex-col rounded-2xl overflow-hidden transition-all duration-300"
+              className="group flex flex-col rounded-2xl overflow-hidden transition-colors duration-300"
               style={{
                 background: dark ? "#0d1117" : "#FFFFFF",
                 border: `1px solid ${dark ? "rgba(255,255,255,0.08)" : "#E0E0E0"}`,

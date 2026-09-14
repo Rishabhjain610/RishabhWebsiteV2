@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { cn } from "../../lib/utils";
 import { useTheme } from "next-themes";
 import { HiSun, HiMoon } from "react-icons/hi";
-import { motion, useScroll, useSpring } from "framer-motion";
 import {
   IoHomeOutline,
   IoPerson,
@@ -94,26 +93,8 @@ const Navbar = () => {
     { name: "Contact", href: "#contact", icon: <IoMailOutline size={18} /> },
   ];
 
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
   return (
     <>
-      {/* Pinned Scroll Progress Bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2.5px] z-[60] origin-left pointer-events-none"
-        style={{
-          scaleX,
-          background:
-            "linear-gradient(90deg, #4A90E2 0%, #60a5fa 50%, #4A90E2 100%)",
-          boxShadow: "0 0 10px rgba(74,144,226,0.6)",
-        }}
-      />
-
       <nav
         className={cn(
           "fixed z-50 w-[95%] top-5 rounded-2xl -translate-x-1/2 left-1/2 border-2 backdrop-blur-xl transition-all duration-300",
