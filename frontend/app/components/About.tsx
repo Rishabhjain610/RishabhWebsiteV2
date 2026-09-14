@@ -41,7 +41,7 @@ const stats = [
 ];
 
 /* ─── Viewport config — once: false so animations replay ─── */
-const vp = { once: false, amount: 0.3 };
+const vp = { once: false, amount: 0.2 };
 
 /* ─── Variants ─── */
 const fadeUp = {

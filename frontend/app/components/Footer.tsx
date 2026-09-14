@@ -15,7 +15,7 @@ const Footer = () => {
     setMounted(true);
   }, []);
 
-  const vp = { once: false, amount: 0.3 };
+  const vp = { once: false, amount: 0.2 };
 
   
   const fadeUp = {

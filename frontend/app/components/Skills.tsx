@@ -368,7 +368,7 @@ const categories: { label: string; skills: Skill[] }[] = [
 ];
 
 /* ─── Viewport config ─── */
-const vp = { once: false, amount: 0.3 };
+const vp = { once: false, amount: 0.2 };
 
 /* ─── Variants ─── */
 const fadeUp = {

@@ -214,7 +214,7 @@ const typeBadge: Record<string, { bg: string; text: string; bgLight: string }> =
   };
 
 /* ─── Viewport & Variants — same pattern as About.tsx ─── */
-const vp = { once: false, amount: 0.25 };
+const vp = { once: false, amount: 0.2 };
 
 const fadeUp = {
   hidden: {
@@ -459,15 +459,8 @@ const Work = () => {
                         // Bold **text** patterns
                         const parts = bullet.split(/(\*\*[^*]+\*\*)/);
                         return (
-                          <motion.li
+                          <li
                             key={j}
-                            initial={
-                              j >= INITIAL_BULLETS_COUNT
-                                ? { opacity: 0, y: -4 }
-                                : false
-                            }
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.2 }}
                             className="flex gap-2 sm:gap-2.5 items-start"
                           >
                             <span
@@ -488,7 +481,7 @@ const Work = () => {
                                 ),
                               )}
                             </span>
-                          </motion.li>
+                          </li>
                         );
                       })}
                     </ul>

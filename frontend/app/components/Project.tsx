@@ -734,7 +734,7 @@ const Project = () => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.2 }}
           variants={fadeUp}
           className="mb-14 text-center lg:text-left"
         >
@@ -944,7 +944,7 @@ const Project = () => {
         <motion.p
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.2 }}
           variants={fadeUp}
           className="dm-mono mt-16 text-center font-spaceGrotesk"
           style={{ fontSize: 13, color: "#6e7681" }}

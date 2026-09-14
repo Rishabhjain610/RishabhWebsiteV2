@@ -171,7 +171,7 @@ const finalist: Achievement[] = [
   },
 ];
 
-const vp = { once: false, amount: 0.3 };
+const vp = { once: false, amount: 0.2 };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
