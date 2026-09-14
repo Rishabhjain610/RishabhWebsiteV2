@@ -205,10 +205,14 @@ const itemVariant = {
 
 const AchievementCard = ({
   a,
+  expanded,
+  onToggle,
   onImageClick,
   dark,
 }: {
   a: Achievement;
+  expanded: boolean;
+  onToggle: () => void;
   onImageClick: (images: string[], index: number) => void;
   dark: boolean;
 }) => {
@@ -241,7 +245,7 @@ const AchievementCard = ({
           ? "rgba(255,255,255,0.02)"
           : "rgba(74,144,226,0.04)";
       }}
-      onClick={() => onImageClick(a.images, 0)}
+      onClick={onToggle}
     >
       <div className="flex items-center gap-3 p-4">
         <div
@@ -275,23 +279,80 @@ const AchievementCard = ({
         </div>
 
         <div
-          className="p-1.5 rounded-lg flex-shrink-0 transition-transform duration-200 group-hover:scale-110"
+          className="p-1.5 rounded-lg flex-shrink-0"
           style={{ backgroundColor: accentRgba(0.08) }}
         >
-          <IoImageOutline size={14} style={{ color: ACCENT }} />
+          {expanded ? (
+            <IoChevronUp size={14} style={{ color: ACCENT }} />
+          ) : (
+            <IoChevronDown size={14} style={{ color: ACCENT }} />
+          )}
         </div>
       </div>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div
+              className="px-4 pb-4 border-t"
+              style={{
+                borderColor: dark ? accentRgba(0.08) : "rgba(74,144,226,0.12)",
+              }}
+            >
+              <div
+                className={`grid gap-2.5 mt-3 ${a.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
+              >
+                {a.images.map((src, i) => (
+                  <div
+                    key={i}
+                    className="rounded-lg overflow-hidden border bg-black/30 flex items-center justify-center"
+                    style={{
+                      borderColor: dark
+                        ? accentRgba(0.12)
+                        : "rgba(74,144,226,0.15)",
+                    }}
+                  >
+                    <img
+                      src={src}
+                      alt={`${a.hackathon} certificate ${i + 1}`}
+                      width="0"
+                      height="0"
+                      style={{ width: "100%", height: "auto" }}
+                      className="object-contain rounded-lg cursor-zoom-in hover:opacity-75 transition-opacity duration-200"
+                      loading="lazy"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onImageClick(a.images, i);
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
 
 const Achievements = () => {
+  const [expandedKey, setExpandedKey] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<{ images: string[]; index: number } | null>(null);
   const [mounted, setMounted] = React.useState(false);
   const { resolvedTheme } = useTheme();
   const dark = mounted && resolvedTheme === "dark";
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const toggle = (key: string) =>
+    setExpandedKey((p) => (p === key ? null : key));
 
   const handleOpenLightbox = (images: string[], index: number = 0) => {
     setLightbox({ images, index });
@@ -489,6 +550,8 @@ const Achievements = () => {
                 <AchievementCard
                   key={a.hackathon}
                   a={a}
+                  expanded={expandedKey === a.hackathon}
+                  onToggle={() => toggle(a.hackathon)}
                   onImageClick={handleOpenLightbox}
                   dark={dark}
                 />
@@ -534,6 +597,8 @@ const Achievements = () => {
                   <AchievementCard
                     key={a.hackathon}
                     a={a}
+                    expanded={expandedKey === a.hackathon}
+                    onToggle={() => toggle(a.hackathon)}
                     onImageClick={handleOpenLightbox}
                     dark={dark}
                   />
@@ -552,6 +617,8 @@ const Achievements = () => {
                   <AchievementCard
                     key={a.hackathon}
                     a={a}
+                    expanded={expandedKey === a.hackathon}
+                    onToggle={() => toggle(a.hackathon)}
                     onImageClick={handleOpenLightbox}
                     dark={dark}
                   />

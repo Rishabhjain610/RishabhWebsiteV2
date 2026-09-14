@@ -16,10 +16,14 @@ export default function FaviconManager() {
 
       if (links.length > 0) {
         links.forEach((link) => {
-          if (!link.type || link.type.includes("png") || link.type.includes("icon")) {
-            link.href = iconUrl;
-          }
+          link.href = iconUrl;
+          link.removeAttribute("media");
         });
+      } else {
+        const link = document.createElement("link");
+        link.rel = "icon";
+        link.href = iconUrl;
+        document.head.appendChild(link);
       }
     };
 

@@ -152,10 +152,6 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon.svg",
-        type: "image/svg+xml",
-      },
-      {
         url: "/LogoDark.png",
         media: "(prefers-color-scheme: dark)",
         type: "image/png",
@@ -181,10 +177,6 @@ export const metadata: Metadata = {
       },
     ],
     shortcut: [
-      {
-        url: "/favicon.svg",
-        type: "image/svg+xml",
-      },
       {
         url: "/LogoDark.png",
         media: "(prefers-color-scheme: dark)",
@@ -455,7 +447,6 @@ export default async function RootLayout({
         />
 
         {/* Dynamic theme-aware favicons for Light and Dark mode */}
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link
           rel="icon"
           href="/LogoDark.png"
