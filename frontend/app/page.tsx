@@ -22,11 +22,11 @@ const page = () => {
       <div id="skills">
         <Skills />
       </div>
-      <div id="projects">
-        <Project />
-      </div>
       <div id="work">
         <Work />
+      </div>
+      <div id="projects">
+        <Project />
       </div>
       <div id="stats">
         <Stats />

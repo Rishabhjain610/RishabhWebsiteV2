@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "../../lib/utils";
 import { useTheme } from "next-themes";
 import { HiSun, HiMoon } from "react-icons/hi";
+import { motion, useScroll, useSpring } from "framer-motion";
 import {
   IoHomeOutline,
   IoPerson,
@@ -15,6 +16,8 @@ import {
   IoBriefcaseOutline,
   IoStatsChartOutline,
   IoTrophy,
+  IoDocumentTextOutline,
+  IoArrowForward,
 } from "react-icons/io5";
 
 const Navbar = () => {
@@ -52,8 +55,8 @@ const Navbar = () => {
       "home",
       "about",
       "skills",
-      "projects",
       "work",
+      "projects",
       "stats",
       "achievements",
       "contact",
@@ -78,12 +81,12 @@ const Navbar = () => {
     { name: "Home", href: "/", icon: <IoHomeOutline size={18} /> },
     { name: "About", href: "#about", icon: <IoPerson size={18} /> },
     { name: "Skills", href: "#skills", icon: <IoCode size={18} /> },
+    { name: "Work", href: "#work", icon: <IoBriefcaseOutline size={18} /> },
     {
       name: "Projects",
       href: "#projects",
       icon: <IoRocketOutline size={18} />,
     },
-    { name: "Work", href: "#work", icon: <IoBriefcaseOutline size={18} /> },
     { name: "Stats", href: "#stats", icon: <IoStatsChartOutline size={18} /> },
     {
       name: "Achievements",
@@ -93,8 +96,26 @@ const Navbar = () => {
     { name: "Contact", href: "#contact", icon: <IoMailOutline size={18} /> },
   ];
 
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
     <>
+      {/* Pinned Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2.5px] z-[60] origin-left pointer-events-none"
+        style={{
+          scaleX,
+          background:
+            "linear-gradient(90deg, #4A90E2 0%, #60a5fa 50%, #4A90E2 100%)",
+          boxShadow: "0 0 10px rgba(74,144,226,0.6)",
+        }}
+      />
+
       <nav
         className={cn(
           "fixed z-50 w-[95%] top-5 rounded-2xl -translate-x-1/2 left-1/2 border-2 backdrop-blur-xl transition-all duration-300",
@@ -139,6 +160,23 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Resume CTA Button */}
+            <a
+              href="https://drive.google.com/file/d/1DV-irLeae0jWaRLNNyeMvwzPm8aqvXoB/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Resume"
+              className={cn(
+                "hidden sm:inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold font-spaceGrotesk transition-all duration-300 flex-shrink-0 border",
+                "bg-[#4A90E2]/10 hover:bg-[#4A90E2] text-[#4A90E2] hover:text-white",
+                "border-[#4A90E2]/40 hover:border-[#4A90E2] hover:shadow-md hover:shadow-[#4A90E2]/30 hover:scale-105",
+                "h-10 whitespace-nowrap",
+              )}
+            >
+              <IoDocumentTextOutline size={15} />
+              <span>Resume</span>
+            </a>
+
             {/* Theme Toggle Button with Smooth Transition */}
             <button
               suppressHydrationWarning
@@ -264,6 +302,21 @@ const Navbar = () => {
                 />
               </Link>
             ))}
+
+            {/* Mobile Resume CTA */}
+            <a
+              href="https://drive.google.com/file/d/1DV-irLeae0jWaRLNNyeMvwzPm8aqvXoB/view"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center justify-between rounded-xl px-3.5 py-3 mt-2 transition-all duration-200 border text-sm font-semibold font-spaceGrotesk bg-[#4A90E2]/15 text-[#4A90E2] border-[#4A90E2]/40 hover:bg-[#4A90E2] hover:text-white shadow-sm"
+            >
+              <div className="flex items-center gap-2.5">
+                <IoDocumentTextOutline size={18} />
+                <span>Resume (PDF)</span>
+              </div>
+              <IoArrowForward size={14} />
+            </a>
           </nav>
         </div>
       </div>

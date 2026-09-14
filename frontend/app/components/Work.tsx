@@ -12,6 +12,8 @@ import {
   IoCloseOutline,
   IoChevronBack,
   IoChevronForward,
+  IoChevronDown,
+  IoChevronUp,
 } from "react-icons/io5";
 
 /* ─── Accent — consistent with LandingPage + About + Project ─── */
@@ -248,6 +250,14 @@ const cardSlide = {
 
 const Work = () => {
   const [selectedCert, setSelectedCert] = useState<{ images: string[]; index: number } | null>(null);
+  const [expandedBullets, setExpandedBullets] = useState<Record<string, boolean>>({});
+
+  const toggleBullets = (key: string) => {
+    setExpandedBullets((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const INITIAL_BULLETS_COUNT = 4;
+
   return (
     <section
       id="experience"
@@ -307,6 +317,12 @@ const Work = () => {
             {experiences.map((exp, i) => {
               const Icon = exp.icon as any;
               const badge = typeBadge[exp.type] || typeBadge["Full-time"];
+              const cardKey = `${exp.company}-${exp.role}`;
+              const isExpanded = !!expandedBullets[cardKey];
+              const visibleBullets = isExpanded
+                ? exp.bullets
+                : exp.bullets.slice(0, INITIAL_BULLETS_COUNT);
+              const hasMoreBullets = exp.bullets.length > INITIAL_BULLETS_COUNT;
 
               return (
                 <motion.div
@@ -439,12 +455,19 @@ const Work = () => {
 
                     {/* Bullets */}
                     <ul className="space-y-1.5 sm:space-y-2">
-                      {exp.bullets.map((bullet, j) => {
+                      {visibleBullets.map((bullet, j) => {
                         // Bold **text** patterns
                         const parts = bullet.split(/(\*\*[^*]+\*\*)/);
                         return (
-                          <li
+                          <motion.li
                             key={j}
+                            initial={
+                              j >= INITIAL_BULLETS_COUNT
+                                ? { opacity: 0, y: -4 }
+                                : false
+                            }
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2 }}
                             className="flex gap-2 sm:gap-2.5 items-start"
                           >
                             <span
@@ -465,10 +488,46 @@ const Work = () => {
                                 ),
                               )}
                             </span>
-                          </li>
+                          </motion.li>
                         );
                       })}
                     </ul>
+
+                    {/* Show more / Show less toggle */}
+                    {hasMoreBullets && (
+                      <button
+                        type="button"
+                        onClick={() => toggleBullets(cardKey)}
+                        className="inline-flex items-center gap-1.5 mt-2.5 px-3 py-1 rounded-lg text-xs font-semibold font-spaceGrotesk transition-all duration-200 cursor-pointer border"
+                        style={{
+                          backgroundColor: accentRgba(0.08),
+                          color: ACCENT,
+                          borderColor: accentRgba(0.2),
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = accentRgba(0.16);
+                          e.currentTarget.style.borderColor = accentRgba(0.35);
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = accentRgba(0.08);
+                          e.currentTarget.style.borderColor = accentRgba(0.2);
+                        }}
+                      >
+                        {isExpanded ? (
+                          <>
+                            <span>Show less</span>
+                            <IoChevronUp size={13} />
+                          </>
+                        ) : (
+                          <>
+                            <span>
+                              Show {exp.bullets.length - INITIAL_BULLETS_COUNT} more points
+                            </span>
+                            <IoChevronDown size={13} />
+                          </>
+                        )}
+                      </button>
+                    )}
 
                     {/* Certificates */}
                     {exp.certificates && exp.certificates.length > 0 && (
