@@ -16,8 +16,6 @@ import {
   IoBriefcaseOutline,
   IoStatsChartOutline,
   IoTrophy,
-  IoDocumentTextOutline,
-  IoArrowForward,
 } from "react-icons/io5";
 
 const Navbar = () => {
@@ -160,23 +158,6 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Resume CTA Button */}
-            <a
-              href="https://drive.google.com/file/d/1DV-irLeae0jWaRLNNyeMvwzPm8aqvXoB/view"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="View Resume"
-              className={cn(
-                "hidden sm:inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold font-spaceGrotesk transition-all duration-300 flex-shrink-0 border",
-                "bg-[#4A90E2]/10 hover:bg-[#4A90E2] text-[#4A90E2] hover:text-white",
-                "border-[#4A90E2]/40 hover:border-[#4A90E2] hover:shadow-md hover:shadow-[#4A90E2]/30 hover:scale-105",
-                "h-10 whitespace-nowrap",
-              )}
-            >
-              <IoDocumentTextOutline size={15} />
-              <span>Resume</span>
-            </a>
-
             {/* Theme Toggle Button with Smooth Transition */}
             <button
               suppressHydrationWarning
@@ -302,21 +283,6 @@ const Navbar = () => {
                 />
               </Link>
             ))}
-
-            {/* Mobile Resume CTA */}
-            <a
-              href="https://drive.google.com/file/d/1DV-irLeae0jWaRLNNyeMvwzPm8aqvXoB/view"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center justify-between rounded-xl px-3.5 py-3 mt-2 transition-all duration-200 border text-sm font-semibold font-spaceGrotesk bg-[#4A90E2]/15 text-[#4A90E2] border-[#4A90E2]/40 hover:bg-[#4A90E2] hover:text-white shadow-sm"
-            >
-              <div className="flex items-center gap-2.5">
-                <IoDocumentTextOutline size={18} />
-                <span>Resume (PDF)</span>
-              </div>
-              <IoArrowForward size={14} />
-            </a>
           </nav>
         </div>
       </div>

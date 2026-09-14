@@ -727,10 +727,6 @@ const Project = () => {
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap');
         .font-spaceGrotesk { font-family: 'Space Grotesk', system-ui, sans-serif !important; }
         .dm-mono { font-family: 'DM Mono', monospace !important; }
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4A90E2; }
       `}</style>
 
       <div className="max-w-6xl mx-auto px-auto relative z-10">

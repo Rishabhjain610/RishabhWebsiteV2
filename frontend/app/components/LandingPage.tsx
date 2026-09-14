@@ -6,6 +6,7 @@ import {
   IoLogoGithub,
   IoLogoLinkedin,
   IoLogoInstagram,
+  IoDocumentTextOutline,
 } from "react-icons/io5";
 
 const bootLines = [
@@ -324,6 +325,11 @@ const LandingPage = () => {
               icon: IoLogoInstagram,
               href: "https://instagram.com/rishabh_jain610",
               label: "Instagram",
+            },
+            {
+              icon: IoDocumentTextOutline,
+              href: "https://drive.google.com/file/d/1DV-irLeae0jWaRLNNyeMvwzPm8aqvXoB/view",
+              label: "Resume",
             },
           ].map((s) => (
             <a
