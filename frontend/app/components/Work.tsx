@@ -34,6 +34,7 @@ const CustomIcon: React.FC<CustomIconProps> = ({ src, alt, size = 17 }) => (
     width={size}
     height={size}
     className="object-contain"
+    unoptimized
   />
 );
 
@@ -360,6 +361,7 @@ const Work = () => {
                           height={36}
                           className="object-contain grayscale-0 dark:grayscale-0"
                           priority={i < 2}
+                          unoptimized
                         />
                       ) : (
                         <Icon size={36} className="text-[#4A90E2]" />
@@ -410,6 +412,7 @@ const Work = () => {
                                 height={24}
                                 className="object-contain grayscale-0 dark:grayscale-0"
                                 priority={i < 2}
+                                unoptimized
                               />
                             ) : (
                               <Icon size={24} className="text-[#4A90E2]" />
