@@ -55,6 +55,21 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
+    icon: IoCodeSlash,
+    iconType: "image",
+    iconSrc: "/iitb.png",
+    role: "Research Intern",
+    type: "Internship",
+    company: "IIT Bombay - CSRE",
+    location: "Mumbai, IN",
+    period: "Oct 2026 – Present",
+    current: true,
+    bullets: [
+      "Run experiment scripts measuring the impact of adversarial attacks on **CLIP-based models** with **FAP prompt tuning** for hyperspectral image classification across multiple experiment settings and configurations.",
+      "Benchmark model robustness across experiment runs and compile results into structured **Excel reports** for research review.",
+    ],
+  },
+  {
     icon: IoServer,
     iconType: "image",
     iconSrc: "/mumbaimetro1.png",
@@ -65,13 +80,13 @@ const experiences: Experience[] = [
     period: "Feb 2026 – Present",
     current: true,
     bullets: [
-      "Built backend and web portal for **48 stations** and **181 stalls** using **Node.js**, **Express.js**, **MongoDB Atlas**, and **Next.js**, developing **139 APIs** and **22 MongoDB models**.",
-      "Engineered **CI/CD pipeline** automating code pulls, builds, and service restarts on production servers.",
+      "Built 3 modules (**vendor compliance, electricity, water billing**) for **48 stations** using **Node.js**, **Express.js**, **MongoDB**, and **Next.js**.",
+      "Optimized high-volume **MongoDB** query patterns across core billing and vendor services by resolving the N+1 query problem using batch **$in** queries and in-memory Map indexing (**O(1)** lookups), slashing database round-trips by **95%** (41 → 2 queries) and reducing endpoint latency by **85%** (from ~2.1s down to ~260ms).",
+      "Architected **MongoDB connection pooling** (minPoolSize: 10, maxPoolSize: 50) in Node.js/Mongoose, eliminating cold-start TCP handshake spikes on concurrent **Promise.all** requests and achieving a **30%+ throughput increase** under parallel I/O workloads.",
+      "Reduced Node.js heap memory consumption by **~15–20 MB per batch** by refactoring read-heavy endpoints to bypass Mongoose document hydration using raw **.lean()** queries, significantly reducing Garbage Collection (GC) overhead and CPU cycle contention.",
       "Implemented bill workflow with **Puppeteer PDFs**, **skip/limit pagination**, and custom rates; cut electric bill generation time from **4 days to 3 hours**.",
       "Secured API with **JWT authentication (5 roles)**, NoSQL injection protection via **mongo-sanitize**, **10MB payload cap**, and **Helmet** headers.",
-      "Automated compliance cycles using **node-cron with timezone support**, **Google Drive API** storage, and **Nodemailer OTP delivery**.",
-      "Optimized database performance with **15+ indexes**, **offset pagination**, and **query projections** for rapid retrieval, slashing query response times on high-volume operational reads.",
-      "Designed hierarchical **MongoDB** schemas representing Metro Lines, Stations, Vendor Stalls, Bills, and Controllers; built analytical dashboards using aggregation pipelines and interactive visualizations to support utility reporting and operational decision-making.",
+      "Automated compliance cycles using **node-cron with timezone support**, **Google Drive API** storage, and **Nodemailer OTP delivery**; rolled out to **30+ Controllers**.",
       "Implemented secure **5-role Role-Based Access Control (RBAC)** with **JWT** authentication, audit logging, and duplicate-billing safeguards to ensure reliable, traceable, and secure billing operations.",
       "Benchmarked enterprise APIs using **Autocannon**, achieving **~52 ms** average authentication latency and **~192 req/sec** throughput under simulated workloads, establishing quantified performance baselines.",
       "Led stakeholder management and coordinated requirement gathering, testing, and production rollout with **30+ Station Controllers** across metro stations, ensuring smooth adoption and deployment.",

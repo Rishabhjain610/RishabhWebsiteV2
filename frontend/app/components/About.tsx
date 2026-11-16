@@ -130,9 +130,9 @@ const About = () => {
                   Rishabh Jain
                 </span>
                 , a Full Stack Developer specializing in AI-integrated platforms,
-                agentic AI systems, and microservices architectures. SDE Intern at
-                MMMOCL, Ex Joint Tech Head at GDG TSEC, 7× hackathon winner, and
-                GSSoC’26 Contributor.
+                agentic AI systems, and microservices architectures. Research Intern at IIT
+                Bombay, SDE Intern at MMMOCL, Ex Joint Tech Head at GDG TSEC, 7× hackathon
+                winner, and GSSoC’26 Contributor.
               </p>
               <p className="text-lg lg:text-xl font-spaceGrotesk text-[#1A1A1A] dark:text-[#E0E0E0] opacity-90 dark:opacity-80 leading-relaxed">
                 I enjoy collaborating with others, thinking critically, mentoring 200+

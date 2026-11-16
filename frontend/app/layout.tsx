@@ -224,6 +224,7 @@ const personJsonLd = {
     "AI Integration",
     "Python",
     "Express.js",
+    "FastAPI",
     "Tailwind CSS",
     "Docker",
     "Git",
