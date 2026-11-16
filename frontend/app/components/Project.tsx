@@ -29,7 +29,7 @@ const projects: Project[] = [
     title: "CortexAI",
     titleParts: ["Cortex", "AI"],
     description:
-      "Production-grade, credit-based AI SaaS platform powered by a microservices architecture and dynamic multi-agent system (LangGraph/LangChain) with real-time SSE token streaming, sliding window rate limiting, and 8 specialized agents.",
+      "Credit-based AI SaaS platform powered by a microservices architecture and dynamic multi-agent system (LangGraph/LangChain) with real-time SSE token streaming, sliding window rate limiting, and 8 specialized agents.",
     tags: [
       "Node.js",
       "Express.js",
@@ -52,9 +52,9 @@ const projects: Project[] = [
       "Monaco Editor",
     ],
     features: [
-      "Architected distributed 4-service microservices with API Gateway orchestrating Auth, Billing, Chat, Agent services; implemented REST APIs and Redis sync enabling fault isolation and elastic scaling across distributed systems",
-      "Built RAG pipeline using Nomic embeddings + Qdrant vector search for document retrieval with memory; orchestrated 8 LangGraph agents for Chat, Coding, Web Search, RAG, Image Analysis, Image/PDF/PPT Generation",
-      "Implemented BullMQ job queue for async processing and Razorpay billing with sliding-window rate limiting",
+      "Architected 4-service microservices with an API Gateway orchestrating Auth, Billing, Chat, Agent services, with 8 LangGraph agents, SSE streaming, and Redis caching with TTL for chat history",
+      "Built RAG pipeline using Nomic embeddings + Qdrant vector search with a BullMQ job queue on Redis for async processing of large PDFs, achieving 95% faithfulness and 87% defense against prompt injection attacks",
+      "Secured Razorpay payments with an idempotent verification and webhook pipeline that prevents replay attacks, and resolved a Redis sliding-window rate limiter collision using a crypto-generated ID instead of the timestamp as set member",
       "Multi-Agent AI Orchestration with 8 specialized agents via LangGraph & LangChain",
       "3-Layer Intelligent Router (Manual selection → Keyword heuristics → Local Ollama LLM fallback)",
       "Microservices Architecture (API Gateway, Auth, Billing, Agent, Chat services)",
